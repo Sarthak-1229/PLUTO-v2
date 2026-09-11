@@ -364,7 +364,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.262592",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158677263",
@@ -390,7 +390,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.264658",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158677265",
@@ -403,7 +403,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.265787",
-      "usage_count": 2
+      "usage_count": 3
     },
     {
       "id": "1789158742002",
@@ -534,10 +534,75 @@
       ],
       "created_at": "2026-09-12T02:03:31.303756",
       "usage_count": 1
+    },
+    {
+      "id": "1789160240360",
+      "query": "What is quantum entanglement? Explain in detail",
+      "source": "duckduckgo",
+      "title": "Quantum entanglement - Wikipedia",
+      "content": "3 days ago - Quantum systems can become entangled through various types of interactions. For some ways in which entanglement may be achieved for experimental purposes, see the section below on methods. Entanglement is broken when the entangled particles decohere through interaction with the environm",
+      "url": "https://en.wikipedia.org/wiki/Quantum_entanglement",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:27:20.360352",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160240361",
+      "query": "What is quantum entanglement? Explain in detail",
+      "source": "duckduckgo",
+      "title": "What Is Quantum Entanglement? Quantum Entanglement Explained ...",
+      "content": "This article was reviewed by a member ofCaltech's Faculty.",
+      "url": "https://scienceexchange.caltech.edu/topics/quantum-science-explained/entanglement",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:27:20.361690",
+      "usage_count": 1
+    },
+    {
+      "id": "1789160240362",
+      "query": "What is quantum entanglement? Explain in detail",
+      "source": "duckduckgo",
+      "title": "What is Quantum Entanglement? NASA Science",
+      "content": "There’s a lot we don’t know about our universe — in fact, 95% of it remains a mystery to us. That’s why scientists continue to probe our understanding of quantum physics.",
+      "url": "https://science.nasa.gov/what-is-the-spooky-science-of-quantum-entanglement/",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:27:20.362902",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160240364",
+      "query": "What is quantum entanglement? Explain in detail",
+      "source": "duckduckgo",
+      "title": "What is quantum entanglement? The physics of 'spooky action at a distance' explained | Space",
+      "content": "Quantum entanglement is one seriously long-distance relationship.",
+      "url": "https://www.space.com/31933-quantum-entanglement-action-at-a-distance.html",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:27:20.364227",
+      "usage_count": 1
+    },
+    {
+      "id": "1789160240365",
+      "query": "What is quantum entanglement? Explain in detail",
+      "source": "duckduckgo",
+      "title": "What Is Quantum Entanglement? Properties & Applications",
+      "content": "“Quantum entanglement” refers to a phenomenon in which two or more particles share a single quantum state, and in which none of the entangled particles have individual quantum states. This phenomenon occurs when particles are brought into close proximity and interact, and particles can also be generated as entangled pairs. No one understands how or why particles become entangled, nonetheless the phenomenon has been observed experimentally, and it can be leveraged for quantum computation, communication, and sensing. An entangled system has several properties that are considered to be unintuitiv",
+      "url": "https://www.quera.com/glossary/entanglement",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:27:20.365321",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 40,
+    "total_searches": 45,
     "total_queries": 0
   }
 }

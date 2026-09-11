@@ -158,9 +158,22 @@ def search_knowledge(query: str = ""):
 # ------------------------------------------------------------------
 # Health check
 # ------------------------------------------------------------------
-@app.get("/health")
-def health():
-    return {"status": "ok"}
+@app.get("/status")
+def get_status():
+    """Return system status including online/offline state."""
+    try:
+        from core.self_learner import get_self_learner
+        learner = get_self_learner()
+        is_online = learner.is_online()
+
+        return {
+            "status": "ok",
+            "online": is_online,
+            "model": getattr(learner.llm, 'model', 'unknown'),
+            "knowledge_entries": learner.kb.get_stats().get('total_entries', 0),
+        }
+    except Exception as e:
+        return {"status": "error", "error": str(e)}
 
 # ------------------------------------------------------------------
 # Serve the static UI

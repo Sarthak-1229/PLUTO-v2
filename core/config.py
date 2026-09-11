@@ -25,6 +25,7 @@ MAX_SEARCH_RESULTS = 5
 SEARCH_TIMEOUT = 10             # Seconds for web requests
 WIKIPEDIA_API_ENABLED = True
 ARXIV_ENABLED = True
+OFFLINE_MODE = False            # Set to True to force offline mode
 
 # ============================================================
 # UI Features

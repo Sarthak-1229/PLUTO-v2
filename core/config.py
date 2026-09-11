@@ -7,7 +7,7 @@ Updated configuration for PLUTO v2 with enhanced features.
 # ============================================================
 VRAM_BUDGET_MB = 6000
 STT_MODEL_SIZE = "small"
-LLM_MODEL_NAME = "qwen2.5:3b"  # Better model: Smarter, 3B params, ~2GB VRAM
+LLM_MODEL_NAME = "qwen2.5:7b"   # Newer, smarter 7B model (~4.5GB VRAM)
 REPORTS_DIR = "reports"
 USE_LLM_SUMMARY = True
 

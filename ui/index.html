@@ -103,6 +103,14 @@
       transform: translateX(4px);
     }
 
+    /* VRAM gauge */
+    .vram-bar {
+      height: 8px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #22c55e 0%, #22c55e 60%, #f59e0b 60%, #f59e0b 80%, #ef4444 80%);
+      transition: width 0.5s ease;
+    }
+
     /* Custom scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: #1e293b; }
@@ -119,13 +127,46 @@
     .status-online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
     .status-busy { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
     .status-offline { background: #ef4444; }
+
+    /* Audio visualizer */
+    .audio-visualizer {
+      display: flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 30px;
+    }
+
+    .audio-visualizer .bar {
+      width: 4px;
+      background: linear-gradient(to top, #6366f1, #a855f7);
+      border-radius: 2px;
+      animation: audioBar 0.8s ease-in-out infinite;
+    }
+
+    .audio-visualizer .bar:nth-child(1) { animation-delay: 0s; }
+    .audio-visualizer .bar:nth-child(2) { animation-delay: 0.1s; }
+    .audio-visualizer .bar:nth-child(3) { animation-delay: 0.2s; }
+    .audio-visualizer .bar:nth-child(4) { animation-delay: 0.3s; }
+    .audio-visualizer .bar:nth-child(5) { animation-delay: 0.4s; }
+    .audio-visualizer .bar:nth-child(6) { animation-delay: 0.5s; }
+    .audio-visualizer .bar:nth-child(7) { animation-delay: 0.6s; }
+
+    @keyframes audioBar {
+      0%, 100% { height: 20%; }
+      50% { height: 100%; }
+    }
+
+    .audio-visualizer.paused .bar {
+      animation-play-state: paused;
+      height: 20%;
+    }
   </style>
 </head>
 <body class="h-full overflow-hidden">
   <div class="flex h-full">
 
     <!-- Sidebar -->
-    <aside class="w-64 glass flex flex-col border-r border-indigo-500/20">
+    <aside class="w-72 glass flex flex-col border-r border-indigo-500/20">
       <!-- Logo -->
       <div class="p-4 border-b border-indigo-500/20">
         <div class="flex items-center gap-3">
@@ -137,6 +178,21 @@
         </div>
       </div>
 
+      <!-- VRAM Monitor -->
+      <div class="p-4 border-b border-indigo-500/20">
+        <div class="flex items-center justify-between mb-2">
+          <span class="text-xs text-gray-400 uppercase tracking-wider">VRAM Usage</span>
+          <span id="vramText" class="text-xs font-mono text-indigo-400">0 MB</span>
+        </div>
+        <div class="w-full bg-surface_light rounded-full h-2">
+          <div id="vramBar" class="vram-bar h-2 rounded-full" style="width: 0%"></div>
+        </div>
+        <div class="flex justify-between mt-1 text-xs text-gray-500">
+          <span>0 GB</span>
+          <span id="vramBudget">6 GB</span>
+        </div>
+      </div>
+
       <!-- Status -->
       <div class="p-4 border-b border-indigo-500/20">
         <div class="flex items-center gap-2 text-sm">
@@ -144,7 +200,7 @@
           <span id="statusText" class="text-gray-300">Online</span>
         </div>
         <div class="mt-2 text-xs text-gray-500">
-          Model: <span id="modelInfo">Qwen2.5:3B</span>
+          Model: <span id="modelInfo">Qwen2.5:7B</span>
         </div>
       </div>
 
@@ -164,6 +220,32 @@
           <button onclick="quickAction('joke')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
             😄 Tell a Joke
           </button>
+          <button onclick="quickAction('define')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            📖 Define Word
+          </button>
+        </div>
+      </div>
+
+      <!-- Knowledge Sources -->
+      <div class="p-4 border-b border-indigo-500/20">
+        <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">Knowledge Sources</p>
+        <div class="space-y-1 text-xs">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-500"></span>
+            <span class="text-gray-300">DuckDuckGo Web</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
+            <span class="text-gray-300">Wikipedia</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-purple-500"></span>
+            <span class="text-gray-300">arXiv Papers</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-indigo-500"></span>
+            <span class="text-gray-300">Qwen2.5 LLM</span>
+          </div>
         </div>
       </div>
 
@@ -182,12 +264,17 @@
       <div class="p-4 border-t border-indigo-500/20">
         <div class="flex items-center justify-between text-sm">
           <span class="text-gray-400">Voice</span>
-          <select id="voiceSelect" class="bg-surface_light rounded px-2 py-1 text-xs">
+          <select id="voiceSelect" onchange="changeVoice(this.value)" class="bg-surface_light rounded px-2 py-1 text-xs">
             <option value="en-US-AriaNeural">Aria (Female)</option>
             <option value="en-US-GuyNeural">Guy (Male)</option>
             <option value="en-GB-SoniaNeural">Sonia (British)</option>
             <option value="en-GB-RyanNeural">Ryan (British)</option>
+            <option value="en-AU-NatashaNeural">Natasha (Australian)</option>
           </select>
+        </div>
+        <div class="flex items-center justify-between text-sm mt-2">
+          <span class="text-gray-400">Auto-play</span>
+          <input type="checkbox" id="autoPlayToggle" checked onchange="toggleAutoPlay(this.checked)" class="form-checkbox h-4 w-4 text-primary rounded">
         </div>
       </div>
     </aside>
@@ -219,6 +306,7 @@
               <button onclick="sendQuick('What is quantum computing?')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Quantum Computing</button>
               <button onclick="sendQuick('Create a report on AI')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Research Report</button>
               <button onclick="sendQuick('Tell me about Mars')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Mars Exploration</button>
+              <button onclick="sendQuick('What is machine learning?')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Machine Learning</button>
             </div>
           </div>
         </div>
@@ -254,12 +342,21 @@
           </div>
         </div>
 
-        <!-- Audio Player (shown when audio is available) -->
-        <div id="audioPlayerContainer" class="hidden mt-3 flex items-center gap-3">
-          <audio id="audioPlayer" controls class="flex-1 h-8"></audio>
-          <button onclick="copyAnswer()" class="px-3 py-1 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
-            📋 Copy
-          </button>
+        <!-- Status bar -->
+        <div class="flex items-center justify-between mt-3 text-xs text-gray-500">
+          <div class="flex items-center gap-4">
+            <span id="voiceStatus">Voice: Ready</span>
+            <span id="lastActivity">Last: Never</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <div id="waveAnimation" class="voice-wave hidden">
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+              <div class="bar"></div>
+            </div>
+          </div>
         </div>
       </div>
     </main>
@@ -270,6 +367,9 @@
     let isRecording = false;
     let recognition = null;
     let currentAnswer = '';
+    let currentAudioUri = '';
+    let autoPlay = true;
+    let currentVoice = 'en-US-AriaNeural';
     const history = [];
 
     // Initialize speech recognition
@@ -290,6 +390,7 @@
         isRecording = false;
         document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
         document.getElementById('recordingIndicator').classList.add('hidden');
+        document.getElementById('voiceStatus').textContent = 'Voice: Ready';
       };
 
       recognition.onerror = (event) => {
@@ -297,6 +398,7 @@
         isRecording = false;
         document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
         document.getElementById('recordingIndicator').classList.add('hidden');
+        document.getElementById('voiceStatus').textContent = `Voice: ${event.error}`;
       };
     }
 
@@ -312,11 +414,13 @@
         isRecording = false;
         document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
         document.getElementById('recordingIndicator').classList.add('hidden');
+        document.getElementById('voiceStatus').textContent = 'Voice: Ready';
       } else {
         recognition.start();
         isRecording = true;
         document.getElementById('voiceBtn').classList.add('bg-red-500/20');
         document.getElementById('recordingIndicator').classList.remove('hidden');
+        document.getElementById('voiceStatus').textContent = 'Voice: Listening...';
       }
     }
 
@@ -328,20 +432,28 @@
       document.getElementById('query').value = '';
       setLoading(true);
       addMessage('user', query);
+      document.getElementById('lastActivity').textContent = `Last: Just now`;
 
       try {
         const response = await fetch('/process', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ text: query })
+          body: JSON.stringify({ text: query, voice: currentVoice })
         });
 
         if (!response.ok) throw new Error(`Server error: ${response.status}`);
 
         const data = await response.json();
         currentAnswer = data.answer;
+        currentAudioUri = data.audio_uri;
+
         addMessage('assistant', data.answer, data.audio_uri);
         addToHistory(query, data.answer);
+
+        // Auto-play audio
+        if (autoPlay && data.audio_uri) {
+          playAudio(data.audio_uri);
+        }
 
       } catch (error) {
         addMessage('assistant', `Error: ${error.message}`);
@@ -350,13 +462,23 @@
       }
     }
 
+    // Play audio
+    function playAudio(uri) {
+      const audio = document.getElementById('audioPlayer');
+      if (audio) {
+        audio.src = uri;
+        audio.play().catch(e => console.log('Audio play failed:', e));
+      }
+    }
+
     // Quick action
     function quickAction(type) {
       const actions = {
-        'weather': 'What is the weather like?',
+        'weather': 'What is the weather like today?',
         'news': 'Give me the latest news',
         'math': 'Calculate 25 * 48',
         'joke': 'Tell me a joke',
+        'define': 'Define quantum entanglement',
       };
       document.getElementById('query').value = actions[type] || type;
       sendQuery();
@@ -381,7 +503,10 @@
         : '<div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">🪐</div>';
 
       const audioControls = audioUri
-        ? `<audio controls class="mt-2 w-full h-8" src="${audioUri}"></audio>`
+        ? `<div class="mt-2 flex items-center gap-2">
+             <audio controls class="flex-1 h-8" src="${audioUri}"></audio>
+             <button onclick="playAudio('${audioUri}')" class="px-2 py-1 rounded bg-indigo-600 hover:bg-indigo-500 text-xs">▶ Replay</button>
+           </div>`
         : '';
 
       div.innerHTML = `
@@ -432,6 +557,18 @@
       navigator.clipboard.writeText(currentAnswer).catch(() => {});
     }
 
+    // Change voice
+    function changeVoice(voice) {
+      currentVoice = voice;
+      localStorage.setItem('pluto-voice', voice);
+    }
+
+    // Toggle auto-play
+    function toggleAutoPlay(enabled) {
+      autoPlay = enabled;
+      localStorage.setItem('pluto-autoplay', enabled);
+    }
+
     // Loading state
     function setLoading(loading) {
       const btn = document.getElementById('sendBtn');
@@ -468,6 +605,22 @@
         document.getElementById('statusText').textContent = 'Offline';
       }
     }, 5000);
+
+    // Load saved preferences
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedVoice = localStorage.getItem('pluto-voice');
+      const savedAutoplay = localStorage.getItem('pluto-autoplay');
+
+      if (savedVoice) {
+        currentVoice = savedVoice;
+        document.getElementById('voiceSelect').value = savedVoice;
+      }
+
+      if (savedAutoplay !== null) {
+        autoPlay = savedAutoplay === 'true';
+        document.getElementById('autoPlayToggle').checked = autoPlay;
+      }
+    });
   </script>
 </body>
 </html>

@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-gray-950 text-gray-100 antialiased">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLUTO v2 - AI Assistant</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            primary: '#6366f1',
+            primary_dark: '#4f46e5',
+            accent: '#f59e0b',
+            surface: '#1e293b',
+            surface_light: '#334155',
+          },
+          animation: {
+            'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+            'slide-in': 'slideIn 0.3s ease-out',
+            'fade-in': 'fadeIn 0.3s ease-out',
+          },
+          keyframes: {
+            slideIn: {
+              '0%': { transform: 'translateX(-10px)', opacity: '0' },
+              '100%': { transform: 'translateX(0)', opacity: '1' },
+            },
+            fadeIn: {
+              '0%': { opacity: '0' },
+              '100%': { opacity: '1' },
+            },
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    body { font-family: 'Inter', sans-serif; }
+
+    .glass {
+      background: rgba(30, 41, 59, 0.7);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    .glass-hover:hover {
+      background: rgba(51, 65, 85, 0.8);
+      border-color: rgba(99, 102, 241, 0.4);
+    }
+
+    .gradient-text {
+      background: linear-gradient(135deg, #6366f1, #a855f7, #ec4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .spinner {
+      border: 3px solid rgba(99, 102, 241, 0.3);
+      border-top-color: #6366f1;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .voice-wave {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 30px;
+    }
+
+    .voice-wave .bar {
+      width: 4px;
+      background: linear-gradient(to top, #6366f1, #a855f7);
+      border-radius: 2px;
+      animation: wave 1s ease-in-out infinite;
+    }
+
+    .voice-wave .bar:nth-child(1) { animation-delay: 0s; height: 40%; }
+    .voice-wave .bar:nth-child(2) { animation-delay: 0.1s; height: 60%; }
+    .voice-wave .bar:nth-child(3) { animation-delay: 0.2s; height: 80%; }
+    .voice-wave .bar:nth-child(4) { animation-delay: 0.3s; height: 60%; }
+    .voice-wave .bar:nth-child(5) { animation-delay: 0.4s; height: 40%; }
+
+    @keyframes wave {
+      0%, 100% { transform: scaleY(0.5); }
+      50% { transform: scaleY(1); }
+    }
+
+    .history-item {
+      transition: all 0.2s ease;
+    }
+
+    .history-item:hover {
+      transform: translateX(4px);
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #1e293b; }
+    ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .status-online { background: #22c55e; box-shadow: 0 0 8px #22c55e; }
+    .status-busy { background: #f59e0b; box-shadow: 0 0 8px #f59e0b; }
+    .status-offline { background: #ef4444; }
+  </style>
+</head>
+<body class="h-full overflow-hidden">
+  <div class="flex h-full">
+
+    <!-- Sidebar -->
+    <aside class="w-64 glass flex flex-col border-r border-indigo-500/20">
+      <!-- Logo -->
+      <div class="p-4 border-b border-indigo-500/20">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-xl">🪐</div>
+          <div>
+            <h1 class="font-bold text-lg gradient-text">PLUTO v2</h1>
+            <p class="text-xs text-gray-400">AI Voice Assistant</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Status -->
+      <div class="p-4 border-b border-indigo-500/20">
+        <div class="flex items-center gap-2 text-sm">
+          <span id="statusDot" class="status-dot status-online"></span>
+          <span id="statusText" class="text-gray-300">Online</span>
+        </div>
+        <div class="mt-2 text-xs text-gray-500">
+          Model: <span id="modelInfo">Qwen2.5:3B</span>
+        </div>
+      </div>
+
+      <!-- Quick Actions -->
+      <div class="p-4 border-b border-indigo-500/20">
+        <p class="text-xs text-gray-500 mb-2 uppercase tracking-wider">Quick Actions</p>
+        <div class="space-y-2">
+          <button onclick="quickAction('weather')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            🌤️ Weather
+          </button>
+          <button onclick="quickAction('news')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            📰 Latest News
+          </button>
+          <button onclick="quickAction('math')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            🔢 Calculator
+          </button>
+          <button onclick="quickAction('joke')" class="w-full text-left px-3 py-2 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            😄 Tell a Joke
+          </button>
+        </div>
+      </div>
+
+      <!-- History -->
+      <div class="flex-1 overflow-hidden flex flex-col">
+        <div class="p-4 border-b border-indigo-500/20 flex items-center justify-between">
+          <p class="text-xs text-gray-500 uppercase tracking-wider">History</p>
+          <button onclick="clearHistory()" class="text-xs text-gray-500 hover:text-red-400 transition-colors">Clear</button>
+        </div>
+        <ul id="historyList" class="flex-1 overflow-y-auto p-2 space-y-2">
+          <!-- History items will be added here -->
+        </ul>
+      </div>
+
+      <!-- Settings -->
+      <div class="p-4 border-t border-indigo-500/20">
+        <div class="flex items-center justify-between text-sm">
+          <span class="text-gray-400">Voice</span>
+          <select id="voiceSelect" class="bg-surface_light rounded px-2 py-1 text-xs">
+            <option value="en-US-AriaNeural">Aria (Female)</option>
+            <option value="en-US-GuyNeural">Guy (Male)</option>
+            <option value="en-GB-SoniaNeural">Sonia (British)</option>
+            <option value="en-GB-RyanNeural">Ryan (British)</option>
+          </select>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="flex-1 flex flex-col">
+      <!-- Header -->
+      <header class="glass px-6 py-4 border-b border-indigo-500/20 flex items-center justify-between">
+        <div>
+          <h2 class="font-semibold text-lg">Chat with PLUTO</h2>
+          <p class="text-sm text-gray-400">Ask anything • Get spoken responses</p>
+        </div>
+        <div class="flex items-center gap-4">
+          <div id="recordingIndicator" class="hidden flex items-center gap-2 px-3 py-1 rounded-full bg-red-500/20 text-red-400 text-sm">
+            <div class="w-2 h-2 rounded-full bg-red-500 animate-pulse"></div>
+            Recording...
+          </div>
+        </div>
+      </header>
+
+      <!-- Chat Area -->
+      <div id="chatArea" class="flex-1 overflow-y-auto p-6 space-y-4">
+        <!-- Welcome Message -->
+        <div class="flex gap-3 animate-fade-in">
+          <div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">🪐</div>
+          <div class="glass rounded-2xl rounded-tl-none px-4 py-3 max-w-2xl">
+            <p class="text-gray-200">Hello! I'm PLUTO v2, your AI voice assistant. Ask me anything, and I'll respond with both text and speech.</p>
+            <div class="mt-2 flex flex-wrap gap-2">
+              <button onclick="sendQuick('What is quantum computing?')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Quantum Computing</button>
+              <button onclick="sendQuick('Create a report on AI')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Research Report</button>
+              <button onclick="sendQuick('Tell me about Mars')" class="text-xs px-3 py-1 rounded-full bg-surface_light hover:bg-indigo-600/20 transition-colors">Mars Exploration</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="glass px-6 py-4 border-t border-indigo-500/20">
+        <div class="flex gap-3">
+          <textarea
+            id="query"
+            rows="2"
+            placeholder="Ask me anything... (Press Enter to send, Shift+Enter for new line)"
+            class="flex-1 bg-surface_light rounded-xl px-4 py-3 text-gray-100 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 resize-none"
+          ></textarea>
+          <div class="flex flex-col gap-2">
+            <button
+              id="voiceBtn"
+              onclick="toggleVoice()"
+              class="w-12 h-12 rounded-xl bg-surface_light hover:bg-indigo-600/20 flex items-center justify-center text-xl transition-all"
+              title="Voice Input"
+            >
+              🎤
+            </button>
+            <button
+              id="sendBtn"
+              onclick="sendQuery()"
+              class="w-12 h-12 rounded-xl bg-indigo-600 hover:bg-indigo-500 flex items-center justify-center transition-all disabled:opacity-50"
+            >
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Audio Player (shown when audio is available) -->
+        <div id="audioPlayerContainer" class="hidden mt-3 flex items-center gap-3">
+          <audio id="audioPlayer" controls class="flex-1 h-8"></audio>
+          <button onclick="copyAnswer()" class="px-3 py-1 rounded-lg bg-surface_light hover:bg-indigo-600/20 text-sm transition-colors">
+            📋 Copy
+          </button>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script>
+    // State
+    let isRecording = false;
+    let recognition = null;
+    let currentAnswer = '';
+    const history = [];
+
+    // Initialize speech recognition
+    if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+      const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = 'en-US';
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        document.getElementById('query').value = transcript;
+        sendQuery();
+      };
+
+      recognition.onend = () => {
+        isRecording = false;
+        document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
+        document.getElementById('recordingIndicator').classList.add('hidden');
+      };
+
+      recognition.onerror = (event) => {
+        console.error('Speech recognition error:', event.error);
+        isRecording = false;
+        document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
+        document.getElementById('recordingIndicator').classList.add('hidden');
+      };
+    }
+
+    // Voice toggle
+    function toggleVoice() {
+      if (!recognition) {
+        alert('Voice input is not supported in this browser. Use Chrome or Edge.');
+        return;
+      }
+
+      if (isRecording) {
+        recognition.stop();
+        isRecording = false;
+        document.getElementById('voiceBtn').classList.remove('bg-red-500/20');
+        document.getElementById('recordingIndicator').classList.add('hidden');
+      } else {
+        recognition.start();
+        isRecording = true;
+        document.getElementById('voiceBtn').classList.add('bg-red-500/20');
+        document.getElementById('recordingIndicator').classList.remove('hidden');
+      }
+    }
+
+    // Send query
+    async function sendQuery() {
+      const query = document.getElementById('query').value.trim();
+      if (!query) return;
+
+      document.getElementById('query').value = '';
+      setLoading(true);
+      addMessage('user', query);
+
+      try {
+        const response = await fetch('/process', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: query })
+        });
+
+        if (!response.ok) throw new Error(`Server error: ${response.status}`);
+
+        const data = await response.json();
+        currentAnswer = data.answer;
+        addMessage('assistant', data.answer, data.audio_uri);
+        addToHistory(query, data.answer);
+
+      } catch (error) {
+        addMessage('assistant', `Error: ${error.message}`);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    // Quick action
+    function quickAction(type) {
+      const actions = {
+        'weather': 'What is the weather like?',
+        'news': 'Give me the latest news',
+        'math': 'Calculate 25 * 48',
+        'joke': 'Tell me a joke',
+      };
+      document.getElementById('query').value = actions[type] || type;
+      sendQuery();
+    }
+
+    // Send quick message
+    function sendQuick(text) {
+      document.getElementById('query').value = text;
+      sendQuery();
+    }
+
+    // Add message to chat
+    function addMessage(role, text, audioUri = null) {
+      const chatArea = document.getElementById('chatArea');
+      const isUser = role === 'user';
+
+      const div = document.createElement('div');
+      div.className = `flex gap-3 animate-slide-in ${isUser ? 'flex-row-reverse' : ''}`;
+
+      const avatar = isUser
+        ? '<div class="w-8 h-8 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0">👤</div>'
+        : '<div class="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center flex-shrink-0">🪐</div>';
+
+      const audioControls = audioUri
+        ? `<audio controls class="mt-2 w-full h-8" src="${audioUri}"></audio>`
+        : '';
+
+      div.innerHTML = `
+        ${avatar}
+        <div class="glass rounded-2xl ${isUser ? 'rounded-tr-none bg-indigo-600/20' : 'rounded-tl-none'} px-4 py-3 max-w-2xl">
+          <p class="text-gray-200 whitespace-pre-wrap">${escapeHtml(text)}</p>
+          ${audioControls}
+        </div>
+      `;
+
+      chatArea.appendChild(div);
+      chatArea.scrollTop = chatArea.scrollHeight;
+    }
+
+    // Add to history sidebar
+    function addToHistory(query, answer) {
+      history.unshift({ query, answer, time: new Date().toLocaleTimeString() });
+      renderHistory();
+    }
+
+    // Render history
+    function renderHistory() {
+      const list = document.getElementById('historyList');
+      list.innerHTML = history.map((item, i) => `
+        <li class="history-item p-2 rounded-lg bg-surface_light cursor-pointer" onclick="loadFromHistory(${i})">
+          <p class="text-xs text-gray-300 truncate">${escapeHtml(item.query)}</p>
+          <p class="text-xs text-gray-500">${item.time}</p>
+        </li>
+      `).join('');
+    }
+
+    // Load from history
+    function loadFromHistory(index) {
+      const item = history[index];
+      document.getElementById('query').value = item.query;
+      addMessage('user', item.query);
+      addMessage('assistant', item.answer);
+    }
+
+    // Clear history
+    function clearHistory() {
+      history.length = 0;
+      renderHistory();
+    }
+
+    // Copy answer
+    function copyAnswer() {
+      navigator.clipboard.writeText(currentAnswer).catch(() => {});
+    }
+
+    // Loading state
+    function setLoading(loading) {
+      const btn = document.getElementById('sendBtn');
+      btn.disabled = loading;
+      btn.innerHTML = loading
+        ? '<div class="spinner"></div>'
+        : '<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/></svg>';
+    }
+
+    // Escape HTML
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // Enter to send
+    document.getElementById('query').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendQuery();
+      }
+    });
+
+    // Check health periodically
+    setInterval(async () => {
+      try {
+        const res = await fetch('/health');
+        const data = await res.json();
+        document.getElementById('statusDot').className = 'status-dot status-online';
+        document.getElementById('statusText').textContent = 'Online';
+      } catch {
+        document.getElementById('statusDot').className = 'status-dot status-offline';
+        document.getElementById('statusText').textContent = 'Offline';
+      }
+    }, 5000);
+  </script>
+</body>
+</html>

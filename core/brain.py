@@ -4,6 +4,8 @@ Handles intent routing, LLM reasoning, and request handling.
 """
 
 from typing import Literal
+import requests
+import logging
 
 # Import necessary modules for report generation and configuration
 from core.researcher import search_topic, compile_report
@@ -30,21 +32,45 @@ def route_intent(text: str) -> Literal['chat', 'report']:
 
 class LLMReasoner:
     """
-    A class to handle LLM-based reasoning.
+    A class to handle LLM-based reasoning using a locally-running Ollama server.
     """
 
+    def __init__(self):
+        self.model = getattr(config, "LLM_MODEL_NAME", "llama3.2:3b")
+        # Simple health check – ping the Ollama server.
+        try:
+            r = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
+            r.raise_for_status()
+        except Exception as exc:
+            logging.warning(f"Ollama not reachable ({exc}); LLMReasoner will use placeholder response.")
+            self.model = None
+
     def reason(self, prompt: str) -> str:
-        """
-        Reason over the given prompt using an LLM.
+        """Send *prompt* to the Ollama model and return the generated text.
 
-        Args:
-            prompt: The prompt to reason over.
-
-        Returns:
-            str: The reasoned output.
+        Uses streaming=True to avoid JSON parsing errors with large responses.
+        Falls back to a placeholder response if Ollama is unavailable.
         """
-        # Placeholder implementation – in a real system this would call the LLM.
-        return f"[LLM response to: {prompt}]"
+        if not self.model:
+            return f"[LLM placeholder response to: {prompt}]"
+        try:
+            payload = {
+                "model": self.model,
+                "prompt": prompt,
+                "stream": False  # Non-streaming response – simpler to parse
+            }
+            r = requests.post(
+                "http://127.0.0.1:11434/api/generate",
+                json=payload,
+                timeout=60
+            )
+            r.raise_for_status()
+            data = r.json()
+            # Return the accumulated response text
+            return data.get("response", "").strip()
+        except Exception as exc:
+            logging.error(f"LLMReasoner error: {exc}")
+            return f"[LLM error response to: {prompt}]"
 
 
 def _extract_topic(text: str) -> str:

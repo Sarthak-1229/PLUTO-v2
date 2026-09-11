@@ -113,11 +113,13 @@ def main_loop():
             audio_data = speak(response_text)
             # `speak` is expected to return raw audio bytes or a path; we handle both.
             if isinstance(audio_data, bytes):
-                # Write bytes to a temporary file for playback.
-                fd, out_path = tempfile.mkstemp(suffix=".wav")
+                # Write MP3 bytes to a temporary file and open with the default system player.
+                fd, out_path = tempfile.mkstemp(suffix=".mp3")
                 os.close(fd)
                 with open(out_path, "wb") as f:
                     f.write(audio_data)
+                # Open the file using the default associated application (Windows).
+                os.startfile(out_path)
                 playback_path = out_path
             else:
                 # Assume a file path is returned.
@@ -126,14 +128,18 @@ def main_loop():
             # Play back the synthesized audio.
             logging.info("Playing response audio...")
             try:
-                # Use `simpleaudio` for cross‑platform playback.
-                import simpleaudio as sa
-                wave_obj = sa.WaveObject.from_wave_file(playback_path)
-                play_obj = wave_obj.play()
-                play_obj.wait_done()
+                # For MP3 files we rely on the system default player.
+                if playback_path.lower().endswith('.mp3'):
+                    # os.startfile already launched the file above; optionally wait a short moment.
+                    time.sleep(2)
+                else:
+                    import simpleaudio as sa
+                    wave_obj = sa.WaveObject.from_wave_file(playback_path)
+                    play_obj = wave_obj.play()
+                    play_obj.wait_done()
             finally:
-                # Remove temporary playback file if we created one.
-                if isinstance(audio_data, bytes):
+                # Remove temporary playback file if we created one and it's a WAV.
+                if isinstance(audio_data, bytes) and not playback_path.lower().endswith('.mp3'):
                     try:
                         os.remove(playback_path)
                     except OSError:

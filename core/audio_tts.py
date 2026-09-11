@@ -1,43 +1,43 @@
-"""Module for audio text-to-speech (TTS) functionality.
-
-Provides a placeholder `speak` function that will eventually synthesize speech
-from text using the specified voice. Currently it returns an empty bytes
-object.
+"""
+Enhanced audio TTS module with better playback handling.
 """
 
-# This module operates with zero VRAM demand because synthesis is performed
-# on the cloud via Microsoft Edge TTS service.
-
-import edge_tts
 import asyncio
-from io import BytesIO
-import os
+import io
+from typing import Optional
 
 
-def speak(text: str, voice: str = "en-US-AriaNeural") -> bytes:
-    """Generate speech audio for the given text.
+async def speak(text: str, voice: str = "en-US-AriaNeural") -> bytes:
+    """Generate speech audio using Edge-TTS.
 
     Args:
         text: The text to synthesize.
-        voice: The voice identifier to use for synthesis.
+        voice: The voice identifier (default: en-US-AriaNeural).
 
     Returns:
-        Bytes representing the audio data.
+        MP3 audio bytes.
     """
-    async def _run():
-        communicate = edge_tts.Communicate(text, voice)
-        buf = BytesIO()
-        async for chunk in communicate.stream():
-            if chunk["type"] == "audio":
-                buf.write(chunk["data"])
-        return buf.getvalue()
+    import edge_tts
 
-    return asyncio.run(_run())
+    communicate = edge_tts.Communicate(text, voice)
+    buf = io.BytesIO()
+    async for chunk in communicate.stream():
+        if chunk["type"] == "audio":
+            buf.write(chunk["data"])
+    return buf.getvalue()
 
 
-if __name__ == "__main__":
-    # Test the speak function and write output to a file.
-    audio_bytes = speak("Test phrase")
-    os.makedirs("reports", exist_ok=True)
-    with open(os.path.join("reports", "tts_test.mp3"), "wb") as f:
-        f.write(audio_bytes)
+def get_voice_options() -> list[str]:
+    """Return list of available voices."""
+    return [
+        "en-US-AriaNeural",      # Female, American
+        "en-US-GuyNeural",        # Male, American
+        "en-GB-SoniaNeural",      # Female, British
+        "en-GB-RyanNeural",       # Male, British
+        "en-AU-NatashaNeural",    # Female, Australian
+        "hi-IN-NeerjaNeural",     # Hindi
+        "es-ES-ElviraNeural",     # Spanish
+        "fr-FR-DeniseNeural",     # French
+        "de-DE-KatjaNeural",      # German
+        "ja-JP-NanamiNeural",     # Japanese
+    ]

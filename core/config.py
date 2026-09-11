@@ -1,21 +1,35 @@
 """
-Configuration module for PLUTO v2.
-Defines constants and settings used across the application.
+Updated configuration for PLUTO v2 with enhanced features.
 """
 
-# VRAM budget in MB for model loading
+# ============================================================
+# VRAM & Model Configuration
+# ============================================================
 VRAM_BUDGET_MB = 6000
-
-# Speech-to-text model size
 STT_MODEL_SIZE = "small"
-
-# Language model name for local inference
-LLM_MODEL_NAME = "llama3.2:3b"
-
-# Directory for storing reports
+LLM_MODEL_NAME = "qwen2.5:3b"  # Better model: Smarter, 3B params, ~2GB VRAM
 REPORTS_DIR = "reports"
-
-# Flag to enable LLM-based summarization
 USE_LLM_SUMMARY = True
 
-# Note: Any model loading must respect VRAM_BUDGET_MB
+# ============================================================
+# Audio Configuration
+# ============================================================
+TTS_VOICE = "en-US-AriaNeural"  # Default TTS voice
+AUDIO_SAMPLE_RATE = 16000       # STT sample rate
+AUDIO_DURATION = 5              # Recording duration in seconds
+
+# ============================================================
+# Search & Knowledge Base
+# ============================================================
+MAX_SEARCH_RESULTS = 5
+SEARCH_TIMEOUT = 10             # Seconds for web requests
+WIKIPEDIA_API_ENABLED = True
+ARXIV_ENABLED = True
+
+# ============================================================
+# UI Features
+# ============================================================
+SHOW_HISTORY = True
+AUTO_PLAY_AUDIO = True
+ENABLE_VOICE_INPUT = True
+DARK_MODE_DEFAULT = True

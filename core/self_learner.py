@@ -9,7 +9,7 @@ import logging
 import time
 from typing import List
 
-from core.web_search import get_web_search
+from core.research.engine import get_research_engine
 from core.brain import LLMReasoner
 from core.knowledge_base import get_knowledge_base
 
@@ -22,7 +22,7 @@ class SelfLearner:
     def __init__(self):
         self.kb = get_knowledge_base()
         self.llm = LLMReasoner()
-        self.search = get_web_search()
+        self.search = get_research_engine()
 
         # Topics that benefit extra search depth
         self.deep_search_topics = [
@@ -43,7 +43,8 @@ class SelfLearner:
         max_results = 10 if is_deep else 7
 
         # Search the internet
-        results = self.search.search(query, max_results=max_results, force_search=True)
+        research_result = self.search.search(query, max_results=max_results, depth='standard')
+        results = research_result.documents
 
         logger.info(f"SelfLearner: Found {len(results)} results for '{query}'")
 
@@ -51,31 +52,32 @@ class SelfLearner:
         for result in results[:5]:
             self.kb.store_knowledge(
                 query=query,
-                source=result.get('source', 'web'),
-                title=result.get('title', 'Unknown'),
-                content=result.get('excerpt', result.get('snippet', '')),
-                url=result.get('url', ''),
+                source=getattr(result, 'source', 'web'),
+                title=getattr(result, 'title', 'Unknown'),
+                content=getattr(result, 'excerpt', getattr(result, 'snippet', '')),
+                url=getattr(result, 'url', ''),
                 tags=self._extract_tags(query),
             )
 
         # Generate comprehensive answer
-        answer = self._generate_answer(query, results)
+        answer = self._generate_answer(query, research_result)
 
         # Increment usage
         for entry in self.kb.get_relevant_knowledge(query, limit=5):
-            self.kb.increment_usage(entry['id'])
+            self.kb.increment_usage(entry.get('id', ''))
 
         return answer
 
-    def _generate_answer(self, query: str, results: List[dict]) -> str:
+    def _generate_answer(self, query: str, research_result) -> str:
+        results = research_result.documents
         """Generate a comprehensive answer using search results."""
 
         # Build rich context from search results
         context_parts = []
         for i, result in enumerate(results[:5], 1):
-            title = result.get('title', 'Untitled')
-            excerpt = result.get('excerpt', result.get('snippet', ''))
-            url = result.get('url', '')
+            title = getattr(result, 'title', 'Untitled')
+            excerpt = getattr(result, 'excerpt', getattr(result, 'snippet', ''))
+            url = getattr(result, 'url', '')
 
             if excerpt:
                 context_parts.append(f"[Source {i}: {title}]({url})\n{excerpt}")

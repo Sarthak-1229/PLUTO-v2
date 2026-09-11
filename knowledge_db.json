@@ -377,7 +377,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.263474",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158677264",
@@ -390,7 +390,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.264658",
-      "usage_count": 2
+      "usage_count": 3
     },
     {
       "id": "1789158677265",
@@ -403,7 +403,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.265787",
-      "usage_count": 3
+      "usage_count": 4
     },
     {
       "id": "1789158742002",
@@ -572,7 +572,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:27:20.362902",
-      "usage_count": 0
+      "usage_count": 1
     },
     {
       "id": "1789160240364",
@@ -585,7 +585,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:27:20.364227",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789160240365",
@@ -599,10 +599,75 @@
       ],
       "created_at": "2026-09-12T02:27:20.365321",
       "usage_count": 0
+    },
+    {
+      "id": "1789160565488",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Tianyan: Cloud services with quantum advantage",
+      "content": "Tianyan Quantum Cloud Platform offers cloud services demonstrating quantum advantage capabilities with a Zuchongzhi 3.0-like superconducting quantum processor. This cloud-accessible superconducting quantum prototype, named Tianyan-287, features 105 qubits and achieves high operational fidelities, with single-qubit gates, two-qubit gates, and readout fidelity at 99.90%, 99.56%, 98.7%, respectively. For a specific benchmark task involving random circuit sampling on a 74-qubit system over 24 cycles, the platform completes one million samples in just 18.4 minutes. In contrast, state-of-the-art classical supercomputers would require approximately 16,000 years to complete the equivalent calculation. To facilitate this, the platform provides access via Cqlib, an open-source SDK designed for working with quantum systems at the level of extended quantum circuits, operators, and primitives. The cloud service aims to democratize access to high-performance quantum hardware, enabling the community to validate and explore practical quantum advantages.",
+      "url": "http://arxiv.org/abs/2512.10504v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:32:45.488572",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160565490",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Superpositions of thermalisations in relativistic quantum field theory",
+      "content": "Recent results in relativistic quantum information and quantum thermodynamics have independently shown that in the quantum regime, a system may fail to thermalise when subject to quantum-controlled application of the same, single thermalisation channel. For example, an accelerating system with fixed proper acceleration is known to thermalise to an acceleration-dependent temperature, known as the Unruh temperature. However, the same system in a superposition of spatially translated trajectories that share the same proper acceleration fails to thermalise. Here, we provide an explanation of these results using the framework of quantum field theory in relativistic noninertial reference frames. We show how a probe that accelerates in a superposition of spatial translations interacts with incommensurate sets of field modes. In special cases where the modes are orthogonal (for example, when the Rindler wedges are translated in a direction orthogonal to the plane of motion), thermalisation does indeed result, corroborating the here provided explanation. We then discuss how this description relates to an information-theoretic approach aimed at studying quantum aspects of temperature through quantum-controlled thermalisations. The present work draws a connection between research in quantum information, relativistic physics, and quantum thermodynamics, in particular showing that relativistic quantum effects can provide a natural realisation of quantum thermodynamical scenarios.",
+      "url": "http://arxiv.org/abs/2307.02593v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:32:45.490063",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160565491",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Quantum games and synchronicity",
+      "content": "In the flavour of categorical quantum mechanics, we extend nonlocal games to allow quantum questions and answers, using quantum sets (special symmetric dagger Frobenius algebras) and the quantum functions of Musto, Reutter, and Verdon [arXiv:1711.07945]. Equations are presented using a diagrammatic calculus for tensor categories. To this quantum question and answer setting, we extend the standard definitions, including strategies, correlations, and synchronicity, and we use these definitions to extend results about synchronicity. We extend the graph homomorphism (isomorphism) game to quantum graphs, and show it is synchronous (bisynchronous) and connect its perfect (bi)strategies to quantum graph homomorphisms (isomorphisms). Our extended definitions agree with the existing quantum games literature, except in the case of synchronicity.",
+      "url": "http://arxiv.org/abs/2408.15444v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:32:45.491217",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160565492",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Achieving the quantum field theory limit in far-from-equilibrium quantum link models",
+      "content": "Realizations of gauge theories in setups of quantum synthetic matter open up the possibility of probing salient exotic phenomena in condensed matter and high-energy physics, along with potential applications in quantum information and science technologies. In light of the impressive ongoing efforts to achieve such realizations, a fundamental question regarding quantum link model regularizations of lattice gauge theories is how faithfully they capture the quantum field theory limit of gauge theories. Recent work [Zache, Van Damme, Halimeh, Hauke, and Banerjee, at https://journals.aps.org/prd/abstract/10.1103/PhysRevD.106.L091502 has shown through analytic derivations, exact diagonalization, and infinite matrix product state calculations that the low-energy physics of $1+1$D $\\mathrm{U}(1)$ quantum link models approaches the quantum field theory limit already at small link spin length $S$. Here, we show that the approach to this limit also lends itself to the far-from-equilibrium quench dynamics of lattice gauge theories, as demonstrated by our numerical simulations of the Loschmidt return rate and the chiral condensate in infinite matrix product states, which work directly in the thermodynamic limit. Similar to our findings in equilibrium that show a distinct behavior between half-integer and integer link spin lengths, we find that criticality emerging in the Loschmidt return rate is fundamentally different between half-integer and integer spin quantum link models in the regim",
+      "url": "http://arxiv.org/abs/2112.04501v3",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:32:45.492204",
+      "usage_count": 0
+    },
+    {
+      "id": "1789160565493",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Searching for Coherent States: From Origins to Quantum Gravity",
+      "content": "We discuss the notion of coherent states from three different perspectives: the seminal approach of Schroedinger, the experimental take of quantum optics, and the theoretical developments in quantum gravity. This comparative study tries to emphasise the connections between the approaches, and to offer a coherent short story of the field, so to speak. It may be useful for pedagogical purposes, as well as for specialists of quantum optics and quantum gravity willing to embed their perspective within a wider landscape.",
+      "url": "http://arxiv.org/abs/2003.11810v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:32:45.493472",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 45,
+    "total_searches": 50,
     "total_queries": 0
   }
 }

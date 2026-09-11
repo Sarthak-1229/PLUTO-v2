@@ -1,16 +1,15 @@
 """
 Self-Learning Module for PLUTO v2.
 
-When the AI encounters a question outside its knowledge base,
-it searches the internet, stores the knowledge, and uses it for future answers.
+ALWAYS searches the internet for answers - never relies solely on training data.
+Mimics the behavior of Claude, ChatGPT, and Gemini by fetching current information.
 """
 
-import json
 import logging
-import re
-from typing import Optional, List
+import time
+from typing import List
 
-from core.researcher import search_topic, compile_report
+from core.web_search import get_web_search
 from core.brain import LLMReasoner
 from core.knowledge_base import get_knowledge_base
 
@@ -18,192 +17,215 @@ logger = logging.getLogger(__name__)
 
 
 class SelfLearner:
-    """Enables the AI to learn from the internet and improve over time."""
+    """AI that ALWAYS searches the internet for current information."""
 
     def __init__(self):
         self.kb = get_knowledge_base()
         self.llm = LLMReasoner()
+        self.search = get_web_search()
 
-        # Topics the AI should always have knowledge about
-        self.high_priority_topics = [
-            "artificial intelligence", "machine learning", "deep learning",
-            "quantum computing", "climate change", "renewable energy",
-            "space exploration", "mars", "biology", "physics",
-            "mathematics", "history", "technology", "coding",
+        # Topics that benefit extra search depth
+        self.deep_search_topics = [
+            "quantum", "machine learning", "ai", "climate", "space",
+            "mars", "nasa", "physics", "biology", "medicine",
+            "technology", "computing", "research", "study",
         ]
 
-    def should_learn(self, query: str) -> bool:
-        """Determine if we should search the internet for this query."""
-        # Always learn for high-priority topics
-        query_lower = query.lower()
-        for topic in self.high_priority_topics:
-            if topic in query_lower:
-                return True
+    def answer(self, query: str) -> str:
+        """
+        Always search the internet and provide a comprehensive answer.
+        Never says "I don't know" - always finds information.
+        """
+        logger.info(f"SelfLearner: Answering '{query}'")
 
-        # Check if we already know the answer
-        relevant = self.kb.get_relevant_knowledge(query, limit=1)
-        if relevant:
-            return False  # We already have this knowledge
+        # Determine search depth
+        is_deep = any(kw in query.lower() for kw in self.deep_search_topics)
+        max_results = 10 if is_deep else 7
 
-        # Default: search for anything
-        return True
+        # Search the internet
+        results = self.search.search(query, max_results=max_results, force_search=True)
 
-    def learn_and_answer(self, query: str) -> str:
-        """Learn from the internet and provide an improved answer."""
-        logger.info(f"SelfLearner: Searching for knowledge about: {query}")
+        logger.info(f"SelfLearner: Found {len(results)} results for '{query}'")
 
-        # 1. Search the internet
-        results = search_topic(query, max_results=5)
-
-        if not results:
-            logger.warning(f"SelfLearner: No results found for '{query}'")
-            return self._fallback_answer(query)
-
-        # 2. Store the knowledge
-        for result in results:
-            # Handle both old and new result formats
-            source = result.get("source", "web")
-            title = result.get("title", "Unknown")
-            url = result.get("url", result.get("href", ""))
-            excerpt = result.get("excerpt", result.get("snippet", result.get("body", "")))
-
+        # Store important results
+        for result in results[:5]:
             self.kb.store_knowledge(
                 query=query,
-                source=source,
-                title=title,
-                content=excerpt or "",
-                url=url,
-                tags=self._extract_tags(query, result),
+                source=result.get('source', 'web'),
+                title=result.get('title', 'Unknown'),
+                content=result.get('excerpt', result.get('snippet', '')),
+                url=result.get('url', ''),
+                tags=self._extract_tags(query),
             )
 
-        # 3. Generate an improved answer using learned knowledge
-        answer = self._generate_improved_answer(query, results)
+        # Generate comprehensive answer
+        answer = self._generate_answer(query, results)
 
-        # 4. Increment usage stats
+        # Increment usage
         for entry in self.kb.get_relevant_knowledge(query, limit=5):
-            self.kb.increment_usage(entry["id"])
+            self.kb.increment_usage(entry['id'])
 
-        logger.info(f"SelfLearner: Learned and answered '{query}'")
         return answer
 
-    def _generate_improved_answer(self, query: str, results: List[dict]) -> str:
-        """Generate a better answer using the learned information."""
-        # Build a context from search results
+    def _generate_answer(self, query: str, results: List[dict]) -> str:
+        """Generate a comprehensive answer using search results."""
+
+        # Build rich context from search results
         context_parts = []
-        for i, result in enumerate(results[:3], 1):
-            excerpt = result.get("excerpt", result.get("snippet", ""))
+        for i, result in enumerate(results[:5], 1):
+            title = result.get('title', 'Untitled')
+            excerpt = result.get('excerpt', result.get('snippet', ''))
+            url = result.get('url', '')
+
             if excerpt:
-                context_parts.append(f"[Source {i}] {excerpt}")
+                context_parts.append(f"[Source {i}: {title}]({url})\n{excerpt}")
+            else:
+                context_parts.append(f"[Source {i}: {title}]({url})\nNo detailed excerpt available.")
 
-        if not context_parts:
-            return self._fallback_answer(query)
+        context = "\n\n---\n\n".join(context_parts)
 
-        context = "\n\n".join(context_parts)
+        # Create a comprehensive prompt
+        prompt = f"""You are PLUTO, an AI assistant that provides accurate, up-to-date information by researching the internet.
 
-        # Ask LLM to synthesize an answer from the context
-        prompt = f"""Based on the following research information, answer the question: "{query}"
+Question: {query}
 
-Research Context:
+Research Results (from live web search):
 {context}
 
-Please provide a comprehensive, accurate answer based on this research. If the research doesn't fully answer the question, acknowledge that and provide the best answer you can."""
+Based on this research, provide a comprehensive, well-structured answer to the question. Include:
+1. A clear direct answer
+2. Key facts and details
+3. Relevant context and background
+4. Any important nuances or caveats
+
+If the research doesn't fully cover the question, still provide the best answer you can based on what you found, and note any gaps.
+
+IMPORTANT: Never say "I don't know" or "I couldn't find information." Always provide a helpful answer based on the research above."""
 
         try:
             answer = self.llm.reason(prompt)
             if answer and len(answer) > 20:
+                # Clean up the answer
+                answer = answer.strip()
+                # Remove any "[Source" references that might leak
+                answer = answer.replace('[Source', 'Source:')
                 return answer
         except Exception as exc:
-            logger.error(f"SelfLearner: LLM generation failed: {exc}")
+            logger.error(f"Answer generation failed: {exc}")
 
-        return self._fallback_answer(query)
+        # Fallback: generate from snippets only
+        return self._answer_from_snippets(query, results)
 
-    def _fallback_answer(self, query: str) -> str:
-        """Provide a fallback answer when learning fails."""
-        # Try the standard LLM answer
+    def _answer_from_snippets(self, query: str, results: List[dict]) -> str:
+        """Generate answer from snippets when full content isn't available."""
+        snippets = []
+        for i, r in enumerate(results[:5], 1):
+            snippet = r.get('snippet', r.get('excerpt', ''))
+            if snippet:
+                snippets.append(f"{i}. {r.get('title', 'Untitled')}: {snippet}")
+
+        if not snippets:
+            # Last resort: just give a direct answer
+            try:
+                return self.llm.reason(f"Provide a concise, accurate answer to: {query}")
+            except:
+                return f"Here's what I can tell you about '{query}': This is an interesting topic. Would you like me to search for more specific information?"
+
+        context = "\n\n".join(snippets)
+        prompt = f"""Based on these search results, answer the question: "{query}"
+
+Results:
+{context}
+
+Provide a clear, informative answer."""
+
         try:
-            answer = self.llm.reason(f"Please answer this question: {query}")
-            if answer and len(answer) > 10:
-                return f"(I searched but didn't find specific information. Here's what I know: {answer})"
+            answer = self.llm.reason(prompt)
+            return answer if answer and len(answer) > 10 else self._format_snippets(snippets)
         except:
-            pass
+            return self._format_snippets(snippets)
 
-        return f"I couldn't find specific information about '{query}' through my research. Could you try rephrasing your question or ask about a different topic?"
+    def _format_snippets(self, snippets: List[str]) -> str:
+        """Format search snippets into a readable answer."""
+        if not snippets:
+            return "I searched but couldn't find specific information. Please try rephrasing your question."
 
-    def _extract_tags(self, query: str, result: dict) -> List[str]:
-        """Extract relevant tags from query and result."""
+        lines = ["Here's what I found:\n"]
+        for snippet in snippets[:5]:
+            lines.append(f"- {snippet}")
+
+        return "\n".join(lines)
+
+    def _extract_tags(self, query: str) -> List[str]:
+        """Extract relevant tags from query."""
         tags = []
-
-        # Extract from query
         query_lower = query.lower()
-        tag_keywords = {
-            "ai": ["artificial intelligence", "machine learning", "neural network"],
-            "quantum": ["quantum computing", "qubit", "superposition"],
-            "climate": ["climate change", "global warming", "environment"],
-            "space": ["space", "mars", "nasa", "exploration"],
-            "tech": ["technology", "computer", "software", "coding"],
-            "science": ["science", "physics", "chemistry", "biology"],
+
+        tag_map = {
+            'ai': ['artificial intelligence', 'machine learning', 'neural network', 'deep learning'],
+            'quantum': ['quantum', 'qubit', 'superposition', 'entanglement'],
+            'climate': ['climate', 'environment', 'sustainability', 'green energy'],
+            'space': ['space', 'mars', 'nasa', 'exploration', 'astronomy'],
+            'tech': ['technology', 'computer', 'software', 'coding', 'programming'],
+            'science': ['science', 'physics', 'chemistry', 'biology'],
+            'medicine': ['medicine', 'health', 'medical', 'biology', 'gene'],
         }
 
-        for tag, keywords in tag_keywords.items():
+        for tag, keywords in tag_map.items():
             if any(kw in query_lower for kw in keywords):
                 tags.append(tag)
 
-        # Add source as tag
-        source = result.get("source", "")
-        if source:
-            tags.append(source)
-
-        return list(set(tags))  # Remove duplicates
-
-    def get_learning_stats(self) -> dict:
-        """Return statistics about the learning system."""
-        kb_stats = self.kb.get_stats()
-        return {
-            **kb_stats,
-            "learning_enabled": True,
-            "high_priority_topics": len(self.high_priority_topics),
-        }
+        return tags
 
     def train_on_topic(self, topic: str) -> dict:
         """Explicitly train the AI on a specific topic."""
         logger.info(f"Training on topic: {topic}")
 
-        # Search for the topic
-        results = search_topic(topic, max_results=5)
+        # Search thoroughly
+        results = self.search.search(topic, max_results=10, force_search=True)
 
-        # Store each result
+        # Store all results
         stored = []
         for result in results:
             entry = self.kb.store_knowledge(
                 query=topic,
-                source=result.get("source", "web"),
-                title=result.get("title", "Unknown"),
-                content=result.get("excerpt", result.get("snippet", "")),
-                url=result.get("url", ""),
-                tags=[topic.lower().replace(" ", "_")],
+                source=result.get('source', 'web'),
+                title=result.get('title', 'Unknown'),
+                content=result.get('excerpt', result.get('snippet', '')),
+                url=result.get('url', ''),
+                tags=[topic.lower().replace(' ', '_')],
             )
             stored.append(entry)
 
-        # Generate a summary
+        # Generate summary
         if results:
             context = "\n\n".join([
-                f"[{i}] {r.get('title', 'Unknown')}: {r.get('excerpt', r.get('snippet', ''))[:200]}"
-                for i, r in enumerate(results[:3], 1)
+                f"[{i}] {r.get('title', 'Unknown')}: {r.get('excerpt', r.get('snippet', ''))[:300]}"
+                for i, r in enumerate(results[:5], 1)
             ])
 
             prompt = f"Summarize the key facts about '{topic}' based on this research:\n\n{context}"
             try:
                 summary = self.llm.reason(prompt)
             except:
-                summary = "Training complete."
+                summary = "Training complete with web research."
         else:
-            summary = "No results found for this topic."
+            summary = "Could not find results for this topic."
 
         return {
-            "topic": topic,
-            "sources_found": len(results),
-            "entries_stored": len(stored),
-            "summary": summary,
+            'topic': topic,
+            'sources_found': len(results),
+            'entries_stored': len(stored),
+            'summary': summary[:500] if summary else '',
+        }
+
+    def get_learning_stats(self) -> dict:
+        """Return statistics about the learning system."""
+        kb_stats = self.kb.get_stats()
+        return {
+            **kb_stats,
+            'learning_enabled': True,
+            'search_strategies': ['DuckDuckGo', 'Wikipedia', 'Site-specific'],
         }
 
 

@@ -117,13 +117,8 @@ def handle_request(text: str) -> str:
     learner = get_self_learner()
 
     if intent == 'chat':
-        # Check if we need to learn something new
-        if learner.should_learn(text):
-            return learner.learn_and_answer(text)
-        else:
-            # We already know this, use standard LLM
-            reasoner = LLMReasoner()
-            return reasoner.reason(text)
+        # Always search the internet for answers (like Claude/ChatGPT)
+        return learner.answer(text)
 
     elif intent == 'report':
         topic = _extract_topic(text)

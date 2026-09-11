@@ -26,7 +26,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T01:35:19.888840",
-      "usage_count": 3
+      "usage_count": 4
     },
     {
       "id": "1789157119889",
@@ -209,10 +209,335 @@
       ],
       "created_at": "2026-09-12T01:41:11.155936",
       "usage_count": 0
+    },
+    {
+      "id": "1789158346501",
+      "query": "Calculate 25 * 48",
+      "source": "web",
+      "title": "What is 25% of 48? - CalculateMe.com",
+      "content": "",
+      "url": "https://www.calculateme.com/math/percent-of-a-number/25-percent-of-48",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:55:46.501024",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158346502",
+      "query": "Calculate 25 * 48",
+      "source": "web",
+      "title": "Free Long Multiplication Calculator: 48*25 | Tiger Algebra Solver",
+      "content": "",
+      "url": "https://www.tiger-algebra.com/en/solution/long-multiplication/48*25/",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:55:46.502251",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158346503",
+      "query": "Calculate 25 * 48",
+      "source": "web",
+      "title": "Sum Calculator",
+      "content": "",
+      "url": "https://www.calculatorsoup.com/calculators/statistics/sum-calculator.php",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:55:46.503124",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158346504",
+      "query": "Calculate 25 * 48",
+      "source": "web",
+      "title": "Basic Calculator",
+      "content": "",
+      "url": "https://www.calculator.net/basic-calculator.html",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:55:46.504178",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158346505",
+      "query": "Calculate 25 * 48",
+      "source": "web",
+      "title": "Online Calculator",
+      "content": "",
+      "url": "https://okcalc.com/en/",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:55:46.505009",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158371980",
+      "query": "Give me the latest news",
+      "source": "web",
+      "title": "Latest News, Breaking News Today - Entertainment, Cricket, Business, Politics - India Today",
+      "content": "",
+      "url": "https://www.indiatoday.in/",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:56:11.980436",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158371981",
+      "query": "Give me the latest news",
+      "source": "web",
+      "title": "Latest News, Breaking News, Top News Headlines and Current Affairs | The Times of India",
+      "content": "",
+      "url": "https://timesofindia.indiatimes.com/news",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:56:11.981626",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158371982",
+      "query": "Give me the latest news",
+      "source": "web",
+      "title": "World | Latest News & Updates | BBC News",
+      "content": "",
+      "url": "https://www.bbc.com/news/world",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:56:11.982691",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158371983",
+      "query": "Give me the latest news",
+      "source": "web",
+      "title": "Google News",
+      "content": "",
+      "url": "https://news.google.com/",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:56:11.983660",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158371984",
+      "query": "Give me the latest news",
+      "source": "web",
+      "title": "CBS News | Breaking news, top stories & today's latest headlines",
+      "content": "",
+      "url": "https://www.cbsnews.com/",
+      "tags": [
+        "web"
+      ],
+      "created_at": "2026-09-12T01:56:11.984708",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158677261",
+      "query": "What is quantum entanglement?",
+      "source": "duckduckgo",
+      "title": "Quantum entanglement - Wikipedia",
+      "content": "Quantum entanglement is the phenomenon in which the quantum state of each particle in a group cannot be described independently of the state of the others, even when the particles are separated by a large distance. The topic of quantum entanglement is at the heart of the disparity between classical ",
+      "url": "https://en.wikipedia.org/wiki/Quantum_entanglement",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:01:17.261061",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158677262",
+      "query": "What is quantum entanglement?",
+      "source": "duckduckgo",
+      "title": "What Is Quantum Entanglement? Quantum Entanglement Explained in Simple ...",
+      "content": "This article was reviewed by a member ofCaltech's Faculty.",
+      "url": "https://scienceexchange.caltech.edu/topics/quantum-science-explained/entanglement",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:01:17.262592",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158677263",
+      "query": "What is quantum entanglement?",
+      "source": "duckduckgo",
+      "title": "What Is the Spooky Science of Quantum Entanglement?",
+      "content": "There’s a lot we don’t know about our universe — in fact, 95% of it remains a mystery to us. That’s why scientists continue to probe our understanding of quantum physics.",
+      "url": "https://science.nasa.gov/what-is-the-spooky-science-of-quantum-entanglement/",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:01:17.263474",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158677264",
+      "query": "What is quantum entanglement?",
+      "source": "duckduckgo",
+      "title": "What is quantum entanglement? The physics of 'spooky action at a distance' explained | Space",
+      "content": "Quantum entanglement is one seriously long-distance relationship.",
+      "url": "https://www.space.com/31933-quantum-entanglement-action-at-a-distance.html",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:01:17.264658",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158677265",
+      "query": "What is quantum entanglement?",
+      "source": "duckduckgo",
+      "title": "What is Quantum Entanglement?",
+      "content": "In 1935, Albert Einstein looked at what quantum mechanics was claiming about reality and called it “spooky action at a distance.” He said this as an insult. Decades of experiments later, the universe has confirmed the spookiness is real – and that Einstein was wrong.",
+      "url": "https://thequantuminsider.com/2026/05/11/what-is-quantum-entanglement/",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:01:17.265787",
+      "usage_count": 2
+    },
+    {
+      "id": "1789158742002",
+      "query": "Give me the latest news about space exploration",
+      "source": "duckduckgo",
+      "title": "Space News - Latest Space and Astronomy News | Space",
+      "content": "The newly discovered Type Ia supernova SN 2026aaiv in NGC 7331 offers amateur astronomers and astrophotographers a rare opportunity to observe and image an exploding star before it fades.",
+      "url": "https://www.space.com/news",
+      "tags": [
+        "space"
+      ],
+      "created_at": "2026-09-12T02:02:22.002168",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158742003",
+      "query": "Give me the latest news about space exploration",
+      "source": "duckduckgo",
+      "title": "Space News, Exploration & Discoveries - SciTechDaily",
+      "content": "The Universe still has plenty of hydrogen, but its ability to turn that fuel into…",
+      "url": "https://scitechdaily.com/news/space/",
+      "tags": [
+        "space"
+      ],
+      "created_at": "2026-09-12T02:02:22.003746",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158742005",
+      "query": "Give me the latest news about space exploration",
+      "source": "duckduckgo",
+      "title": "Space.com: NASA, Space Exploration and Astronomy News",
+      "content": "The newly discovered Type Ia supernova SN 2026aaiv in NGC 7331 offers amateur astronomers and astrophotographers a rare opportunity to observe and image an exploding star before it fades.",
+      "url": "https://www.space.com/",
+      "tags": [
+        "space"
+      ],
+      "created_at": "2026-09-12T02:02:22.005261",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158742006",
+      "query": "Give me the latest news about space exploration",
+      "source": "duckduckgo",
+      "title": "Space Headlines: Breaking Space News, NASA, Space Force ...",
+      "content": "NASA has officially initiated plans to establish a United States Space Academy following a presidential mandate, releasing a request for information to guide the civil program's creation. In international developments, Djibouti is preparing to sign the Artemis Accords to join the U.S.-led lunar exploration framework. Commercial and military launch sectors saw significant activity as SpaceX successfully placed a classified U.S. Space Force payload into orbit from California, while U.S. Space Command conducted multi-orbit satellite maneuvering exercises and selected a site in Texas for a new dee",
+      "url": "https://spaceheadlines.com/",
+      "tags": [
+        "space"
+      ],
+      "created_at": "2026-09-12T02:02:22.006273",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158742007",
+      "query": "Give me the latest news about space exploration",
+      "source": "duckduckgo",
+      "title": "Latest Astronomy News & Space Exploration",
+      "content": "Stay updated with the latest astronomy news and space exploration discoveries. Explore breakthroughs in cosmology, exoplanets, telescopes, and space missions.",
+      "url": "https://www.sciencenewstoday.org/astronomy",
+      "tags": [
+        "space"
+      ],
+      "created_at": "2026-09-12T02:02:22.007672",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158811299",
+      "query": "What is machine learning?",
+      "source": "duckduckgo",
+      "title": "Machine learning - Wikipedia",
+      "content": "Machine learning(ML) is a field of study inartificial intelligenceconcerned with the development and study ofstatistical algorithmsthat can learn fromdataandgeneralizeto unseen data, and thus performtaskswithout being explicitlyprogrammed.[1]",
+      "url": "https://en.wikipedia.org/wiki/Machine_learning",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-12T02:03:31.299439",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158811300",
+      "query": "What is machine learning?",
+      "source": "duckduckgo",
+      "title": "What is machine learning? - IBM",
+      "content": "Machine learning is the subset of artificial intelligence (AI) focused on algorithms that can “learn” the patterns of training data and, subsequently, make accurateinferencesabout new data. This pattern recognition ability enables machine learning models to make decisions or predictions without explicit, hard-coded instructions.",
+      "url": "https://www.ibm.com/think/topics/machine-learning",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-12T02:03:31.300714",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158811301",
+      "query": "What is machine learning?",
+      "source": "duckduckgo",
+      "title": "Machine Learning Tutorial - GeeksforGeeks",
+      "content": "Machine learning is a branch of Artificial Intelligence that focuses on developing models and algorithms that let computers learn from data without being explicitly programmed for every task. In simple words, ML teaches systems to think and understand like humans by learning from the data.",
+      "url": "https://www.geeksforgeeks.org/machine-learning/machine-learning/",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-12T02:03:31.301675",
+      "usage_count": 0
+    },
+    {
+      "id": "1789158811302",
+      "query": "What is machine learning?",
+      "source": "duckduckgo",
+      "title": "What is Machine Learning? | Google for Developers",
+      "content": "Machine learning (ML) is a way to train software, called a model, to make predictions or generate content using data.",
+      "url": "https://developers.google.com/machine-learning/intro-to-ml/what-is-ml",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-12T02:03:31.302535",
+      "usage_count": 1
+    },
+    {
+      "id": "1789158811303",
+      "query": "What is machine learning?",
+      "source": "duckduckgo",
+      "title": "What is Machine Learning? How It Works, Types and Use Cases | Databricks Blog",
+      "content": "Machine learning (ML) is a subset of artificial intelligence (AI) that enables systems to learn from data rather than relying on explicit programming. Instead of simply analyzing information, ML models identify patterns, improve with experience and generate predictions or decisions automatically.",
+      "url": "https://www.databricks.com/blog/machine-learning",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-12T02:03:31.303756",
+      "usage_count": 1
     }
   ],
   "stats": {
-    "total_searches": 15,
+    "total_searches": 40,
     "total_queries": 0
   }
 }

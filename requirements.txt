@@ -1,4 +1,6 @@
-fastapi
-uvicorn[standard]
-httpx
-ddgs
+faster-whisper
+edge-tts
+duckduckgo-search
+beautifulsoup4
+ollama
+python-dotenv

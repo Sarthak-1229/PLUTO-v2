@@ -26,7 +26,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T01:35:19.888840",
-      "usage_count": 5
+      "usage_count": 6
     },
     {
       "id": "1789157119889",
@@ -40,7 +40,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T01:35:19.889765",
-      "usage_count": 4
+      "usage_count": 5
     },
     {
       "id": "1789157119890",
@@ -54,7 +54,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T01:35:19.890516",
-      "usage_count": 4
+      "usage_count": 5
     },
     {
       "id": "1789157119891",
@@ -68,7 +68,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T01:35:19.891538",
-      "usage_count": 4
+      "usage_count": 5
     },
     {
       "id": "1789157396963",
@@ -377,7 +377,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.263474",
-      "usage_count": 2
+      "usage_count": 4
     },
     {
       "id": "1789158677264",
@@ -390,7 +390,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.264658",
-      "usage_count": 3
+      "usage_count": 5
     },
     {
       "id": "1789158677265",
@@ -403,7 +403,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.265787",
-      "usage_count": 5
+      "usage_count": 8
     },
     {
       "id": "1789158742002",
@@ -533,7 +533,7 @@
         "ai"
       ],
       "created_at": "2026-09-12T02:03:31.303756",
-      "usage_count": 1
+      "usage_count": 3
     },
     {
       "id": "1789160240360",
@@ -572,7 +572,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:27:20.362902",
-      "usage_count": 1
+      "usage_count": 3
     },
     {
       "id": "1789160240364",
@@ -585,7 +585,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:27:20.364227",
-      "usage_count": 2
+      "usage_count": 4
     },
     {
       "id": "1789160240365",
@@ -624,7 +624,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:32:45.490063",
-      "usage_count": 0
+      "usage_count": 1
     },
     {
       "id": "1789160565491",
@@ -650,7 +650,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:32:45.492204",
-      "usage_count": 0
+      "usage_count": 1
     },
     {
       "id": "1789160565493",
@@ -664,10 +664,195 @@
       ],
       "created_at": "2026-09-12T02:32:45.493472",
       "usage_count": 0
+    },
+    {
+      "id": "1789161631503",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Tianyan: Cloud services with quantum advantage",
+      "content": "Tianyan Quantum Cloud Platform offers cloud services demonstrating quantum advantage capabilities with a Zuchongzhi 3.0-like superconducting quantum processor. This cloud-accessible superconducting quantum prototype, named Tianyan-287, features 105 qubits and achieves high operational fidelities, with single-qubit gates, two-qubit gates, and readout fidelity at 99.90%, 99.56%, 98.7%, respectively. For a specific benchmark task involving random circuit sampling on a 74-qubit system over 24 cycles, the platform completes one million samples in just 18.4 minutes. In contrast, state-of-the-art classical supercomputers would require approximately 16,000 years to complete the equivalent calculation. To facilitate this, the platform provides access via Cqlib, an open-source SDK designed for working with quantum systems at the level of extended quantum circuits, operators, and primitives. The cloud service aims to democratize access to high-performance quantum hardware, enabling the community to validate and explore practical quantum advantages.",
+      "url": "http://arxiv.org/abs/2512.10504v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:50:31.503185",
+      "usage_count": 0
+    },
+    {
+      "id": "1789161631504",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Superpositions of thermalisations in relativistic quantum field theory",
+      "content": "Recent results in relativistic quantum information and quantum thermodynamics have independently shown that in the quantum regime, a system may fail to thermalise when subject to quantum-controlled application of the same, single thermalisation channel. For example, an accelerating system with fixed proper acceleration is known to thermalise to an acceleration-dependent temperature, known as the Unruh temperature. However, the same system in a superposition of spatially translated trajectories that share the same proper acceleration fails to thermalise. Here, we provide an explanation of these results using the framework of quantum field theory in relativistic noninertial reference frames. We show how a probe that accelerates in a superposition of spatial translations interacts with incommensurate sets of field modes. In special cases where the modes are orthogonal (for example, when the Rindler wedges are translated in a direction orthogonal to the plane of motion), thermalisation does indeed result, corroborating the here provided explanation. We then discuss how this description relates to an information-theoretic approach aimed at studying quantum aspects of temperature through quantum-controlled thermalisations. The present work draws a connection between research in quantum information, relativistic physics, and quantum thermodynamics, in particular showing that relativistic quantum effects can provide a natural realisation of quantum thermodynamical scenarios.",
+      "url": "http://arxiv.org/abs/2307.02593v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:50:31.504728",
+      "usage_count": 1
+    },
+    {
+      "id": "1789161631505",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Quantum games and synchronicity",
+      "content": "In the flavour of categorical quantum mechanics, we extend nonlocal games to allow quantum questions and answers, using quantum sets (special symmetric dagger Frobenius algebras) and the quantum functions of Musto, Reutter, and Verdon [arXiv:1711.07945]. Equations are presented using a diagrammatic calculus for tensor categories. To this quantum question and answer setting, we extend the standard definitions, including strategies, correlations, and synchronicity, and we use these definitions to extend results about synchronicity. We extend the graph homomorphism (isomorphism) game to quantum graphs, and show it is synchronous (bisynchronous) and connect its perfect (bi)strategies to quantum graph homomorphisms (isomorphisms). Our extended definitions agree with the existing quantum games literature, except in the case of synchronicity.",
+      "url": "http://arxiv.org/abs/2408.15444v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:50:31.505984",
+      "usage_count": 0
+    },
+    {
+      "id": "1789161631507",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Achieving the quantum field theory limit in far-from-equilibrium quantum link models",
+      "content": "Realizations of gauge theories in setups of quantum synthetic matter open up the possibility of probing salient exotic phenomena in condensed matter and high-energy physics, along with potential applications in quantum information and science technologies. In light of the impressive ongoing efforts to achieve such realizations, a fundamental question regarding quantum link model regularizations of lattice gauge theories is how faithfully they capture the quantum field theory limit of gauge theories. Recent work [Zache, Van Damme, Halimeh, Hauke, and Banerjee, at https://journals.aps.org/prd/abstract/10.1103/PhysRevD.106.L091502 has shown through analytic derivations, exact diagonalization, and infinite matrix product state calculations that the low-energy physics of $1+1$D $\\mathrm{U}(1)$ quantum link models approaches the quantum field theory limit already at small link spin length $S$. Here, we show that the approach to this limit also lends itself to the far-from-equilibrium quench dynamics of lattice gauge theories, as demonstrated by our numerical simulations of the Loschmidt return rate and the chiral condensate in infinite matrix product states, which work directly in the thermodynamic limit. Similar to our findings in equilibrium that show a distinct behavior between half-integer and integer link spin lengths, we find that criticality emerging in the Loschmidt return rate is fundamentally different between half-integer and integer spin quantum link models in the regim",
+      "url": "http://arxiv.org/abs/2112.04501v3",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:50:31.507090",
+      "usage_count": 1
+    },
+    {
+      "id": "1789161631508",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Searching for Coherent States: From Origins to Quantum Gravity",
+      "content": "We discuss the notion of coherent states from three different perspectives: the seminal approach of Schroedinger, the experimental take of quantum optics, and the theoretical developments in quantum gravity. This comparative study tries to emphasise the connections between the approaches, and to offer a coherent short story of the field, so to speak. It may be useful for pedagogical purposes, as well as for specialists of quantum optics and quantum gravity willing to embed their perspective within a wider landscape.",
+      "url": "http://arxiv.org/abs/2003.11810v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T02:50:31.508261",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162115578",
+      "query": "in college I am doing research on monocular volumetric analysis and using image to determine the volume of a food item or food stuff so gather information about it and create research paper and how to implement it in algorithm on an AI model",
+      "source": "arxiv",
+      "title": "Observation of the rare $B^0_s\\toμ^+μ^-$ decay from the combined analysis of CMS and LHCb data",
+      "content": "A joint measurement is presented of the branching fractions $B^0_s\\toμ^+μ^-$ and $B^0\\toμ^+μ^-$ in proton-proton collisions at the LHC by the CMS and LHCb experiments. The data samples were collected in 2011 at a centre-of-mass energy of 7 TeV, and in 2012 at 8 TeV. The combined analysis produces the first observation of the $B^0_s\\toμ^+μ^-$ decay, with a statistical significance exceeding six standard deviations, and the best measurement of its branching fraction so far. Furthermore, evidence for the $B^0\\toμ^+μ^-$ decay is obtained with a statistical significance of three standard deviations. The branching fraction measurements are statistically compatible with SM predictions and impose stringent constraints on several theories beyond the SM.",
+      "url": "http://arxiv.org/abs/1411.4413v2",
+      "tags": [],
+      "created_at": "2026-09-12T02:58:35.578450",
+      "usage_count": 1
+    },
+    {
+      "id": "1789162115580",
+      "query": "in college I am doing research on monocular volumetric analysis and using image to determine the volume of a food item or food stuff so gather information about it and create research paper and how to implement it in algorithm on an AI model",
+      "source": "arxiv",
+      "title": "Expected Performance of the ATLAS Experiment - Detector, Trigger and Physics",
+      "content": "A detailed study is presented of the expected performance of the ATLAS detector. The reconstruction of tracks, leptons, photons, missing energy and jets is investigated, together with the performance of b-tagging and the trigger. The physics potential for a variety of interesting physics processes, within the Standard Model and beyond, is examined. The study comprises a series of notes based on simulations of the detector and physics processes, with particular emphasis given to the data expected from the first years of operation of the LHC at CERN.",
+      "url": "http://arxiv.org/abs/0901.0512v4",
+      "tags": [],
+      "created_at": "2026-09-12T02:58:35.580152",
+      "usage_count": 1
+    },
+    {
+      "id": "1789162115581",
+      "query": "in college I am doing research on monocular volumetric analysis and using image to determine the volume of a food item or food stuff so gather information about it and create research paper and how to implement it in algorithm on an AI model",
+      "source": "arxiv",
+      "title": "Deep Search for Joint Sources of Gravitational Waves and High-Energy Neutrinos with IceCube During the Third Observing Run of LIGO and Virgo",
+      "content": "The discovery of joint sources of high-energy neutrinos and gravitational waves has been a primary target for the LIGO, Virgo, KAGRA, and IceCube observatories. The joint detection of high-energy neutrinos and gravitational waves would provide insight into cosmic processes, from the dynamics of compact object mergers and stellar collapses to the mechanisms driving relativistic outflows. The joint detection of multiple cosmic messengers can also elevate the significance of the common observation even when some or all of the constituent messengers are sub-threshold, i.e. not significant enough to declare their detection individually. Using data from the LIGO, Virgo, and IceCube observatories, including sub-threshold events, we searched for common sources of gravitational waves and high-energy neutrinos during the third observing run of Advanced LIGO and Advanced Virgo detectors. Our search did not identify significant joint sources. We derive constraints on the rate densities of joint sources. Our results constrain the isotropic neutrino emission from gravitational-wave sources for very high values of the total energy emitted in neutrinos (> $10^{52} - 10^{54}$ erg).",
+      "url": "http://arxiv.org/abs/2601.07595v3",
+      "tags": [],
+      "created_at": "2026-09-12T02:58:35.581656",
+      "usage_count": 1
+    },
+    {
+      "id": "1789162115582",
+      "query": "in college I am doing research on monocular volumetric analysis and using image to determine the volume of a food item or food stuff so gather information about it and create research paper and how to implement it in algorithm on an AI model",
+      "source": "arxiv",
+      "title": "GWTC-5.0: Constraints on the Cosmic Expansion Rate and Modified Gravitational-wave Propagation",
+      "content": "We employ 236 gravitational-wave (GW) sources in the fifth LIGO--Virgo--KAGRA Collaboration (LVK) Gravitational-Wave Transient Catalog (GWTC-5.0) to estimate the Hubble constant $H_0$. We compare the luminosity distance measured from GWs to the redshift inferred i) using features in the mass spectrum, and ii) using statistical host galaxy association. Probing the relationship between source luminosity distances and redshifts obtained in this way yields constraints on cosmological parameters. We estimate $H_0 = {71.7}_{-7.5}^{+9.4}\\,{\\text{km}\\,\\text{s}^{-1}\\,\\text{Mpc}^{-1}}$ (median with $68\\%$ symmetric credible interval). This combines information from the source-frame mass distribution with the $H_0$ measurement from GW170817 and its electromagnetic counterpart as well as galaxy catalog information from Dark Energy Survey Year 6 (DES-Y6). We improve over the GWTC-4.0 measurement by using more GW sources, some with significantly smaller sky localization volumes, which leads to a reduction by $22.0\\%$ of the $H_0$ uncertainty and a reconstructed mass distribution with lower uncertainties. We also constrain deviations from general relativity (GR) which affect GW propagation, specifically that modify the luminosity distance inferred from the GW signal. We find no departures from GR in parameterized tests of GW propagation.",
+      "url": "http://arxiv.org/abs/2605.27227v2",
+      "tags": [],
+      "created_at": "2026-09-12T02:58:35.582887",
+      "usage_count": 1
+    },
+    {
+      "id": "1789162115585",
+      "query": "in college I am doing research on monocular volumetric analysis and using image to determine the volume of a food item or food stuff so gather information about it and create research paper and how to implement it in algorithm on an AI model",
+      "source": "arxiv",
+      "title": "GWTC-4.0: Tests of General Relativity. I. Overview and General Tests",
+      "content": "The worldwide LIGO-Virgo-KAGRA network of gravitational-wave (GW) detectors continues to increase in sensitivity, thus increasing the quantity and quality of the detected GW signals from compact binary coalescences. These signals allow us to perform ever-more sensitive tests of general relativity (GR) in the dynamical and strong-field regime of gravity. This paper is the first of three, where we present the results of a suite of tests of GR using the binary signals included in the fourth GW Transient Catalog (GWTC-4.0), i.e., up to and including the first part of the fourth observing run of the detectors (O4a). We restrict our analysis to the 91 confident signals, henceforth called events, that were measured by at least two detectors, and have false alarm rates $\\le 10^{-3} \\mathrm{yr}^{-1}$. These include 42 events from O4a. This first paper presents an overview of the methods, selection of events and GR tests, and serves as a guidemap for all three papers. Here we focus on the four general tests of consistency, where we find no evidence for deviations from our models. Specifically, for all the events considered, we find consistency of the residuals with noise. The final mass and final spin as inferred from the low- and high-frequency parts of the waveform are consistent with each other. We also find no evidence for deviations from the GR predictions for the amplitudes of subdominant GW multipole moments, or for non-GR modes of polarization. We thus find that GR, without new",
+      "url": "http://arxiv.org/abs/2603.19019v1",
+      "tags": [],
+      "created_at": "2026-09-12T02:58:35.585503",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162225933",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Tianyan: Cloud services with quantum advantage",
+      "content": "Tianyan Quantum Cloud Platform offers cloud services demonstrating quantum advantage capabilities with a Zuchongzhi 3.0-like superconducting quantum processor. This cloud-accessible superconducting quantum prototype, named Tianyan-287, features 105 qubits and achieves high operational fidelities, with single-qubit gates, two-qubit gates, and readout fidelity at 99.90%, 99.56%, 98.7%, respectively. For a specific benchmark task involving random circuit sampling on a 74-qubit system over 24 cycles, the platform completes one million samples in just 18.4 minutes. In contrast, state-of-the-art classical supercomputers would require approximately 16,000 years to complete the equivalent calculation. To facilitate this, the platform provides access via Cqlib, an open-source SDK designed for working with quantum systems at the level of extended quantum circuits, operators, and primitives. The cloud service aims to democratize access to high-performance quantum hardware, enabling the community to validate and explore practical quantum advantages.",
+      "url": "http://arxiv.org/abs/2512.10504v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T03:00:25.933801",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162225993",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Superpositions of thermalisations in relativistic quantum field theory",
+      "content": "Recent results in relativistic quantum information and quantum thermodynamics have independently shown that in the quantum regime, a system may fail to thermalise when subject to quantum-controlled application of the same, single thermalisation channel. For example, an accelerating system with fixed proper acceleration is known to thermalise to an acceleration-dependent temperature, known as the Unruh temperature. However, the same system in a superposition of spatially translated trajectories that share the same proper acceleration fails to thermalise. Here, we provide an explanation of these results using the framework of quantum field theory in relativistic noninertial reference frames. We show how a probe that accelerates in a superposition of spatial translations interacts with incommensurate sets of field modes. In special cases where the modes are orthogonal (for example, when the Rindler wedges are translated in a direction orthogonal to the plane of motion), thermalisation does indeed result, corroborating the here provided explanation. We then discuss how this description relates to an information-theoretic approach aimed at studying quantum aspects of temperature through quantum-controlled thermalisations. The present work draws a connection between research in quantum information, relativistic physics, and quantum thermodynamics, in particular showing that relativistic quantum effects can provide a natural realisation of quantum thermodynamical scenarios.",
+      "url": "http://arxiv.org/abs/2307.02593v2",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T03:00:25.993116",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162226034",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Quantum games and synchronicity",
+      "content": "In the flavour of categorical quantum mechanics, we extend nonlocal games to allow quantum questions and answers, using quantum sets (special symmetric dagger Frobenius algebras) and the quantum functions of Musto, Reutter, and Verdon [arXiv:1711.07945]. Equations are presented using a diagrammatic calculus for tensor categories. To this quantum question and answer setting, we extend the standard definitions, including strategies, correlations, and synchronicity, and we use these definitions to extend results about synchronicity. We extend the graph homomorphism (isomorphism) game to quantum graphs, and show it is synchronous (bisynchronous) and connect its perfect (bi)strategies to quantum graph homomorphisms (isomorphisms). Our extended definitions agree with the existing quantum games literature, except in the case of synchronicity.",
+      "url": "http://arxiv.org/abs/2408.15444v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T03:00:26.034198",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162226057",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Achieving the quantum field theory limit in far-from-equilibrium quantum link models",
+      "content": "Realizations of gauge theories in setups of quantum synthetic matter open up the possibility of probing salient exotic phenomena in condensed matter and high-energy physics, along with potential applications in quantum information and science technologies. In light of the impressive ongoing efforts to achieve such realizations, a fundamental question regarding quantum link model regularizations of lattice gauge theories is how faithfully they capture the quantum field theory limit of gauge theories. Recent work [Zache, Van Damme, Halimeh, Hauke, and Banerjee, at https://journals.aps.org/prd/abstract/10.1103/PhysRevD.106.L091502 has shown through analytic derivations, exact diagonalization, and infinite matrix product state calculations that the low-energy physics of $1+1$D $\\mathrm{U}(1)$ quantum link models approaches the quantum field theory limit already at small link spin length $S$. Here, we show that the approach to this limit also lends itself to the far-from-equilibrium quench dynamics of lattice gauge theories, as demonstrated by our numerical simulations of the Loschmidt return rate and the chiral condensate in infinite matrix product states, which work directly in the thermodynamic limit. Similar to our findings in equilibrium that show a distinct behavior between half-integer and integer link spin lengths, we find that criticality emerging in the Loschmidt return rate is fundamentally different between half-integer and integer spin quantum link models in the regim",
+      "url": "http://arxiv.org/abs/2112.04501v3",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T03:00:26.057719",
+      "usage_count": 0
+    },
+    {
+      "id": "1789162226059",
+      "query": "What is quantum entanglement?",
+      "source": "arxiv",
+      "title": "Searching for Coherent States: From Origins to Quantum Gravity",
+      "content": "We discuss the notion of coherent states from three different perspectives: the seminal approach of Schroedinger, the experimental take of quantum optics, and the theoretical developments in quantum gravity. This comparative study tries to emphasise the connections between the approaches, and to offer a coherent short story of the field, so to speak. It may be useful for pedagogical purposes, as well as for specialists of quantum optics and quantum gravity willing to embed their perspective within a wider landscape.",
+      "url": "http://arxiv.org/abs/2003.11810v4",
+      "tags": [
+        "quantum"
+      ],
+      "created_at": "2026-09-12T03:00:26.059686",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 50,
+    "total_searches": 65,
     "total_queries": 0
   }
 }

@@ -46,31 +46,30 @@ class LLMReasoner:
             self.model = None
 
     def reason(self, prompt: str) -> str:
-        """Send *prompt* to the Ollama model and return the generated text.
-
-        Uses streaming=True to avoid JSON parsing errors with large responses.
-        Falls back to a placeholder response if Ollama is unavailable.
-        """
+        """Send *prompt* to the Ollama model and return the generated text."""
         if not self.model:
             return f"[LLM placeholder response to: {prompt}]"
         try:
+            # Use chat endpoint (more reliable than generate)
             payload = {
                 "model": self.model,
-                "prompt": prompt,
-                "stream": False  # Non-streaming response – simpler to parse
+                "messages": [{"role": "user", "content": prompt}],
+                "stream": False
             }
             r = requests.post(
-                "http://127.0.0.1:11434/api/generate",
+                "http://127.0.0.1:11434/api/chat",
                 json=payload,
-                timeout=60
+                timeout=120
             )
-            r.raise_for_status()
+            if r.status_code != 200:
+                logging.error(f"Ollama API error: {r.status_code}")
+                return f"[LLM service unavailable]"
             data = r.json()
-            # Return the accumulated response text
-            return data.get("response", "").strip()
+            message = data.get("message", {})
+            return message.get("content", "").strip()
         except Exception as exc:
             logging.error(f"LLMReasoner error: {exc}")
-            return f"[LLM error response to: {prompt}]"
+            return f"[LLM error: {str(exc)[:50]}]"
 
 
 def _extract_topic(text: str) -> str:

@@ -98,9 +98,15 @@ def _extract_topic(text: str) -> str:
     return text.strip()
 
 
+from core.self_learner import get_self_learner
+
+
 def handle_request(text: str) -> str:
     """
     Handle an incoming request by routing intent and reasoning.
+
+    Uses the self-learning system to search the internet when needed
+    and improve answers over time.
 
     Args:
         text: The request text.
@@ -109,11 +115,22 @@ def handle_request(text: str) -> str:
         str: The response to the request.
     """
     intent = route_intent(text)
+    learner = get_self_learner()
+
     if intent == 'chat':
-        reasoner = LLMReasoner()
-        return reasoner.reason(text)
+        # Check if we need to learn something new
+        if learner.should_learn(text):
+            return learner.learn_and_answer(text)
+        else:
+            # We already know this, use standard LLM
+            reasoner = LLMReasoner()
+            return reasoner.reason(text)
+
     elif intent == 'report':
         topic = _extract_topic(text)
+        # Learn about the topic first
+        if learner.should_learn(topic):
+            learner.learn_and_answer(topic)
         # Perform search and compile report
         results = search_topic(topic)
         md_path = compile_report(topic, results)

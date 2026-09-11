@@ -11,10 +11,12 @@ from pydantic import BaseModel
 # ------------------------------------------------------------------
 from core.brain import handle_request
 from core.audio_tts import speak
+from core.knowledge_base import get_knowledge_base
+from core.self_learner import get_self_learner
 
 app = FastAPI(
     title="PLUTO v2 Assistant UI",
-    version="0.2.0",
+    version="0.3.0",
     docs_url=None,
     redoc_url=None,
 )
@@ -40,7 +42,7 @@ def _bytes_to_data_uri(data: bytes, mime: str = "audio/mpeg") -> str:
 @app.post("/process")
 async def process(query: Query):
     try:
-        # Run the PLUTO brain
+        # Run the PLUTO brain (with self-learning)
         answer = handle_request(query.text)
 
         # Synthesize speech (async)
@@ -78,6 +80,42 @@ def get_vram():
         "budget_mb": 6000,
         "usage_percent": 0,
     }
+
+# ------------------------------------------------------------------
+# Knowledge base endpoints
+# ------------------------------------------------------------------
+@app.get("/knowledge/stats")
+def get_knowledge_stats():
+    """Return knowledge base statistics."""
+    try:
+        kb = get_knowledge_base()
+        learner = get_self_learner()
+        return {
+            "kb_stats": kb.get_stats(),
+            "learner_stats": learner.get_learning_stats(),
+        }
+    except Exception as exc:
+        return {"error": str(exc)}
+
+@app.post("/knowledge/train")
+def train_on_topic(topic: str):
+    """Train the AI on a specific topic."""
+    try:
+        learner = get_self_learner()
+        result = learner.train_on_topic(topic)
+        return {"success": True, "result": result}
+    except Exception as exc:
+        return {"error": str(exc)}
+
+@app.get("/knowledge/search")
+def search_knowledge(query: str = ""):
+    """Search for relevant stored knowledge."""
+    try:
+        kb = get_knowledge_base()
+        results = kb.get_relevant_knowledge(query or "general", limit=5)
+        return {"results": results, "count": len(results)}
+    except Exception as exc:
+        return {"error": str(exc)}
 
 # ------------------------------------------------------------------
 # Health check

@@ -228,6 +228,20 @@
           <div id="vramText" class="text-lg font-semibold text-slate-900">0 MB</div>
         </div>
       </div>
+      <!-- VRAM Progress Bar -->
+      <div class="mt-2">
+        <div class="flex justify-between text-xs text-slate-500 mb-1">
+          <span>GPU Memory</span>
+          <span id="vramPercent">0%</span>
+        </div>
+        <div class="w-full h-1.5 bg-slate-200 rounded-full overflow-hidden">
+          <div id="vramBar" class="h-full rounded-full transition-all duration-500" style="width: 0%; background: #22c55e;"></div>
+        </div>
+        <div class="flex justify-between text-xs text-slate-400 mt-1">
+          <span id="vramUsed">0 MB</span>
+          <span id="vramTotal">6141 MB</span>
+        </div>
+      </div>
     </div>
 
     <!-- Quick Actions -->
@@ -544,7 +558,25 @@
       try {
         const vramRes = await fetch('/vram');
         const vram = await vramRes.json();
-        document.getElementById('vramText').textContent = `${vram.allocated_mb} MB`;
+        const used = vram.nvidia_used_mb || vram.total_mb || vram.ollama_mb;
+        const total = vram.nvidia_total_mb || vram.budget_mb;
+        const percent = vram.usage_percent || (used / total * 100);
+
+        document.getElementById('vramText').textContent = `${Math.round(used)} MB`;
+        document.getElementById('vramPercent').textContent = `${Math.round(percent)}%`;
+        document.getElementById('vramUsed').textContent = `${Math.round(used)} MB`;
+        document.getElementById('vramTotal').textContent = `${total} MB`;
+
+        // Color code the bar
+        const bar = document.getElementById('vramBar');
+        if (percent > 80) {
+          bar.style.background = '#ef4444'; // red
+        } else if (percent > 60) {
+          bar.style.background = '#f59e0b'; // orange
+        } else {
+          bar.style.background = '#22c55e'; // green
+        }
+        bar.style.width = `${Math.min(percent, 100)}%`;
       } catch {}
 
       try {

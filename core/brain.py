@@ -98,9 +98,6 @@ def _extract_topic(text: str) -> str:
     return text.strip()
 
 
-from core.self_learner import get_self_learner
-
-
 def handle_request(text: str) -> str:
     """
     Handle an incoming request by routing intent and reasoning.
@@ -114,6 +111,8 @@ def handle_request(text: str) -> str:
     Returns:
         str: The response to the request.
     """
+    from core.self_learner import get_self_learner
+
     intent = route_intent(text)
     learner = get_self_learner()
 

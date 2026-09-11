@@ -61,12 +61,18 @@ class SelfLearner:
 
         # 2. Store the knowledge
         for result in results:
+            # Handle both old and new result formats
+            source = result.get("source", "web")
+            title = result.get("title", "Unknown")
+            url = result.get("url", result.get("href", ""))
+            excerpt = result.get("excerpt", result.get("snippet", result.get("body", "")))
+
             self.kb.store_knowledge(
                 query=query,
-                source=result.get("source", "web"),
-                title=result.get("title", "Unknown"),
-                content=result.get("excerpt", result.get("snippet", "")),
-                url=result.get("url", ""),
+                source=source,
+                title=title,
+                content=excerpt or "",
+                url=url,
                 tags=self._extract_tags(query, result),
             )
 

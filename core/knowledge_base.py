@@ -74,7 +74,7 @@ class KnowledgeBase:
             "query": query,
             "source": source,
             "title": title,
-            "content": content[:2000],  # Limit content length
+            "content": (content or "")[:2000],  # Limit content length
             "url": url,
             "tags": tags or [],
             "created_at": datetime.now().isoformat(),

@@ -1,0 +1,218 @@
+{
+  "entries": [
+    {
+      "id": "1789157119887",
+      "query": "quantum computing",
+      "source": "web",
+      "title": "Quantum computing",
+      "content": "",
+      "url": "https://en.wikipedia.org/wiki/Quantum_computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:35:19.887902",
+      "usage_count": 2
+    },
+    {
+      "id": "1789157119888",
+      "query": "quantum computing",
+      "source": "web",
+      "title": "What Is Quantum Computing? | IBM",
+      "content": "",
+      "url": "https://www.ibm.com/think/topics/quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:35:19.888840",
+      "usage_count": 3
+    },
+    {
+      "id": "1789157119889",
+      "query": "quantum computing",
+      "source": "web",
+      "title": "What is Quantum Computing? - Quantum Computing Explained - AWS",
+      "content": "",
+      "url": "https://aws.amazon.com/what-is/quantum-computing/",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:35:19.889765",
+      "usage_count": 3
+    },
+    {
+      "id": "1789157119890",
+      "query": "quantum computing",
+      "source": "web",
+      "title": "What Is Quantum Computing? - Caltech Science Exchange",
+      "content": "",
+      "url": "https://scienceexchange.caltech.edu/topics/quantum-science-explained/quantum-computing-computers",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:35:19.890516",
+      "usage_count": 3
+    },
+    {
+      "id": "1789157119891",
+      "query": "quantum computing",
+      "source": "web",
+      "title": "What is quantum computing? | McKinsey & Company",
+      "content": "",
+      "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:35:19.891538",
+      "usage_count": 3
+    },
+    {
+      "id": "1789157396963",
+      "query": "What is quantum computing?",
+      "source": "web",
+      "title": "Quantum computing - Wikipedia",
+      "content": "",
+      "url": "https://en.wikipedia.org/wiki/Quantum_computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:39:56.963206",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157396964",
+      "query": "What is quantum computing?",
+      "source": "web",
+      "title": "What Is Quantum Computing? | IBM",
+      "content": "",
+      "url": "https://www.ibm.com/think/topics/quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:39:56.964225",
+      "usage_count": 1
+    },
+    {
+      "id": "1789157396965",
+      "query": "What is quantum computing?",
+      "source": "web",
+      "title": "What is quantum computing? | McKinsey & Company",
+      "content": "",
+      "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:39:56.965727",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157396966",
+      "query": "What is quantum computing?",
+      "source": "web",
+      "title": "What is quantum computing? | Google Quantum AI",
+      "content": "",
+      "url": "https://quantumai.google/whatisqc",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:39:56.966668",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157396968",
+      "query": "What is quantum computing?",
+      "source": "web",
+      "title": "What Is Quantum Computing? - Caltech Science Exchange",
+      "content": "",
+      "url": "https://scienceexchange.caltech.edu/topics/quantum-science-explained/quantum-computing-computers",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:39:56.968460",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157471149",
+      "query": "Tell me about quantum computing",
+      "source": "web",
+      "title": "Quantum computing - Wikipedia",
+      "content": "",
+      "url": "https://en.wikipedia.org/wiki/Quantum_computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:41:11.149595",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157471150",
+      "query": "Tell me about quantum computing",
+      "source": "web",
+      "title": "What Is Quantum Computing? | IBM",
+      "content": "",
+      "url": "https://www.ibm.com/think/topics/quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:41:11.150923",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157471153",
+      "query": "Tell me about quantum computing",
+      "source": "web",
+      "title": "What is Quantum Computing? - Quantum Computing Explained - AWS",
+      "content": "",
+      "url": "https://aws.amazon.com/what-is/quantum-computing/",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:41:11.153508",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157471155",
+      "query": "Tell me about quantum computing",
+      "source": "web",
+      "title": "Quantum Computing Explained | NIST",
+      "content": "",
+      "url": "https://www.nist.gov/quantum-information-science/quantum-computing-explained",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:41:11.155148",
+      "usage_count": 0
+    },
+    {
+      "id": "1789157471155",
+      "query": "Tell me about quantum computing",
+      "source": "web",
+      "title": "What is quantum computing? | McKinsey & Company",
+      "content": "",
+      "url": "https://www.mckinsey.com/featured-insights/mckinsey-explainers/what-is-quantum-computing",
+      "tags": [
+        "web",
+        "quantum"
+      ],
+      "created_at": "2026-09-12T01:41:11.155936",
+      "usage_count": 0
+    }
+  ],
+  "stats": {
+    "total_searches": 15,
+    "total_queries": 0
+  }
+}

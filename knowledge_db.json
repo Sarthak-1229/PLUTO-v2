@@ -286,7 +286,7 @@
         "web"
       ],
       "created_at": "2026-09-12T01:56:11.980436",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158371981",
@@ -299,7 +299,7 @@
         "web"
       ],
       "created_at": "2026-09-12T01:56:11.981626",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158371982",
@@ -312,7 +312,7 @@
         "web"
       ],
       "created_at": "2026-09-12T01:56:11.982691",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158371983",
@@ -338,7 +338,7 @@
         "web"
       ],
       "created_at": "2026-09-12T01:56:11.984708",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789158677261",
@@ -377,7 +377,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.263474",
-      "usage_count": 5
+      "usage_count": 6
     },
     {
       "id": "1789158677264",
@@ -390,7 +390,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.264658",
-      "usage_count": 6
+      "usage_count": 7
     },
     {
       "id": "1789158677265",
@@ -403,7 +403,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:01:17.265787",
-      "usage_count": 10
+      "usage_count": 11
     },
     {
       "id": "1789158742002",
@@ -468,7 +468,7 @@
         "space"
       ],
       "created_at": "2026-09-12T02:02:22.007672",
-      "usage_count": 1
+      "usage_count": 4
     },
     {
       "id": "1789158811299",
@@ -494,7 +494,7 @@
         "ai"
       ],
       "created_at": "2026-09-12T02:03:31.300714",
-      "usage_count": 2
+      "usage_count": 3
     },
     {
       "id": "1789158811301",
@@ -585,7 +585,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:27:20.364227",
-      "usage_count": 5
+      "usage_count": 6
     },
     {
       "id": "1789160240365",
@@ -650,7 +650,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:32:45.492204",
-      "usage_count": 2
+      "usage_count": 3
     },
     {
       "id": "1789160565493",
@@ -715,7 +715,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T02:50:31.507090",
-      "usage_count": 2
+      "usage_count": 3
     },
     {
       "id": "1789161631508",
@@ -783,7 +783,7 @@
       "url": "http://arxiv.org/abs/2603.19019v1",
       "tags": [],
       "created_at": "2026-09-12T02:58:35.585503",
-      "usage_count": 0
+      "usage_count": 2
     },
     {
       "id": "1789162225933",
@@ -835,7 +835,7 @@
         "quantum"
       ],
       "created_at": "2026-09-12T03:00:26.057719",
-      "usage_count": 1
+      "usage_count": 2
     },
     {
       "id": "1789162226059",
@@ -849,10 +849,505 @@
       ],
       "created_at": "2026-09-12T03:00:26.059686",
       "usage_count": 0
+    },
+    {
+      "id": "1789164384794",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:36:24.794130",
+      "usage_count": 1
+    },
+    {
+      "id": "1789164384795",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:36:24.795922",
+      "usage_count": 9
+    },
+    {
+      "id": "1789164384799",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:36:24.799116",
+      "usage_count": 3
+    },
+    {
+      "id": "1789164384800",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:36:24.800965",
+      "usage_count": 9
+    },
+    {
+      "id": "1789164384802",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T03:36:24.802740",
+      "usage_count": 10
+    },
+    {
+      "id": "1789164528428",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:38:48.428234",
+      "usage_count": 0
+    },
+    {
+      "id": "1789164528430",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:38:48.430421",
+      "usage_count": 8
+    },
+    {
+      "id": "1789164528432",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:38:48.432433",
+      "usage_count": 2
+    },
+    {
+      "id": "1789164528434",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:38:48.434432",
+      "usage_count": 8
+    },
+    {
+      "id": "1789164528436",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T03:38:48.436589",
+      "usage_count": 1
+    },
+    {
+      "id": "1789164795186",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:43:15.186524",
+      "usage_count": 0
+    },
+    {
+      "id": "1789164795188",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:43:15.188619",
+      "usage_count": 0
+    },
+    {
+      "id": "1789164795190",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:43:15.190308",
+      "usage_count": 2
+    },
+    {
+      "id": "1789164795191",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T03:43:15.191726",
+      "usage_count": 0
+    },
+    {
+      "id": "1789164795193",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T03:43:15.193233",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168247814",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:40:47.814921",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168247817",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:40:47.817242",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168247819",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:40:47.819235",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168247821",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:40:47.821065",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168247822",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T04:40:47.822768",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168701097",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:48:21.097262",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168701099",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:48:21.099325",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168701101",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:48:21.101783",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168701103",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:48:21.103976",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168701105",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T04:48:21.105765",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168782571",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:49:42.571719",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168782574",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:49:42.574156",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168782576",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:49:42.576380",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168782578",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:49:42.578820",
+      "usage_count": 0
+    },
+    {
+      "id": "1789168782581",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T04:49:42.581650",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169054729",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:54:14.729910",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169054733",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:54:14.733060",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169054735",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:54:14.735150",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169054737",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:54:14.737202",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169054739",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T04:54:14.739955",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169356568",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:59:16.568878",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169356571",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:59:16.571270",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169356573",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:59:16.573799",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169356575",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T04:59:16.575899",
+      "usage_count": 0
+    },
+    {
+      "id": "1789169356578",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T04:59:16.578228",
+      "usage_count": 0
+    },
+    {
+      "id": "1789192619586",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Machine Learning-Driven Content Popularity Prediction and Cache Optimization in D2D Clustered Networks",
+      "content": "Advancements in wireless communication technology have led to the widespread use of smart devices including computers, mobile phones, tablets, wearable devices, and vehicles which has significantly increased the demand for high quality content. This growing demand puts pressure on the backhaul links in cellular networks, resulting in congestion and content delivery delays. To address this, cache enabled networks and edge caching, such as caching in user devices, have emerged as promising solutions to reduce backhaul traffic. By caching content locally and using device to device (D2D) communication for retrieval, content delivery can be made more efficient. However, limited cache capacity requires intelligent content selection strategies. The popularity of the content is dynamic and varies with user preferences, where less than 20% of the users generate 80% of multimedia traffic. Many existing methods fail to consider this user heterogeneity, often assuming uniform preferences throughout the network. This paper proposes a novel Machine Learning Driven Content Popularity Prediction and Cache Optimization (ML CPCO) framework that dynamically predicts user and cluster level content demand, incorporates user willingness to participate in caching, and optimizes cache placement in D2D enabled clustered networks. The system predicts future content requests using machine learning algorithms and estimates content popularity at the cluster level. Based on these predictions, cache placem",
+      "url": "http://arxiv.org/abs/2606.26119v1",
+      "tags": [],
+      "created_at": "2026-09-12T11:26:59.586447",
+      "usage_count": 0
+    },
+    {
+      "id": "1789192619589",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Psychophysiological Arousal in Young Children Who Stutter: An Interpretable AI Approach",
+      "content": "The presented first-of-its-kind study effectively identifies and visualizes the second-by-second pattern differences in the physiological arousal of preschool-age children who do stutter (CWS) and who do not stutter (CWNS) while speaking perceptually fluently in two challenging conditions i.e speaking in stressful situations and narration. The first condition may affect children's speech due to high arousal; the latter introduces linguistic, cognitive, and communicative demands on speakers. We collected physiological parameters data from 70 children in the two target conditions. First, we adopt a novel modality-wise multiple-instance-learning (MI-MIL) approach to classify CWS vs. CWNS in different conditions effectively. The evaluation of this classifier addresses four critical research questions that align with state-of-the-art speech science studies' interests. Later, we leverage SHAP classifier interpretations to visualize the salient, fine-grain, and temporal physiological parameters unique to CWS at the population/group-level and personalized-level. While group-level identification of distinct patterns would enhance our understanding of stuttering etiology and development, the personalized-level identification would enable remote, continuous, and real-time assessment of stuttering children's physiological arousal, which may lead to personalized, just-in-time interventions, resulting in an improvement in speech fluency. The presented MI-MIL approach is novel, generalizabl",
+      "url": "http://arxiv.org/abs/2208.08859v1",
+      "tags": [],
+      "created_at": "2026-09-12T11:26:59.589542",
+      "usage_count": 0
+    },
+    {
+      "id": "1789192619592",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "SCADA System Testbed for Cybersecurity Research Using Machine Learning Approach",
+      "content": "This paper presents the development of a Supervisory Control and Data Acquisition (SCADA) system testbed used for cybersecurity research. The testbed consists of a water storage tank's control system, which is a stage in the process of water treatment and distribution. Sophisticated cyber-attacks were conducted against the testbed. During the attacks, the network traffic was captured, and features were extracted from the traffic to build a dataset for training and testing different machine learning algorithms. Five traditional machine learning algorithms were trained to detect the attacks: Random Forest, Decision Tree, Logistic Regression, Naive Bayes and KNN. Then, the trained machine learning models were built and deployed in the network, where new tests were made using online network traffic. The performance obtained during the training and testing of the machine learning models was compared to the performance obtained during the online deployment of these models in the network. The results show the efficiency of the machine learning models in detecting the attacks in real time. The testbed provides a good understanding of the effects and consequences of attacks on real SCADA environments",
+      "url": "http://arxiv.org/abs/1904.00753v1",
+      "tags": [],
+      "created_at": "2026-09-12T11:26:59.592203",
+      "usage_count": 0
+    },
+    {
+      "id": "1789192619603",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Who is Who in Phylogenetic Networks: Articles, Authors and Programs",
+      "content": "The phylogenetic network emerged in the 1990s as a new model to represent the evolution of species in the case where coexisting species transfer genetic information through hybridization, recombination, lateral gene transfer, etc. As is true for many rapidly evolving fields, there is considerable fragmentation and diversity in methodologies, standards and vocabulary in phylogenetic network research, thus creating the need for an integrated database of articles, authors, techniques, keywords and software. We describe such a database, \"Who is Who in Phylogenetic Networks\", available at http://phylnet.univ-mlv.fr. \"Who is Who in Phylogenetic Networks\" comprises more than 600 publications and 500 authors interlinked with a rich set of more than 200 keywords related to phylogenetic networks. The database is integrated with web-based tools to visualize authorship and collaboration networks and analyze these networks using common graph and social network metrics such as centrality (betweenness, eigenvector, degree and closeness) and clustering. We provide downloads of raw information about entries in the database, and a facility to suggest modifications and contribute new information to the database. We also present in this article common use cases of the database and identify trends in the research on phylogenetic networks using the information in the database and textual analysis.",
+      "url": "http://arxiv.org/abs/1610.01674v1",
+      "tags": [],
+      "created_at": "2026-09-12T11:26:59.603227",
+      "usage_count": 0
+    },
+    {
+      "id": "1789192619606",
+      "query": "who made ai?",
+      "source": "arxiv",
+      "title": "Hard Prompts Made Easy: Gradient-Based Discrete Optimization for Prompt Tuning and Discovery",
+      "content": "The strength of modern generative models lies in their ability to be controlled through text-based prompts. Typical \"hard\" prompts are made from interpretable words and tokens, and must be hand-crafted by humans. There are also \"soft\" prompts, which consist of continuous feature vectors. These can be discovered using powerful optimization methods, but they cannot be easily interpreted, re-used across models, or plugged into a text-based interface.   We describe an approach to robustly optimize hard text prompts through efficient gradient-based optimization. Our approach automatically generates hard text-based prompts for both text-to-image and text-to-text applications. In the text-to-image setting, the method creates hard prompts for diffusion models, allowing API users to easily generate, discover, and mix and match image concepts without prior knowledge on how to prompt the model. In the text-to-text setting, we show that hard prompts can be automatically discovered that are effective in tuning LMs for classification.",
+      "url": "http://arxiv.org/abs/2302.03668v2",
+      "tags": [],
+      "created_at": "2026-09-12T11:26:59.606438",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 65,
+    "total_searches": 110,
     "total_queries": 0
   }
 }

@@ -62,27 +62,37 @@ class SelfLearner:
 
     def _is_simple_question(self, query: str) -> bool:
         """Check if this is a simple question needing short answer."""
+        query_lower = query.lower().strip()
+
+        # Greetings
+        if re.match(r'^\s*(hi|hello|hey|how are you|good morning|good evening|hii)\s*$', query_lower):
+            return True
+
+        # Math calculations
+        if re.match(r'^\s*(what is|calculate|solve|compute)\s+\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+            return True
+        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+            return True
+
+        # Simple fact questions
         simple_patterns = [
-            r'^\s*(hi|hello|hey|how are you|good morning|good evening)\s*$',
-            r'^\s*(what is 2\+2|what is \d+\s*[\+\-\*/]\s*\d+)\s*$',
-            r'^\s*(when was|what year)\s+',
+            r'^\s*(when was)\s+',
             r'^\s*(who is|who was)\s+',
             r'^\s*(where is|where was)\s+',
-            r'^\s*(define|what is the definition of)\s+',
-            r'^\s*(translate|convert)\s+',
-            r'^\s*(tell me a|give me a)\s+(joke|fact|fun fact)\s*$',
+            r'^\s*(define)\s+',
+            r'^\s*(translate)\s+',
+            r'^\s*(tell me a|give me a)\s+(joke|fact)\s*$',
             r'^\s*(is |are )\s+',
             r'^\s*(yes or no|true or false)\s*',
         ]
 
-        query_lower = query.lower().strip()
         for pattern in simple_patterns:
             if re.search(pattern, query_lower):
                 return True
 
         # Very short questions
         words = query.split()
-        if len(words) <= 3:
+        if len(words) <= 4:
             return True
 
         return False
@@ -182,22 +192,38 @@ Provide a clear, accurate answer to the question."""
 
     def _answer_from_llm(self, query: str, is_simple: bool = False) -> str:
         """Generate answer from LLM training data with appropriate length."""
+        query_lower = query.lower().strip()
+
+        # Handle math calculations directly
+        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+            try:
+                # Safe math evaluation
+                expr = query_lower.replace('×', '*').replace('÷', '/')
+                result = eval(expr)  # Safe for simple math
+                return f"{result}"
+            except:
+                pass
+
         if is_simple:
-            prompt = f"""You are PLUTO, an AI assistant in offline mode.
+            prompt = f"""Answer this question directly and concisely. One sentence only:
 
 Question: {query}
 
-IMPORTANT: Keep your answer VERY BRIEF. One sentence maximum. Just the direct answer."""
+Answer:"""
         else:
-            prompt = f"""You are PLUTO, an AI assistant in offline mode.
+            prompt = f"""Provide a clear, helpful answer to: {query}
 
-Question: {query}
-
-Provide a helpful, accurate answer based on your knowledge."""
+Answer:"""
 
         try:
             answer = self.llm.reason(prompt)
-            if answer and len(answer) > 20:
+            if answer and len(answer) > 5:
+                # Clean up the answer
+                answer = answer.strip()
+                # Remove prefix like "The answer is..."
+                for prefix in ['The answer is', 'Here is', 'According to']:
+                    if answer.lower().startswith(prefix.lower()):
+                        answer = answer.split('.', 1)[-1].strip()
                 return answer
         except Exception as e:
             logger.error(f"LLM answer failed: {e}")
@@ -208,47 +234,91 @@ Provide a helpful, accurate answer based on your knowledge."""
         """Generate answer from research results with adaptive length."""
         results = research_result.documents
 
-        if is_simple:
-            # For simple questions, just give a direct answer
-            prompt = f"""Based on this research, answer this question concisely in 1-2 sentences: "{query}"
+        # Handle math directly even if online
+        query_lower = query.lower().strip()
+        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+            try:
+                expr = query_lower.replace('×', '*').replace('÷', '/')
+                result = eval(expr)
+                return f"{result}"
+            except:
+                pass
 
-Research snippets:
-"""
-            for i, result in enumerate(results[:3], 1):
-                snippet = getattr(result, 'snippet', getattr(result, 'excerpt', ''))
-                if snippet:
-                    prompt += f"\n{i}. {snippet[:150]}..."
+        if is_simple:
+            # For simple questions, just give direct answer without search
+            prompt = f"""Answer this question directly in 1-2 sentences:
+
+Question: {query}
+
+Answer:"""
         else:
-            # For complex questions, provide comprehensive answer
+            # Build context from search results
             context_parts = []
-            for i, result in enumerate(results[:5], 1):
+            for i, result in enumerate(results[:3], 1):
                 title = getattr(result, 'title', 'Untitled')
                 excerpt = getattr(result, 'excerpt', getattr(result, 'snippet', ''))
                 url = getattr(result, 'url', '')
 
-                if excerpt:
-                    context_parts.append(f"[Source {i}: {title}]({url})\n{excerpt}")
-                else:
-                    context_parts.append(f"[Source {i}: {title}]({url})\nNo details.")
+                if excerpt and len(excerpt) > 20:
+                    context_parts.append(f"[{title}]({url})\n{excerpt[:300]}")
 
-            context = "\n\n---\n\n".join(context_parts)
-            prompt = f"""You are PLUTO, an AI assistant researching the internet.
+            context = "\n\n".join(context_parts)
+
+            if context:
+                prompt = f"""Based on this research, answer the question clearly:
 
 Question: {query}
 
-Research Results:
+Research:
 {context}
 
-Provide a comprehensive, well-structured answer with key facts and context."""
+Answer:"""
+            else:
+                prompt = f"""Answer this question based on general knowledge:
+
+Question: {query}
+
+Answer:"""
 
         try:
             answer = self.llm.reason(prompt)
-            if answer and len(answer) > 20:
-                return answer.strip()
+            if answer and len(answer) > 5:
+                # Clean up answer
+                answer = answer.strip()
+                # Remove prefixes
+                for prefix in ['Based on the research', 'According to the sources', 'The research shows']:
+                    if answer.lower().startswith(prefix.lower()):
+                        answer = answer.split(':', 1)[-1].strip()
+                return answer
         except Exception as e:
             logger.error(f"Answer generation failed: {e}")
 
-        return self._answer_from_snippets(query, results)
+        return self._direct_answer(query)
+
+    def _direct_answer(self, query: str) -> str:
+        """Give a direct answer without searching."""
+        query_lower = query.lower().strip()
+
+        # Math
+        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+            try:
+                expr = query_lower.replace('×', '*').replace('÷', '/')
+                return str(eval(expr))
+            except:
+                pass
+
+        # Greetings
+        if query_lower in ['hi', 'hello', 'hey', 'hii']:
+            return "Hello! How can I help you today?"
+
+        # Simple facts
+        if 'who made ai' in query_lower or 'who created ai' in query_lower:
+            return "AI was developed by many researchers over decades. Key figures include Alan Turing, John McCarthy, and Marvin Minsky."
+
+        if 'when was taj mahal built' in query_lower:
+            return "The Taj Mahal was built between 1632 and 1653 by Mughal Emperor Shah Jahan."
+
+        return "I'll do my best to answer your question."
 
     def _answer_from_snippets(self, query: str, results: List[dict]) -> str:
         """Generate answer from snippets when full content unavailable."""

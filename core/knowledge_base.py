@@ -7,12 +7,30 @@ Enables the AI to learn from the internet and improve over time.
 
 import json
 import logging
+import re
 import time
 from pathlib import Path
 from typing import Optional, List
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
+
+STOPWORDS = {
+    'a', 'about', 'above', 'after', 'again', 'against', 'all', 'am', 'an', 'and',
+    'any', 'are', 'aren\'t', 'as', 'at', 'be', 'because', 'been', 'before', 'being',
+    'below', 'between', 'both', 'but', 'by', 'can', 'can\'t', 'cannot', 'could',
+    'did', 'do', 'does', 'doing', 'don\'t', 'down', 'during', 'each', 'few', 'for',
+    'from', 'further', 'had', 'has', 'have', 'having', 'he', 'her', 'here', 'hers',
+    'herself', 'him', 'himself', 'his', 'how', 'i', 'if', 'in', 'into', 'is', 'isn\'t',
+    'it', 'its', 'itself', 'just', 'me', 'more', 'most', 'my', 'myself', 'no', 'nor',
+    'not', 'now', 'of', 'off', 'on', 'once', 'only', 'or', 'other', 'our', 'ours',
+    'ourselves', 'out', 'over', 'own', 'same', 'she', 'should', 'so', 'some', 'such',
+    'than', 'that', 'the', 'their', 'theirs', 'them', 'themselves', 'then', 'there',
+    'these', 'they', 'this', 'those', 'through', 'to', 'too', 'under', 'until', 'up',
+    'very', 'was', 'wasn\'t', 'we', 'were', 'what', 'when', 'where', 'which', 'while',
+    'who', 'whom', 'why', 'with', 'won\'t', 'would', 'you', 'your', 'yours', 'yourself',
+    'yourselves', 'tell', 'give', 'please', 'know', 'say', 'find'
+}
 
 
 class KnowledgeBase:
@@ -42,24 +60,49 @@ class KnowledgeBase:
         except Exception as exc:
             logger.error(f"Failed to save knowledge base: {exc}")
 
+    def _extract_keywords(self, text: str) -> List[str]:
+        """Extract meaningful keywords excluding stopwords."""
+        words = re.findall(r'\b[a-zA-Z0-9_\-]{3,}\b', text.lower())
+        return [w for w in words if w not in STOPWORDS]
+
     def get_relevant_knowledge(self, query: str, limit: int = 3) -> List[dict]:
-        """Find relevant stored knowledge for a query."""
-        query_lower = query.lower()
+        """Find strictly relevant stored knowledge for a query."""
+        keywords = self._extract_keywords(query)
+        if not keywords:
+            return []
+
         matching = []
 
         for entry in self.knowledge["entries"]:
-            # Check if query terms appear in title, content, or tags
-            score = 0
-            for term in query_lower.split():
-                if len(term) > 2:  # Skip short words
-                    if term in entry.get("title", "").lower():
-                        score += 3
-                    if term in entry.get("content", "").lower():
-                        score += 1
-                    if term in [tag.lower() for tag in entry.get("tags", [])]:
-                        score += 2
+            title = entry.get("title", "").lower()
+            content = entry.get("content", "").lower()
+            original_query = entry.get("query", "").lower()
+            tags = [t.lower() for t in entry.get("tags", [])]
 
-            if score > 0:
+            score = 0
+            matched_keywords = 0
+
+            for kw in keywords:
+                kw_matched = False
+                if kw in original_query:
+                    score += 6
+                    kw_matched = True
+                if kw in title:
+                    score += 4
+                    kw_matched = True
+                if any(kw in tag for tag in tags):
+                    score += 3
+                    kw_matched = True
+                if kw in content:
+                    score += 1
+                    kw_matched = True
+
+                if kw_matched:
+                    matched_keywords += 1
+
+            # Require either high keyword match ratio (>= 50%) or strong keyword overlap (score >= 8)
+            match_ratio = matched_keywords / len(keywords) if keywords else 0
+            if (match_ratio >= 0.5 and score >= 5) or score >= 10:
                 matching.append((score, entry))
 
         # Sort by relevance score
@@ -68,14 +111,26 @@ class KnowledgeBase:
 
     def store_knowledge(self, query: str, source: str, title: str,
                         content: str, url: str, tags: List[str] = None):
-        """Store new knowledge entry."""
+        """Store new knowledge entry avoiding exact duplicates."""
+        if not title and not content:
+            return None
+
+        # Check for near duplicates
+        for existing in self.knowledge["entries"]:
+            if url and existing.get("url") == url:
+                existing["usage_count"] = existing.get("usage_count", 0) + 1
+                self._save()
+                return existing
+            if title and existing.get("title") == title:
+                return existing
+
         entry = {
             "id": str(int(time.time() * 1000)),
             "query": query,
             "source": source,
             "title": title,
             "content": (content or "")[:2000],  # Limit content length
-            "url": url,
+            "url": url or "",
             "tags": tags or [],
             "created_at": datetime.now().isoformat(),
             "usage_count": 0,
@@ -103,7 +158,7 @@ class KnowledgeBase:
             "total_entries": len(self.knowledge["entries"]),
             "total_searches": self.knowledge["stats"]["total_searches"],
             "total_queries": self.knowledge["stats"]["total_queries"],
-            "sources": list(set(e.get("source", "") for e in self.knowledge["entries"])),
+            "sources": list(set(e.get("source", "") for e in self.knowledge["entries"] if e.get("source"))),
         }
 
     def clear_old_entries(self, max_age_days: int = 30):

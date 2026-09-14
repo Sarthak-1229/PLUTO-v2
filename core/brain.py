@@ -36,40 +36,84 @@ class LLMReasoner:
     """
 
     def __init__(self):
-        self.model = getattr(config, "LLM_MODEL_NAME", "llama3.2:3b")
-        # Simple health check – ping the Ollama server.
-        try:
-            r = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
-            r.raise_for_status()
-        except Exception as exc:
-            logging.warning(f"Ollama not reachable ({exc}); LLMReasoner will use placeholder response.")
-            self.model = None
+        self.model = None
+        self._discover_model()
 
-    def reason(self, prompt: str) -> str:
-        """Send *prompt* to the Ollama model and return the generated text."""
-        if not self.model:
-            return f"[LLM placeholder response to: {prompt}]"
+    def _discover_model(self):
+        """Discover available models from Ollama."""
+        target_model = getattr(config, "LLM_MODEL_NAME", "qwen2.5:3b")
         try:
-            # Use chat endpoint (more reliable than generate)
-            payload = {
-                "model": self.model,
-                "messages": [{"role": "user", "content": prompt}],
-                "stream": False
-            }
+            r = requests.get("http://127.0.0.1:11434/api/tags", timeout=3)
+            if r.status_code == 200:
+                data = r.json()
+                available = [m.get("name", "") for m in data.get("models", [])]
+                # Check exact or prefix match for target
+                for m in available:
+                    if target_model in m or m.startswith(target_model.split(":")[0]):
+                        self.model = m
+                        return
+                # Prioritize optimal local models
+                for pref in ["qwen2.5:3b", "qwen2.5", "qwen3:8b", "llama3.2", "llama3"]:
+                    for m in available:
+                        if pref in m:
+                            self.model = m
+                            return
+                # If target not found, pick first available model
+                if available:
+                    self.model = available[0]
+                    return
+        except Exception as exc:
+            logging.warning(f"Ollama server check: {exc}")
+        self.model = target_model
+
+    def reason(self, prompt: str, system_prompt: str = None) -> str:
+        """Send prompt to the Ollama model and return the generated text."""
+        # Try discovering model if not yet verified
+        if not self.model:
+            self._discover_model()
+
+        messages = []
+        if system_prompt:
+            messages.append({"role": "system", "content": system_prompt})
+        messages.append({"role": "user", "content": prompt})
+
+        options = {
+            "num_ctx": 2048,
+            "temperature": 0.6
+        }
+        if self.model and ("8b" in self.model.lower() or "7b" in self.model.lower()):
+            options["num_gpu"] = 22
+
+        payload = {
+            "model": self.model or "qwen3:8b",
+            "messages": messages,
+            "options": options,
+            "stream": False
+        }
+
+        try:
             r = requests.post(
                 "http://127.0.0.1:11434/api/chat",
                 json=payload,
                 timeout=120
             )
             if r.status_code != 200:
-                logging.error(f"Ollama API error: {r.status_code}")
-                return f"[LLM service unavailable]"
+                logging.error(f"Ollama API error {r.status_code}: {r.text[:100]}")
+                # Try fallback to first available model
+                self._discover_model()
+                return "I am currently unable to process this request through the local model."
+            
             data = r.json()
-            message = data.get("message", {})
-            return message.get("content", "").strip()
+            content = data.get("message", {}).get("content", "").strip()
+            
+            # Clean up <think>...</think> tags if present in reasoning models like Qwen 3
+            import re
+            cleaned_content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
+            return cleaned_content if cleaned_content else content
         except Exception as exc:
             logging.error(f"LLMReasoner error: {exc}")
-            return f"[LLM error: {str(exc)[:50]}]"
+            return f"I encountered an error communicating with the local language model."
+
 
 
 def _extract_topic(text: str) -> str:
@@ -121,19 +165,30 @@ def handle_request(text: str) -> str:
 
     elif intent == 'report':
         topic = _extract_topic(text)
-        # Learn about the topic first
-        if learner.should_learn(topic):
-            learner.learn_and_answer(topic)
         # Perform search and compile report
         results = search_topic(topic)
-        md_path = compile_report(topic, results)
+        paths = compile_report(topic, results)
+        md_path = paths.get("markdown", "")
+        
         # Generate summary if configured
-        if config.USE_LLM_SUMMARY:
-            reasoner = LLMReasoner()
-            summary = reasoner.reason('Summarize the following report: ' + md_path)
-        else:
-            summary = "Summary not generated."
-        return f"Report on {topic} saved at {md_path}. Summary: {summary}"
+        summary = "Report compiled successfully."
+        if config.USE_LLM_SUMMARY and md_path:
+            try:
+                from pathlib import Path
+                md_content = Path(md_path).read_text(encoding='utf-8', errors='ignore')
+                reasoner = LLMReasoner()
+                summary = reasoner.reason(f"Summarize the key findings of this report in 2 concise sentences:\n\n{md_content[:2000]}")
+            except Exception as e:
+                logging.warning(f"Failed to generate LLM summary: {e}")
+                summary = f"Comprehensive research completed on {topic}."
+
+        # Build response string with formats info
+        files_info = []
+        if "markdown" in paths: files_info.append("Markdown (.md)")
+        if "pdf" in paths: files_info.append("PDF (.pdf)")
+        if "docx" in paths: files_info.append("Word (.docx)")
+        
+        return f"Report on '{topic}' generated successfully in {', '.join(files_info)}. Summary: {summary}"
     else:
         return "Unable to determine intent."
 

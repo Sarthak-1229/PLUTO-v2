@@ -31,11 +31,12 @@ class WikipediaSource(BaseSource):
                 "format": "json",
                 "origin": "*"
             }
-            resp = requests.get(self.api_url, params=params, timeout=15)
+            headers = {"User-Agent": "PlutoResearchBot/2.0 (contact@pluto.ai)"}
+            resp = requests.get(self.api_url, params=params, headers=headers, timeout=15)
             resp.raise_for_status()
             data = resp.json()
 
-            for item in data.get('query', {}).get('search', []):
+            for item in data.get('query', {}).get('search', [])[:max_results]:
                 title = item.get('title', '')
                 snippet = item.get('snippet', '').replace('<[^>]+>', '').strip()
 
@@ -69,7 +70,8 @@ class WikipediaSource(BaseSource):
                 "format": "json",
                 "origin": "*"
             }
-            resp = requests.get(self.api_url, params=params, timeout=10)
+            headers = {"User-Agent": "PlutoResearchBot/2.0 (contact@pluto.ai)"}
+            resp = requests.get(self.api_url, params=params, headers=headers, timeout=3)
             resp.raise_for_status()
             data = resp.json()
             pages = data.get('query', {}).get('pages', {})

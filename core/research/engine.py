@@ -128,11 +128,15 @@ class ResearchEngine:
         # Deduplicate and rank
         documents = self._deduplicate_and_rank(documents, query)
 
-        # Enrich top results
-        top_docs = documents[:min(3, len(documents))]
-        for doc in top_docs:
-            if not doc.content:
-                doc.content = self.web_extractor.extract(doc.url).get('content', '')
+        # Enrich top results with full web extraction only for deep/expert searches
+        if depth in ('deep', 'expert'):
+            top_docs = documents[:min(2, len(documents))]
+            for doc in top_docs:
+                if not doc.content:
+                    try:
+                        doc.content = self.web_extractor.extract(doc.url, max_length=2000).get('content', '')
+                    except Exception:
+                        pass
 
         # Verify key claims
         if len(documents) > 1:

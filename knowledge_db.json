@@ -1344,10 +1344,121 @@
       "tags": [],
       "created_at": "2026-09-12T11:26:59.606438",
       "usage_count": 0
+    },
+    {
+      "id": "1789310411166",
+      "query": "which is the worst movie by Saif Ali Khan",
+      "source": "duckduckgo",
+      "title": "The Worst Movies Starring Saif Ali Khan - Flickchart",
+      "content": "\"Do Your Thing\", \"Tomorrow May Not Be\" are on The Worst Movies Starring Saif Ali Khan on Flickchart.",
+      "url": "https://www.flickchart.com/charts.aspx?actor=saif+ali+khan&order=desc",
+      "tags": [
+        "entertainment"
+      ],
+      "created_at": "2026-09-13T20:10:11.166635",
+      "usage_count": 0
+    },
+    {
+      "id": "1789310411169",
+      "query": "which is the worst movie by Saif Ali Khan",
+      "source": "duckduckgo",
+      "title": "Saif Ali Khan's Flop Movies: 7 Films That Lost Producers Money",
+      "content": "Entertainment Saif Ali Khan's Flop Movies: 7 Films That Lost Producers Money When discussing Khan actors in Bollywood, the focus often lands on Salman Khan, Shah Rukh Khan, and Aamir Khan. However, Saif Ali Khan has also enjoyed a significant Bollywood career. Having been in...",
+      "url": "https://www.newsanalysisindia.com/entertainment/saif-ali-khans-flop-movies-7-films-that-lost-producers-money",
+      "tags": [
+        "entertainment"
+      ],
+      "created_at": "2026-09-13T20:10:11.169831",
+      "usage_count": 0
+    },
+    {
+      "id": "1789310411172",
+      "query": "which is the worst movie by Saif Ali Khan",
+      "source": "duckduckgo",
+      "title": "The 10 worst Saif ali khan movies ever - India Forums",
+      "content": "Saif didn't have top billing in this monstrosity, that honour going to the always-unwatchable Aditya Pancholi. That should pretty much say it all, but this cringeworthy mess of cliche -- directed by Dayal Nihalani -- typifies all that was wrong with Hindi cinema in the mid-1990s. It's embarrassingly bad, and I bet Saif agrees.",
+      "url": "https://www.indiaforums.com/forum/bollywood/3839046/the-10-worst-saif-ali-khan-movies-ever",
+      "tags": [
+        "entertainment"
+      ],
+      "created_at": "2026-09-13T20:10:11.173010",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311135887",
+      "query": "Artificial Intelligence trends",
+      "source": "wikipedia",
+      "title": "Wikipedia: Artificial general intelligence",
+      "content": "Artificial general intelligence (AGI) is a hypothetical type of artificial intelligence that matches or surpasses human capabilities across virtually all cognitive tasks. Unlike artificial narrow intelligence (ANI), whose competence is confined to well‑defined tasks, an AGI system can generalise knowledge, transfer skills between domains, and solve novel problems without task‑specific reprogramming.\nCreating AGI is a stated goal of technology companies such as OpenAI, Google, SpaceXAI, and Meta. A 2020 survey identified 72 active AGI research and development projects across 37 countries.\nAGI is a common topic in science fiction and futures studies.\nContention exists over whether AGI represents an existential risk. Some AI experts and industry figures have stated that mitigating the risk of human extinction posed by AGI should be a global priority. Others find the development of AGI to be in too remote a stage to present such a risk.\n\n\n== Terminology ==\nAGI is also known as strong AI, full AI, human-level AI, human-level intelligent AI, or general intelligent action.\nThe term \"artificial general intelligence\" was used in 1997 by Mark Gubrud in a discussion of the implications of fully automated military production and operations. A mathematical formalism of AGI named AIXI was proposed in 2000 by Marcus Hutter, who defines intelligence as \"an agent's ability to achieve goals or succeed in a wide range of environments\". This type of AGI has also been called \"universal artificial intelligence\". The term AGI was re-introduced and popularized by Shane Legg and Ben Goertzel around 2002.\nSome academic sources reserve the term \"strong AI\" for computer programs that will experience sentience or consciousness. In contrast, weak AI (or narrow AI) can solve a specific problem but lacks general cognitive abilities. Some academic sources use \"weak AI\" to refer more broadly to any programs that neither experience consciousness nor have a mind in the same sense as humans.\nRelated co",
+      "url": "https://en.wikipedia.org/wiki/Artificial general intelligence",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-13T20:22:15.887670",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311135890",
+      "query": "Artificial Intelligence trends",
+      "source": "wikipedia",
+      "title": "Wikipedia: Applications of artificial intelligence",
+      "content": "Artificial intelligence (AI) and its subfields have been used in applications throughout industry and academia. Machine learning has been used for various scientific and commercial purposes, including language translation, image recognition, decision-making, credit scoring, and e-commerce. Since the 2020s, massive advancements have been made in the field of generative AI (GenAI) as a result of the 2017 inception of Transformer Model architecture. GenAI has the ability to create text, images, voice, music, videos, and other forms of data from chat-based prompting.\n\n\n== Agriculture ==\n\nIn agriculture, AI has been proposed as a way for farmers to identify areas that need irrigation, fertilization, or pesticide treatments to increase yields, thereby improving efficiency. AI has been used to attempt to classify livestock pig call emotions, automate greenhouses, detect diseases and pests, and optimize irrigation.\n\n\n== AI-assisted software development ==\n\n\n== Physical AI ==\n\n\n== Architecture and design ==\nAI in architecture is the use of AI in automation, design, and planning in the architectural process or in assisting human skills in the field of architecture.\nAI has been used by some architects for design, and has been proposed as a way to automate planning and routine tasks in the field.\n\n\n== Business ==\n\nA 2019 study found that generative AI increased productivity by 15% in contact centers. Another 2019 study found it increased productivity by up to 40% for writing tasks. An August 2025 review by MIT found that of surveyed companies, 95% did not report any improvement in revenue from the use of AI. In September 2025, a Harvard Business Review article described how increased use of AI does not automatically lead to increases in revenue or actual productivity. Referring to \"AI generated work content that masquerades as good work, but lacks the substance to meaningfully advance a given task\", the article coined the term workslop. Per studies done in collaboration with th",
+      "url": "https://en.wikipedia.org/wiki/Applications of artificial intelligence",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-13T20:22:15.890429",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311135891",
+      "query": "Artificial Intelligence trends",
+      "source": "wikipedia",
+      "title": "Wikipedia: AI boom",
+      "content": "An AI boom is a period of rapid growth in the field of artificial intelligence. The most recent boom happened in the 2020s before seeing increased acceleration and media coverage. Generative AI technologies include large language models (LLM), which generate text and code, image models, and video models, and world models. This period is sometimes referred to as an AI spring, a term used to differentiate it from previous AI winters.\nAs of 2026, large frontier models have been released by OpenAI, Anthropic, Google DeepMind, Meta Superintelligence Labs, and SpaceXAI in the United States, and by the AI industry in China, including Alibaba Cloud, DeepSeek, Moonshot AI, and Z.ai. Many leading models, largely from China, are open weights or open-source; open weights small language models are optimized to run locally on personal computers. These include many models under Alibaba's Qwen, Google's Gemma, Nvidia's Nemotron, and Meta's Muse Glimmer.\nKey advances preceding precipitating the boom include the transformer (2017), generative pre-trained transformer (2018) and reinforcement learning from human feedback. During the boom, LLMs have evolved via the reasoning model, mixture of experts technique, and multimodal learning. \nControversies of the AI boom include its environmental impact, dominance by US Big Tech companies, effect on copyright, proliferation of deepfakes, threats to cybersecurity and biosecurity, its use in warfare, a potential economic bubble, and existential risks such as AI takeover resulting from artificial general intelligence and superintelligence. Since 2018, observers including Ian Bremmer, Nicholas Thompson, and Kai-Fu Lee have argued an AI arms race or AI Cold War exists between the US and China. The boom has impacted the semiconductor industry, causing a global memory supply shortage. As of 2025, ChatGPT has emerged as the 4th-most-visited website globally, surpassed only by Google, YouTube, and Facebook.\n\n\n== History ==\n\nIn 1950, Alan Turing propos",
+      "url": "https://en.wikipedia.org/wiki/AI boom",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-13T20:22:15.891603",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311289078",
+      "query": "Who is the CEO of Tesla?",
+      "source": "wikipedia",
+      "title": "Wikipedia: Tesla Cybertruck",
+      "content": "The Tesla Cybertruck is a battery-electric full-size pickup truck manufactured by Tesla, Inc. since 2023. It was presented as a prototype concept in November 2019, with an angular design composed of flat, unpainted stainless steel body panels, drawing comparisons to low-polygon computer models.\nWhile scheduled for production in late 2021, the vehicle had multiple delays before entering limited production at Gigafactory Texas in 2023, with customer deliveries beginning in November 2023. As of 2026, two variants are available: a tri-motor all-wheel drive (AWD) model marketed as the \"Cyberbeast\" with an EPA range of 320 miles (515 km) and a dual-motor AWD model with a range of 350 miles (565 km).\nAs of 2026, the Cybertruck is marketed in the United States, Mexico, Canada, South Korea, Qatar, the United Arab Emirates, and Saudi Arabia. The Cybertruck has been extensively criticized for its production quality issues, unusual appearance, and safety problems. In response to its disappointing sales, multiple news publications have described it as an \"automotive flop\".\n\n\n== History ==\n\n\n=== Background ===\nTesla CEO Elon Musk's presented his ideas in 2012, envisioning building a \"Tesla supertruck with crazy torque, dynamic air suspension, and corners like it's on rails\" with load-compensating suspensions comparable to a Ford F-250. In early 2014 Musk predicted 4–5 years before work could start on the product. In a 2015 interview with CNN, Musk said the Tesla pickup would be the equivalent of a Ford F-150.\nIn mid-2016, the outline for a consumer pickup truck was included in part 2 of the Tesla Master Plan. Musk suggested that the same chassis could be used for a van and a pickup truck. In late 2017, Musk teased the picture of a \"pickup truck that can carry a pickup truck\" at the official reveal for the Tesla Semi and the new Roadster.\nIn late 2018, Musk anticipated that a prototype would be ready to show in 2019.\nIn March 2019, following the Tesla Model Y launch, Musk distribu",
+      "url": "https://en.wikipedia.org/wiki/Tesla Cybertruck",
+      "tags": [],
+      "created_at": "2026-09-13T20:24:49.078476",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311289082",
+      "query": "Who is the CEO of Tesla?",
+      "source": "wikipedia",
+      "title": "Wikipedia: Tesla, Inc.",
+      "content": "Tesla, Inc. ( TEZ-lə or   TESS-lə) is an American multinational automotive and clean energy company. Headquartered in Austin, Texas, it designs, manufactures, and sells battery electric vehicles (BEVs), stationary battery energy storage devices from home to grid-scale, solar panels and solar shingles, and related products and services.\nThe company was incorporated in July 2003 by Martin Eberhard and Marc Tarpenning as Tesla Motors. Its name is a tribute to the inventor and electrical engineer Nikola Tesla. In February 2004, Elon Musk led Tesla's first funding round and became the company's chairman, subsequently claiming to be a co-founder; in 2008, he was named chief executive officer. The company began production of its first car model, the Roadster sports car, in 2008; the Model S sedan in 2012; the Model X SUV in 2015; the Model 3 sedan in 2017; the Model Y crossover in 2020; the Tesla Semi truck in 2022; and the Cybertruck pickup truck in 2023.\nTesla is one of the world's most valuable companies in terms of market capitalization. Starting in July 2020, it has been the world's most valuable automaker. From October 2021 to March 2022, Tesla was a US$1 trillion company, the sixth US company to reach that valuation. In 2023, the company was ranked 69th in the Forbes Global 2000. In 2024, the company led the battery electric vehicle market, with 17.6% share.\nTesla exceeded $1 trillion in market capitalization again between November 2024 and February 2025, and from May 2025 to July 2026. In November 2025, Tesla approved a pay package worth $1 trillion for Musk, which he is to receive over 10 years if he meets specific goals. By the end of 2025, the company lost its status as world's leading manufacturer of electric vehicles.\nTesla has been the subject of lawsuits, boycotts, government scrutiny, and journalistic criticism, stemming from allegations of multiple cases of whistleblower retaliation, worker rights violations such as sexual harassment and anti-union activit",
+      "url": "https://en.wikipedia.org/wiki/Tesla, Inc.",
+      "tags": [],
+      "created_at": "2026-09-13T20:24:49.082514",
+      "usage_count": 0
+    },
+    {
+      "id": "1789311289085",
+      "query": "Who is the CEO of Tesla?",
+      "source": "wikipedia",
+      "title": "Wikipedia: Tesla Robotaxi",
+      "content": "Tesla Robotaxi is a ride-hailing service operated by Tesla, Inc. that uses vehicles running the company's Full Self-Driving software. Limited service began in Austin, Texas, on June 22, 2025. As of September 2026 it operates without an in-vehicle safety supervisor in Texas (Austin, Dallas, Houston) and Florida (Miami, Orlando and Tampa), and with a safety supervisor in the San Francisco Bay Area. The fleet is primarily Tesla Model Y vehicles; purpose-built Tesla Cybercab vehicles were added in Austin on September 3, 2026. As of September 2026, over 1 million unsupervised miles (1,600,000 km) have been driven in Tesla Robotaxis.\nThe service represents a key part of Tesla CEO Elon Musk's long-term strategy for the company, which envisions a future where Tesla owners can add their personal vehicles to a shared autonomous ride-hailing network. The launch in Austin attracted significant media attention and scrutiny, with early riders documenting incidents such as the vehicle driving on the wrong side of the road, phantom braking, dropping passengers off in intersections and committing traffic violations that led to an investigation by the National Highway Traffic Safety Administration.\nTesla plans to have the Robotaxi network work with all current Tesla vehicles, starting with its Model Y and Cybercab vehicles. During Tesla's October 2024 We, Robot event it also demonstrated the Robovan which it plans to build and add to the network, but no timelines were given.\n\n\n== History and concept ==\nElon Musk first mentioned a future car sharing service for Tesla cars with autonomous control capability in 2016. He stated that the car could generate income for the owner while the owner pursued other activities, and said that all new Tesla cars were being built with the necessary hardware for \"full self-driving capability.\" In 2018, Musk indicated that the service would compete directly with companies like Uber and Lyft, but the Robotaxi network would be composed exclusively of auto",
+      "url": "https://en.wikipedia.org/wiki/Tesla Robotaxi",
+      "tags": [],
+      "created_at": "2026-09-13T20:24:49.085362",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 110,
+    "total_searches": 119,
     "total_queries": 0
   }
 }

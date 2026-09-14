@@ -42,12 +42,17 @@ def _bytes_to_data_uri(data: bytes, mime: str = "audio/mpeg") -> str:
 @app.post("/process")
 async def process(query: Query):
     try:
-        # Run the PLUTO brain (with self-learning)
+        # Run the PLUTO brain (with self-learning & local Ollama)
         answer = handle_request(query.text)
 
-        # Synthesize speech (async)
-        audio_bytes = await speak(answer, voice=query.voice)
-        audio_uri = _bytes_to_data_uri(audio_bytes)
+        # Synthesize speech (async) - gracefully handle offline state
+        audio_uri = ""
+        try:
+            audio_bytes = await speak(answer, voice=query.voice)
+            if audio_bytes:
+                audio_uri = _bytes_to_data_uri(audio_bytes)
+        except Exception as tts_err:
+            logging.warning(f"TTS synthesis unavailable (likely offline): {tts_err}")
 
         return {"answer": answer, "audio_uri": audio_uri}
     except Exception as exc:
@@ -156,7 +161,67 @@ def search_knowledge(query: str = ""):
         return {"error": str(exc)}
 
 # ------------------------------------------------------------------
-# Health check
+# Voice & Configuration endpoints
+# ------------------------------------------------------------------
+@app.get("/voices")
+def get_voices():
+    """Return available TTS voices."""
+    try:
+        from core.audio_tts import get_voice_options
+        return {"voices": get_voice_options()}
+    except Exception as e:
+        return {"voices": ["en-US-AriaNeural", "en-US-GuyNeural", "en-GB-SoniaNeural"]}
+
+@app.get("/reports")
+def list_reports():
+    """List all compiled research reports."""
+    from pathlib import Path
+    import os
+    reports_dir = Path("reports")
+    items = []
+    if reports_dir.exists():
+        for f in reports_dir.glob("*.md"):
+            if f.name == ".gitkeep":
+                continue
+            try:
+                stat = f.stat()
+                snippet = f.read_text(encoding="utf-8", errors="ignore")[:250]
+                items.append({
+                    "filename": f.name,
+                    "title": f.stem.replace("-", " ").title(),
+                    "size_bytes": stat.st_size,
+                    "updated_at": stat.st_mtime,
+                    "snippet": snippet
+                })
+            except Exception:
+                pass
+    items.sort(key=lambda x: x.get("updated_at", 0), reverse=True)
+    return {"reports": items}
+
+@app.get("/reports/{filename}")
+def get_report_content(filename: str):
+    """Get the full content of a specific report."""
+    from pathlib import Path
+    report_file = Path("reports") / filename
+    if not report_file.exists() or not report_file.is_file():
+        raise HTTPException(status_code=404, detail="Report not found")
+    try:
+        content = report_file.read_text(encoding="utf-8", errors="ignore")
+        return {"filename": filename, "content": content}
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=str(exc))
+
+@app.get("/reports/download/{filename}")
+def download_report(filename: str):
+    """Download a report file (pdf, docx, or md)."""
+    from pathlib import Path
+    from fastapi.responses import FileResponse
+    report_file = Path("reports") / filename
+    if not report_file.exists() or not report_file.is_file():
+        raise HTTPException(status_code=404, detail="Report not found")
+    return FileResponse(path=str(report_file.resolve()), filename=filename)
+# ------------------------------------------------------------------
+# Health & Status check
 # ------------------------------------------------------------------
 @app.get("/status")
 def get_status():
@@ -179,3 +244,8 @@ def get_status():
 # Serve the static UI
 # ------------------------------------------------------------------
 app.mount("/", StaticFiles(directory="ui", html=True), name="ui")
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)
+

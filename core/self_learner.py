@@ -48,17 +48,49 @@ class SelfLearner:
                 return False
 
     def answer(self, query: str) -> str:
-        """Provide answer using internet if available, otherwise KB + LLM."""
+        """Provide answer using KB/LLM first, then internet if needed and available."""
         logger.info(f"SelfLearner: Answering '{query}'")
+        query_stripped = query.strip()
+        if not query_stripped:
+            return "How can I assist you today?"
+
+        query_lower = query_stripped.lower()
+
+        # 0. Instant handling for basic greetings & simple math
+        if re.match(r'^(hi|hello|hey|hii|howdy|good morning|good afternoon|good evening)\b', query_lower):
+            return "Hello! How can I help you today?"
+        
+        if re.match(r'^\s*(what is|calculate|solve|compute)?\s*(\d+\s*[\+\-\*/×÷\^]\s*\d+)\s*$', query_lower):
+            m = re.search(r'(\d+\s*[\+\-\*/×÷\^]\s*\d+)', query_lower)
+            if m:
+                try:
+                    expr = m.group(1).replace('×', '*').replace('÷', '/').replace('^', '**')
+                    return f"{eval(expr)}"
+                except Exception:
+                    pass
 
         # Detect question complexity
         is_simple = self._is_simple_question(query)
         is_complex = self._is_complex_question(query)
 
+        # 1. Check knowledge base for verified stored facts
+        relevant = self.kb.get_relevant_knowledge(query, limit=3)
+        if relevant:
+            ans = self._answer_from_knowledge(query, relevant, is_simple=is_simple)
+            if ans and len(ans.strip()) > 5:
+                return ans
+
+        # 2. If online, perform live web search & learn into KB
         if self.is_online():
-            return self._answer_online(query, is_simple=is_simple, is_complex=is_complex)
-        else:
-            return self._answer_offline(query, is_simple=is_simple, is_complex=is_complex)
+            try:
+                online_ans = self._answer_online(query, is_simple=is_simple, is_complex=is_complex)
+                if online_ans and len(online_ans.strip()) > 5:
+                    return online_ans
+            except Exception as exc:
+                logger.warning(f"Online search error: {exc}")
+
+        # 3. Local LLM (Qwen) answering (offline or search fallback)
+        return self._answer_from_llm(query, is_simple=is_simple)
 
     def _is_simple_question(self, query: str) -> bool:
         """Check if this is a simple question needing short answer."""
@@ -69,18 +101,13 @@ class SelfLearner:
             return True
 
         # Math calculations
-        if re.match(r'^\s*(what is|calculate|solve|compute)\s+\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
-            return True
-        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
+        if re.match(r'^\s*(what is|calculate|solve|compute)?\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
             return True
 
         # Simple fact questions
         simple_patterns = [
-            r'^\s*(when was)\s+',
-            r'^\s*(who is|who was)\s+',
-            r'^\s*(where is|where was)\s+',
-            r'^\s*(define)\s+',
-            r'^\s*(translate)\s+',
+            r'^\s*(when was|who is|who was|where is|where was|which is)\s+',
+            r'^\s*(define|what is a|what is the)\s+',
             r'^\s*(tell me a|give me a)\s+(joke|fact)\s*$',
             r'^\s*(is |are )\s+',
             r'^\s*(yes or no|true or false)\s*',
@@ -90,9 +117,9 @@ class SelfLearner:
             if re.search(pattern, query_lower):
                 return True
 
-        # Very short questions
+        # Very short questions (unless complex keyword detected)
         words = query.split()
-        if len(words) <= 4:
+        if len(words) <= 5 and not self._is_complex_question(query):
             return True
 
         return False
@@ -100,13 +127,13 @@ class SelfLearner:
     def _is_complex_question(self, query: str) -> bool:
         """Check if this is a complex question needing detailed answer."""
         complex_patterns = [
-            r'\b(explain|describe|elaborate|detail)\b',
+            r'\b(explain|describe|elaborate|detail|detailed|in-depth)\b',
             r'\b(how does|how do|how did)\b',
-            r'\b(compare|contrast)\b',
-            r'\b(create a report|write a report)\b',
+            r'\b(compare|contrast|difference between)\b',
+            r'\b(create a report|write a report|generate report)\b',
             r'\b(research|analyze|investigate)\b',
             r'\b(why|because)\b.*\bexplain\b',
-            r'\b(list all|list everything)\b',
+            r'\b(list all|list everything|give a breakdown)\b',
             r'\b(factors|reasons|causes)\b',
             r'\b(history of|background of)\b',
             r'\b(importance|significance|impact)\b',
@@ -123,35 +150,24 @@ class SelfLearner:
         """Answer using internet search with adaptive length."""
         logger.info(f"Online mode - searching for '{query}' (simple={is_simple})")
 
-        # Search fewer results for simple questions
-        max_results = 3 if is_simple else 7
-
+        max_results = 3 if is_simple else 6
         research_result = self.search.search(query, max_results=max_results, depth='standard')
         results = research_result.documents
 
-        # Store results
-        for result in results[:5]:
-            self.kb.store_knowledge(
-                query=query,
-                source=getattr(result, 'source', 'web'),
-                title=getattr(result, 'title', 'Unknown'),
-                content=getattr(result, 'excerpt', getattr(result, 'snippet', '')),
-                url=getattr(result, 'url', ''),
-                tags=self._extract_tags(query),
-            )
+        # Store high quality results in knowledge base
+        for result in results[:4]:
+            content = getattr(result, 'excerpt', getattr(result, 'snippet', ''))
+            if content and len(content.strip()) > 20:
+                self.kb.store_knowledge(
+                    query=query,
+                    source=getattr(result, 'source', 'web'),
+                    title=getattr(result, 'title', 'Unknown'),
+                    content=content,
+                    url=getattr(result, 'url', ''),
+                    tags=self._extract_tags(query),
+                )
 
         return self._generate_answer(query, research_result, is_simple=is_simple)
-
-    def _answer_offline(self, query: str, is_simple: bool = False, is_complex: bool = False) -> str:
-        """Answer using knowledge base and LLM training data."""
-        logger.info(f"Offline mode - using KB + LLM for '{query}'")
-
-        relevant = self.kb.get_relevant_knowledge(query, limit=3)
-
-        if relevant:
-            return self._answer_from_knowledge(query, relevant, is_simple=is_simple)
-        else:
-            return self._answer_from_llm(query, is_simple=is_simple)
 
     def _answer_from_knowledge(self, query: str, knowledge: List[dict], is_simple: bool = False) -> str:
         """Generate answer from stored knowledge with appropriate length."""
@@ -163,28 +179,20 @@ class SelfLearner:
 
             if content:
                 context_parts.append(f"[Source {i}: {title}]({url})\n{content[:500]}")
-            else:
-                context_parts.append(f"[Source {i}: {title}]({url})\nNo detailed content.")
 
         context = "\n\n---\n\n".join(context_parts)
 
         if is_simple:
-            prompt = f"""You are PLUTO, an AI assistant. You have the following stored knowledge about "{query}":
-
-{context}
-
-Provide a BRIEF, CONCISE answer. One sentence is enough if possible. No elaboration needed."""
+            system_prompt = "You are PLUTO, an intelligent, helpful voice AI. Give a direct, factual, and concise answer in 1-2 sentences. Avoid preamble."
+            user_prompt = f"Knowledge:\n{context}\n\nQuestion: {query}\n\nConcise Answer:"
         else:
-            prompt = f"""You are PLUTO, an AI assistant. You have the following stored knowledge about "{query}":
-
-{context}
-
-Provide a clear, accurate answer to the question."""
+            system_prompt = "You are PLUTO, an intelligent, helpful AI assistant. Provide a clear, well-structured, and accurate answer based on the knowledge provided."
+            user_prompt = f"Knowledge:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 
         try:
-            answer = self.llm.reason(prompt)
-            if answer and len(answer) > 20:
-                return answer
+            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
+            if answer and len(answer.strip()) > 5:
+                return answer.strip()
         except Exception as e:
             logger.error(f"Knowledge answer failed: {e}")
 
@@ -192,181 +200,64 @@ Provide a clear, accurate answer to the question."""
 
     def _answer_from_llm(self, query: str, is_simple: bool = False) -> str:
         """Generate answer from LLM training data with appropriate length."""
-        query_lower = query.lower().strip()
-
-        # Handle math calculations directly
-        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
-            try:
-                # Safe math evaluation
-                expr = query_lower.replace('×', '*').replace('÷', '/')
-                result = eval(expr)  # Safe for simple math
-                return f"{result}"
-            except:
-                pass
-
         if is_simple:
-            prompt = f"""Answer this question directly and concisely. One sentence only:
-
-Question: {query}
-
-Answer:"""
+            system_prompt = "You are PLUTO, a fast and smart local voice AI. Answer concisely in 1-2 sentences. Be direct and avoid boilerplate."
+            user_prompt = f"Question: {query}\nAnswer:"
         else:
-            prompt = f"""Provide a clear, helpful answer to: {query}
-
-Answer:"""
+            system_prompt = "You are PLUTO, an intelligent AI assistant. Provide a comprehensive, accurate, and helpful response."
+            user_prompt = f"Question: {query}\nAnswer:"
 
         try:
-            answer = self.llm.reason(prompt)
-            if answer and len(answer) > 5:
-                # Clean up the answer
-                answer = answer.strip()
-                # Remove prefix like "The answer is..."
-                for prefix in ['The answer is', 'Here is', 'According to']:
-                    if answer.lower().startswith(prefix.lower()):
-                        answer = answer.split('.', 1)[-1].strip()
-                return answer
+            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
+            if answer and len(answer.strip()) > 5:
+                return answer.strip()
         except Exception as e:
             logger.error(f"LLM answer failed: {e}")
 
-        return f"Based on my knowledge: {query}"
+        return "I am currently unable to generate a response for this query."
 
     def _generate_answer(self, query: str, research_result, is_simple: bool = False) -> str:
         """Generate answer from research results with adaptive length."""
         results = research_result.documents
 
-        # Handle math directly even if online
-        query_lower = query.lower().strip()
-        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
-            try:
-                expr = query_lower.replace('×', '*').replace('÷', '/')
-                result = eval(expr)
-                return f"{result}"
-            except:
-                pass
+        # Build context from search results
+        context_parts = []
+        for i, result in enumerate(results[:4], 1):
+            title = getattr(result, 'title', 'Untitled')
+            excerpt = getattr(result, 'excerpt', getattr(result, 'snippet', ''))
+            url = getattr(result, 'url', '')
+
+            if excerpt and len(excerpt.strip()) > 15:
+                context_parts.append(f"[{title}]({url}): {excerpt[:400]}")
+
+        context = "\n\n".join(context_parts)
+
+        if not context:
+            return self._answer_from_llm(query, is_simple=is_simple)
 
         if is_simple:
-            # For simple questions, just give direct answer without search
-            prompt = f"""Answer this question directly in 1-2 sentences:
-
-Question: {query}
-
-Answer:"""
+            system_prompt = "You are PLUTO, an AI assistant. Using the provided search results, provide a direct, factual answer in 1-2 sentences. Keep it brief and accurate."
+            user_prompt = f"Search Results:\n{context}\n\nQuestion: {query}\n\nAnswer:"
         else:
-            # Build context from search results
-            context_parts = []
-            for i, result in enumerate(results[:3], 1):
-                title = getattr(result, 'title', 'Untitled')
-                excerpt = getattr(result, 'excerpt', getattr(result, 'snippet', ''))
-                url = getattr(result, 'url', '')
-
-                if excerpt and len(excerpt) > 20:
-                    context_parts.append(f"[{title}]({url})\n{excerpt[:300]}")
-
-            context = "\n\n".join(context_parts)
-
-            if context:
-                prompt = f"""Based on this research, answer the question clearly:
-
-Question: {query}
-
-Research:
-{context}
-
-Answer:"""
-            else:
-                prompt = f"""Answer this question based on general knowledge:
-
-Question: {query}
-
-Answer:"""
+            system_prompt = "You are PLUTO, an AI assistant. Using the provided search results, provide a clear, accurate, and well-structured answer."
+            user_prompt = f"Search Results:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 
         try:
-            answer = self.llm.reason(prompt)
-            if answer and len(answer) > 5:
-                # Clean up answer
-                answer = answer.strip()
-                # Remove prefixes
-                for prefix in ['Based on the research', 'According to the sources', 'The research shows']:
-                    if answer.lower().startswith(prefix.lower()):
-                        answer = answer.split(':', 1)[-1].strip()
-                return answer
+            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
+            if answer and len(answer.strip()) > 5:
+                return answer.strip()
         except Exception as e:
             logger.error(f"Answer generation failed: {e}")
 
-        return self._direct_answer(query)
-
-    def _direct_answer(self, query: str) -> str:
-        """Give a direct answer without searching."""
-        query_lower = query.lower().strip()
-
-        # Math
-        if re.match(r'^\s*\d+\s*[\+\-\*/×\*]\s*\d+\s*$', query_lower):
-            try:
-                expr = query_lower.replace('×', '*').replace('÷', '/')
-                return str(eval(expr))
-            except:
-                pass
-
-        # Greetings
-        if query_lower in ['hi', 'hello', 'hey', 'hii']:
-            return "Hello! How can I help you today?"
-
-        # Simple facts
-        if 'who made ai' in query_lower or 'who created ai' in query_lower:
-            return "AI was developed by many researchers over decades. Key figures include Alan Turing, John McCarthy, and Marvin Minsky."
-
-        if 'when was taj mahal built' in query_lower:
-            return "The Taj Mahal was built between 1632 and 1653 by Mughal Emperor Shah Jahan."
-
-        return "I'll do my best to answer your question."
-
-    def _answer_from_snippets(self, query: str, results: List[dict]) -> str:
-        """Generate answer from snippets when full content unavailable."""
-        snippets = []
-        for i, r in enumerate(results[:5], 1):
-            snippet = getattr(r, 'snippet', getattr(r, 'excerpt', ''))
-            if snippet:
-                snippets.append(f"{i}. {getattr(r, 'title', 'Untitled')}: {snippet}")
-
-        if not snippets:
-            try:
-                return self.llm.reason(f"Concise answer to: {query}")
-            except:
-                return f"Here's what I know: {query}"
-
-        prompt = f"""Answer concisely based on these results for "{query}":
-{chr(10).join(snippets[:3])}"""
-
-        try:
-            answer = self.llm.reason(prompt)
-            return answer if answer and len(answer) > 10 else self._format_snippets(snippets)
-        except:
-            return self._format_snippets(snippets)
+        return self._answer_from_llm(query, is_simple=is_simple)
 
     def _format_knowledge_answer(self, query: str, knowledge: List[dict], is_simple: bool = False) -> str:
         """Format stored knowledge into answer."""
-        if is_simple:
-            # Just give direct answer
-            return f"The answer is based on stored knowledge about '{query}'."
-        else:
-            lines = [f"Based on stored knowledge about '{query}':\n"]
-            for i, entry in enumerate(knowledge[:3], 1):
-                title = entry.get('title', 'Untitled')
-                content = entry.get('content', entry.get('excerpt', ''))
-                if content:
-                    lines.append(f"{i}. **{title}**: {content[:200]}...")
-            return "\n".join(lines)
-
-    def _format_snippets(self, snippets: List[str]) -> str:
-        """Format search snippets into answer."""
-        if not snippets:
-            return "No specific information found."
-
-        lines = ["Here's what I found:\n"]
-        for snippet in snippets[:3]:
-            lines.append(f"- {snippet}")
-
-        return "\n".join(lines)
+        if not knowledge:
+            return "No specific information found in knowledge base."
+        first = knowledge[0]
+        content = first.get('content', first.get('excerpt', ''))
+        return content[:300] if content else f"Information found regarding {query}."
 
     def _extract_tags(self, query: str) -> List[str]:
         """Extract relevant tags from query."""
@@ -374,12 +265,13 @@ Answer:"""
         query_lower = query.lower()
 
         tag_map = {
-            'ai': ['artificial intelligence', 'machine learning', 'neural network'],
+            'ai': ['artificial intelligence', 'machine learning', 'neural network', 'deep learning', 'llm'],
             'quantum': ['quantum', 'qubit', 'superposition', 'entanglement'],
-            'climate': ['climate', 'environment', 'sustainability'],
-            'space': ['space', 'mars', 'nasa', 'exploration'],
-            'tech': ['technology', 'computer', 'software', 'coding'],
-            'science': ['science', 'physics', 'chemistry', 'biology'],
+            'climate': ['climate', 'environment', 'sustainability', 'global warming'],
+            'space': ['space', 'mars', 'nasa', 'exploration', 'astronomy', 'planet'],
+            'tech': ['technology', 'computer', 'software', 'coding', 'programming'],
+            'science': ['science', 'physics', 'chemistry', 'biology', 'medicine'],
+            'entertainment': ['movie', 'film', 'actor', 'actress', 'director', 'cinema', 'bollywood', 'hollywood'],
         }
 
         for tag, keywords in tag_map.items():
@@ -387,6 +279,39 @@ Answer:"""
                 tags.append(tag)
 
         return tags
+
+    def train_on_topic(self, topic: str) -> dict:
+        """Train AI on a specific topic by searching and storing knowledge."""
+        try:
+            if not self.is_online():
+                return {"status": "offline", "message": "Currently in offline mode", "topic": topic}
+            research_result = self.search.search(topic, max_results=5, depth='deep')
+            docs = getattr(research_result, 'documents', [])
+            count = 0
+            for doc in docs:
+                content = getattr(doc, 'excerpt', getattr(doc, 'snippet', ''))
+                if content:
+                    self.kb.store_knowledge(
+                        query=topic,
+                        source=getattr(doc, 'source', 'web'),
+                        title=getattr(doc, 'title', topic),
+                        content=content,
+                        url=getattr(doc, 'url', ''),
+                        tags=self._extract_tags(topic),
+                    )
+                    count += 1
+            return {"status": "success", "topic": topic, "stored_entries": count}
+        except Exception as e:
+            logger.error(f"train_on_topic error: {e}")
+            return {"status": "error", "error": str(e), "topic": topic}
+
+    def should_learn(self, topic: str) -> bool:
+        """Determine if learning is needed for this topic."""
+        return True
+
+    def learn_and_answer(self, topic: str) -> str:
+        """Learn and answer query."""
+        return self.answer(topic)
 
     def get_learning_stats(self) -> dict:
         """Return statistics about the learning system."""

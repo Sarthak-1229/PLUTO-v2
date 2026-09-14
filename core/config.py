@@ -7,9 +7,14 @@ Updated configuration for PLUTO v2 with enhanced features.
 # ============================================================
 VRAM_BUDGET_MB = 6000
 STT_MODEL_SIZE = "small"
-LLM_MODEL_NAME = "qwen2.5:7b"   # Newer, smarter 7B model (~4.5GB VRAM)
+LLM_MODEL_NAME = "qwen2.5:7b"   # Primary LLM (~4.5GB VRAM at Q4)
 REPORTS_DIR = "reports"
 USE_LLM_SUMMARY = True
+
+# STT (Speech-to-Text) is intentionally kept on CPU because qwen2.5:7b
+# at Q4 quantization consumes the majority of the 6GB VRAM budget.
+# Running Whisper on GPU would trigger an OOM conflict with the LLM.
+FORCE_STT_CPU = True
 
 # ============================================================
 # Audio Configuration
@@ -25,7 +30,8 @@ MAX_SEARCH_RESULTS = 5
 SEARCH_TIMEOUT = 10             # Seconds for web requests
 WIKIPEDIA_API_ENABLED = True
 ARXIV_ENABLED = True
-OFFLINE_MODE = True            # Set to True to force offline mode
+OFFLINE_MODE = False            # False: auto-detect internet; True: force offline
+
 
 # ============================================================
 # UI Features

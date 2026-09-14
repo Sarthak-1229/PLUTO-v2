@@ -4,8 +4,8 @@ Handles intent routing, LLM reasoning, and request handling.
 """
 
 from typing import Literal
-import requests
 import logging
+import re
 
 # Import necessary modules for report generation and configuration
 from core.researcher import search_topic, compile_report
@@ -40,79 +40,76 @@ class LLMReasoner:
         self._discover_model()
 
     def _discover_model(self):
-        """Discover available models from Ollama."""
-        target_model = getattr(config, "LLM_MODEL_NAME", "qwen2.5:3b")
+        """Discover available models from Ollama using the ollama Python package."""
+        target_model = config.LLM_MODEL_NAME
         try:
-            r = requests.get("http://127.0.0.1:11434/api/tags", timeout=3)
-            if r.status_code == 200:
-                data = r.json()
-                available = [m.get("name", "") for m in data.get("models", [])]
-                # Check exact or prefix match for target
+            import ollama
+            client = ollama.Client(host='http://127.0.0.1:11434')
+            resp = client.list()
+            available = [m.model for m in resp.models]
+            # Check exact or prefix match for target
+            for m in available:
+                if target_model in m or m.startswith(target_model.split(":")[0]):
+                    self.model = m
+                    return
+            # Prioritize optimal local models
+            for pref in ["qwen2.5", "qwen3", "llama3.2", "llama3"]:
                 for m in available:
-                    if target_model in m or m.startswith(target_model.split(":")[0]):
+                    if pref in m:
                         self.model = m
                         return
-                # Prioritize optimal local models
-                for pref in ["qwen2.5:3b", "qwen2.5", "qwen3:8b", "llama3.2", "llama3"]:
-                    for m in available:
-                        if pref in m:
-                            self.model = m
-                            return
-                # If target not found, pick first available model
-                if available:
-                    self.model = available[0]
-                    return
+            # If target not found, pick first available model
+            if available:
+                self.model = available[0]
+                return
         except Exception as exc:
             logging.warning(f"Ollama server check: {exc}")
         self.model = target_model
 
     def reason(self, prompt: str, system_prompt: str = None) -> str:
-        """Send prompt to the Ollama model and return the generated text."""
+        """Send prompt to the Ollama model using the ollama Python package."""
         # Try discovering model if not yet verified
         if not self.model:
             self._discover_model()
 
-        messages = []
-        if system_prompt:
-            messages.append({"role": "system", "content": system_prompt})
-        messages.append({"role": "user", "content": prompt})
-
-        options = {
-            "num_ctx": 2048,
-            "temperature": 0.6
-        }
-        if self.model and ("8b" in self.model.lower() or "7b" in self.model.lower()):
-            options["num_gpu"] = 22
-
-        payload = {
-            "model": self.model or "qwen3:8b",
-            "messages": messages,
-            "options": options,
-            "stream": False
-        }
-
         try:
-            r = requests.post(
-                "http://127.0.0.1:11434/api/chat",
-                json=payload,
-                timeout=120
+            import ollama
+            client = ollama.Client(host='http://127.0.0.1:11434')
+
+            messages = []
+            if system_prompt:
+                messages.append({"role": "system", "content": system_prompt})
+            messages.append({"role": "user", "content": prompt})
+
+            response = client.chat(
+                model=self.model or config.LLM_MODEL_NAME,
+                messages=messages,
+                options={
+                    "num_ctx": 2048,
+                    "temperature": 0.6,
+                },
+                keep_alive=300,  # Keep model loaded for 5 minutes for faster follow-up
             )
-            if r.status_code != 200:
-                logging.error(f"Ollama API error {r.status_code}: {r.text[:100]}")
-                # Try fallback to first available model
-                self._discover_model()
-                return "I am currently unable to process this request through the local model."
-            
-            data = r.json()
-            content = data.get("message", {}).get("content", "").strip()
-            
-            # Clean up <think>...</think> tags if present in reasoning models like Qwen 3
-            import re
+
+            content = response.message.content.strip()
+
+            # Clean up  tags if present in reasoning models like Qwen 3
             cleaned_content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
             return cleaned_content if cleaned_content else content
+
+        except ollama.ResponseError as exc:
+            logging.error(f"Ollama API error: {exc}")
+            # Try fallback to first available model
+            self._discover_model()
+            if self.model:
+                return f"I am currently unable to process this request through the local model ({self.model}). Please ensure Ollama is running with `ollama serve`."
+            return "I am currently unable to process this request through the local model."
+        except ollama.RequestError as exc:
+            logging.error(f"Ollama request error: {exc}")
+            return "I am currently unable to process this request. Please ensure Ollama is running with `ollama serve` and the model is pulled with `ollama pull qwen2.5:7b`."
         except Exception as exc:
             logging.error(f"LLMReasoner error: {exc}")
-            return f"I encountered an error communicating with the local language model."
+            return "I encountered an error communicating with the local language model."
 
 
 

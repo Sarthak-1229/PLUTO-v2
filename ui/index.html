@@ -11,6 +11,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
   <!-- Self-contained complete Design System (Zero external CDN dependency) -->
+  <!-- Markdown & MathJax for rich response rendering -->
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     :root {
       --bg: #FAF9F7;
@@ -433,6 +437,56 @@
     .tag-primary { background: var(--primary-fixed); color: var(--on-primary-fixed); }
     .tag-secondary { background: var(--secondary-fixed); color: var(--on-secondary-fixed); }
     .tag-tertiary { background: var(--tertiary-fixed); color: var(--on-tertiary-fixed); }
+
+    /* Markdown rendering styles */
+    .msg-assistant-card h1, .msg-assistant-card h2, .msg-assistant-card h3, .msg-assistant-card h4 {
+      margin: 12px 0 8px 0;
+      color: var(--primary);
+    }
+    .msg-assistant-card h1 { font-size: 1.5em; font-weight: 700; }
+    .msg-assistant-card h2 { font-size: 1.3em; font-weight: 700; }
+    .msg-assistant-card h3 { font-size: 1.1em; font-weight: 600; }
+    .msg-assistant-card h4 { font-size: 1em; font-weight: 600; }
+
+    .msg-assistant-card ul, .msg-assistant-card ol {
+      margin: 8px 0;
+      padding-left: 24px;
+    }
+
+    .msg-assistant-card li {
+      margin: 4px 0;
+      line-height: 1.5;
+    }
+
+    .msg-assistant-card code {
+      background: var(--surface-container-high);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9em;
+    }
+
+    .msg-assistant-card pre {
+      background: var(--surface-container);
+      padding: 12px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 8px 0;
+      font-size: 0.9em;
+    }
+
+    .msg-assistant-card blockquote {
+      border-left: 4px solid var(--primary);
+      padding-left: 12px;
+      margin-left: 0;
+      color: var(--text-muted);
+    }
+
+    /* MathJax equation styling */
+    .msg-assistant-card mjx-container {
+      display: inline-block;
+      margin: 4px 0;
+    }
 
     /* Responsive */
     @media (max-width: 860px) {
@@ -938,6 +992,13 @@
         `;
         stream.appendChild(assistantDiv);
 
+        // Trigger MathJax to render any equations in the newly added content
+        if (window.MathJax) {
+          MathJax.typesetPromise([assistantDiv]).catch(err =>
+            console.log('MathJax rendering error:', err)
+          );
+        }
+
         if (autoPlay && audioUri) {
           playAudio(id, audioUri);
         }
@@ -964,6 +1025,18 @@
     // Lightweight Offline Markdown & Visual Renderer
     function renderMarkdown(md) {
       if (!md) return '';
+
+      // Use markdown-it if available, otherwise fall back to custom renderer
+      if (window._plutoMd) {
+        let html = window._plutoMd.render(md);
+        return html;
+      }
+
+      // Fallback to existing custom renderer
+      return renderMarkdownCustom(md);
+    }
+
+    function renderMarkdownCustom(md) {
       let html = escapeHtml(md);
 
       // Images ![alt](url)
@@ -1129,6 +1202,13 @@
         const res = await fetch(`/reports/${filename}`);
         const data = await res.json();
         body.innerHTML = renderMarkdown(data.content);
+
+        // Trigger MathJax to render any equations in the report modal
+        if (window.MathJax) {
+          MathJax.typesetPromise([body]).catch(err =>
+            console.log('MathJax rendering error:', err)
+          );
+        }
       } catch (e) {
         body.innerText = 'Error loading report content: ' + e.message;
       }
@@ -1237,6 +1317,15 @@
 
     // Startup Initialization
     document.addEventListener('DOMContentLoaded', () => {
+      // Initialize markdown-it parser
+      if (window.markdownit) {
+        window._plutoMd = window.markdownit({
+          breaks: true,
+          linkify: true,
+          html: true
+        });
+      }
+
       pollStats();
       setInterval(pollStats, 3000);
 

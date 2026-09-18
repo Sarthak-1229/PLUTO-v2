@@ -14,7 +14,29 @@
   <!-- Markdown & MathJax for rich response rendering -->
   <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <!-- MathJax 3 configuration — MUST appear before the library load (no async!) -->
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: false,
+        processEnvironments: true
+      },
+      svg: {
+        fontCache: 'global'
+      },
+      startup: {
+        ready: function() {
+          MathJax.startup.defaultReady();
+          window._mathjaxReady = true;
+          console.log('[PLUTO] MathJax v' + MathJax.version + ' ready');
+        }
+      }
+    };
+  </script>
+  <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <style>
     :root {
       --bg: #FAF9F7;
@@ -981,7 +1003,7 @@
             </div>` : ''}
 
             <div id="content_${id}">
-              ${renderMarkdown(answer)}
+              ${renderMarkdownAndMath(answer)}
             </div>
 
             <div style="display:flex; align-items:center; justify-content:space-between; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px; color:var(--text-subtle);">
@@ -993,10 +1015,28 @@
         stream.appendChild(assistantDiv);
 
         // Trigger MathJax to render any equations in the newly added content
-        if (window.MathJax) {
-          MathJax.typesetPromise([assistantDiv]).catch(err =>
-            console.log('MathJax rendering error:', err)
-          );
+        function runMathJax() {
+          if (!window.MathJax || !window.MathJax.typesetPromise) {
+            console.warn('[PLUTO] MathJax not available for typesetting');
+            return;
+          }
+          console.log('[PLUTO] Calling MathJax.typesetPromise, ready:', window._mathjaxReady);
+          console.log('[PLUTO] Content HTML:', assistantDiv.innerHTML.substring(0, 500));
+          window.MathJax.typesetPromise([assistantDiv]).then(() => {
+            console.log('[PLUTO] MathJax typeset complete');
+          }).catch(err => {
+            console.error('[PLUTO] MathJax typeset error:', err);
+          });
+        }
+        if (window._mathjaxReady) {
+          runMathJax();
+        } else {
+          const _cj = setInterval(() => {
+            if (window._mathjaxReady) {
+              clearInterval(_cj);
+              runMathJax();
+            }
+          }, 200);
         }
 
         if (autoPlay && audioUri) {
@@ -1023,17 +1063,56 @@
     }
 
     // Lightweight Offline Markdown & Visual Renderer
-    function renderMarkdown(md) {
-      if (!md) return '';
+    function renderMarkdownAndMath(rawText) {
+      if (!rawText) return '';
 
-      // Use markdown-it if available, otherwise fall back to custom renderer
+      // Step 1: Protect LaTeX delimiters by replacing with placeholders
+      // markdown-it would otherwise consume the backslashes as escapes
+      const placeholders = {
+        inlineOpen: '__PLUTO_LATEX_INLINE_OPEN__',
+        inlineClose: '__PLUTO_LATEX_INLINE_CLOSE__',
+        displayOpen: '__PLUTO_LATEX_DISPLAY_OPEN__',
+        displayClose: '__PLUTO_LATEX_DISPLAY_CLOSE__'
+      };
+
+      let protectedText = rawText
+        .replace(/\\\(/g, placeholders.inlineOpen)
+        .replace(/\\\)/g, placeholders.inlineClose)
+        .replace(/\\\[/g, placeholders.displayOpen)
+        .replace(/\\\]/g, placeholders.displayClose);
+
+      // Step 2: Render markdown (safe — placeholders won't be touched)
+      let html;
       if (window._plutoMd) {
-        let html = window._plutoMd.render(md);
-        return html;
+        html = window._plutoMd.render(protectedText);
+      } else {
+        html = renderMarkdownCustom(protectedText);
       }
 
-      // Fallback to existing custom renderer
-      return renderMarkdownCustom(md);
+      // Step 3: Restore delimiters as $...$ for MathJax
+      html = html
+        .replace(new RegExp(placeholders.inlineOpen, 'g'), '$')
+        .replace(new RegExp(placeholders.inlineClose, 'g'), '$')
+        .replace(new RegExp(placeholders.displayOpen, 'g'), '$$')
+        .replace(new RegExp(placeholders.displayClose, 'g'), '$$');
+
+      return html;
+    }
+
+    // Backwards-compatible alias
+    function renderMarkdown(md) {
+      return renderMarkdownAndMath(md);
+    }
+
+    function escapeHtml(text) {
+      const map = {
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#039;'
+      };
+      return text.replace(/[&<>"']/g, m => map[m]);
     }
 
     function renderMarkdownCustom(md) {
@@ -1091,12 +1170,6 @@
       html = html.replace(/\n\n/g, '<br/><br/>');
 
       return html;
-    }
-
-    function escapeHtml(text) {
-      const d = document.createElement('div');
-      d.innerText = text;
-      return d.innerHTML;
     }
 
     function copyText(elemId) {
@@ -1201,13 +1274,24 @@
       try {
         const res = await fetch(`/reports/${filename}`);
         const data = await res.json();
-        body.innerHTML = renderMarkdown(data.content);
+        console.log('[PLUTO] Report content preview:', JSON.stringify(data).substring(0, 300));
+        body.innerHTML = renderMarkdownAndMath(data.content);
+        console.log('[PLUTO] Report HTML rendered, length:', body.innerHTML.length);
 
         // Trigger MathJax to render any equations in the report modal
-        if (window.MathJax) {
-          MathJax.typesetPromise([body]).catch(err =>
-            console.log('MathJax rendering error:', err)
-          );
+        function runMathJax() {
+          if (window.MathJax && window.MathJax.typesetPromise) {
+            window.MathJax.typesetPromise([body]).catch(err =>
+              console.log('MathJax rendering error:', err)
+            );
+          }
+        }
+        if (window._mathjaxReady) {
+          runMathJax();
+        } else {
+          const _check = setInterval(() => {
+            if (window._mathjaxReady) { clearInterval(_check); runMathJax(); }
+          }, 200);
         }
       } catch (e) {
         body.innerText = 'Error loading report content: ' + e.message;
@@ -1324,6 +1408,29 @@
           linkify: true,
           html: true
         });
+        console.log('[PLUTO] markdown-it initialized:', !!window._plutoMd);
+      } else {
+        console.warn('[PLUTO] markdown-it CDN not loaded!');
+      }
+
+      // Listen for MathJax ready
+      if (window.MathJax) {
+        if (window._mathjaxReady) {
+          console.log('[PLUTO] MathJax already ready');
+        } else {
+          const _mjCheck = setInterval(() => {
+            if (window._mathjaxReady) {
+              clearInterval(_mjCheck);
+              console.log('[PLUTO] MathJax ready');
+            }
+          }, 200);
+          // Also wait for load event
+          window.addEventListener('load', () => {
+            console.log('[PLUTO] Window loaded, _mathjaxReady:', window._mathjaxReady);
+          });
+        }
+      } else {
+        console.warn('[PLUTO] MathJax not loaded!');
       }
 
       pollStats();

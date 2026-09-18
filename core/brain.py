@@ -11,6 +11,8 @@ import re
 from core.researcher import search_topic, compile_report
 from core import config
 
+logger = logging.getLogger(__name__)
+
 
 def route_intent(text: str) -> Literal['chat', 'report']:
     """
@@ -31,13 +33,13 @@ def route_intent(text: str) -> Literal['chat', 'report']:
 
 
 class LLMReasoner:
-    """
-    A class to handle LLM-based reasoning using a locally-running Ollama server.
-    """
+    """A class to handle LLM-based reasoning using a locally-running Ollama server."""
 
     def __init__(self):
         self.model = None
         self._discover_model()
+        self._conversation_history = []  # Cap at 4 turns (8 messages)
+        self._max_history = 8  # 4 user + 4 assistant messages
 
     def _discover_model(self):
         """Discover available models from Ollama using the ollama Python package."""
@@ -76,10 +78,19 @@ class LLMReasoner:
             import ollama
             client = ollama.Client(host='http://127.0.0.1:11434')
 
+            # Build messages with capped conversation history
             messages = []
             if system_prompt:
                 messages.append({"role": "system", "content": system_prompt})
+
+            # Add capped conversation history (last 4 turns)
+            messages.extend(self._conversation_history[-self._max_history:])
+
+            # Add current user prompt
             messages.append({"role": "user", "content": prompt})
+
+            # Log VRAM before call
+            vram_info = self._log_vram("before")
 
             response = client.chat(
                 model=self.model or config.LLM_MODEL_NAME,
@@ -94,8 +105,21 @@ class LLMReasoner:
             content = response.message.content.strip()
 
             # Clean up  tags if present in reasoning models like Qwen 3
-            cleaned_content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
-            return cleaned_content if cleaned_content else content
+            cleaned_content = re.sub(r'', '', content, flags=re.DOTALL).strip()
+            result = cleaned_content if cleaned_content else content
+
+            # Update conversation history
+            self._conversation_history.append({"role": "user", "content": prompt})
+            self._conversation_history.append({"role": "assistant", "content": result})
+
+            # Keep history capped
+            if len(self._conversation_history) > self._max_history:
+                self._conversation_history = self._conversation_history[-self._max_history:]
+
+            # Log VRAM after call
+            self._log_vram("after", vram_info)
+
+            return result
 
         except ollama.ResponseError as exc:
             logging.error(f"Ollama API error: {exc}")
@@ -110,6 +134,33 @@ class LLMReasoner:
         except Exception as exc:
             logging.error(f"LLMReasoner error: {exc}")
             return "I encountered an error communicating with the local language model."
+
+    def _log_vram(self, stage: str, prev_info: dict = None) -> dict:
+        """Log VRAM usage before/after LLM calls."""
+        try:
+            import torch
+            if torch.cuda.is_available():
+                allocated = torch.cuda.memory_allocated() / (1024 * 1024)
+                reserved = torch.cuda.memory_reserved() / (1024 * 1024)
+                total, free = torch.cuda.mem_get_info()
+                free_mb = free / (1024 * 1024)
+                info = {
+                    "allocated_mb": round(allocated, 2),
+                    "reserved_mb": round(reserved, 2),
+                    "free_mb": round(free_mb, 2),
+                    "total_mb": round(total / (1024 * 1024), 2),
+                }
+                logger.info(f"VRAM {stage}: {info['allocated_mb']:.1f} MB allocated, {info['free_mb']:.1f} MB free")
+
+                # Warn if free VRAM is low
+                if info['free_mb'] < 5000:
+                    logger.warning(f"Low VRAM warning: only {info['free_mb']:.0f} MB free")
+
+                return info
+        except Exception as e:
+            logger.debug(f"VRAM logging failed: {e}")
+
+        return {}
 
 
 

@@ -1,4 +1,3 @@
-
 # PLUTO v2 - Phase 1 Behavioral Contract
 
 ## Architecture & Constraints
@@ -23,3 +22,9 @@
 ## Commands
 
 * Run the main agent loop: `python main.py`
+
+## Git Discipline
+
+- NEVER run `git commit` or `git push` without explicit confirmation from
+  the user in that same session. Always summarize what changed and ask
+  "commit now?" first, even if a previous session auto-committed.

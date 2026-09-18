@@ -1432,7 +1432,7 @@
       "url": "https://en.wikipedia.org/wiki/Tesla Cybertruck",
       "tags": [],
       "created_at": "2026-09-13T20:24:49.078476",
-      "usage_count": 0
+      "usage_count": 1
     },
     {
       "id": "1789311289082",
@@ -1443,7 +1443,7 @@
       "url": "https://en.wikipedia.org/wiki/Tesla, Inc.",
       "tags": [],
       "created_at": "2026-09-13T20:24:49.082514",
-      "usage_count": 0
+      "usage_count": 1
     },
     {
       "id": "1789311289085",
@@ -1455,10 +1455,563 @@
       "tags": [],
       "created_at": "2026-09-13T20:24:49.085362",
       "usage_count": 0
+    },
+    {
+      "id": "1789455202428",
+      "query": "what is 100 x 5000",
+      "source": "wikipedia",
+      "title": "Wikipedia: Law of total probability",
+      "content": "In probability theory, the law (or formula) of total probability is a fundamental rule relating marginal probabilities to conditional probabilities. It expresses the total probability of an outcome which can be realized via several distinct events, hence the name.\n\n\n== Statement ==\nThe law of total probability is a theorem that states, in its discrete case, if \n  \n    \n      \n        \n          {\n          \n            \n              B\n              \n                n\n              \n            \n            :\n            n\n            =\n            1\n            ,\n            2\n            ,\n            3\n            ,\n            …\n          \n          }\n        \n      \n    \n    {\\displaystyle \\left\\{{B_{n}:n=1,2,3,\\ldots }\\right\\}}\n  \n is a finite or countably infinite set of mutually exclusive and collectively exhaustive events, then for any event \n  \n    \n      \n        A\n      \n    \n    {\\displaystyle A}\n  \n\n  \n    \n      \n        P\n        (\n        A\n        )\n        =\n        \n          ∑\n          \n            n\n          \n        \n        P\n        (\n        A\n        ∩\n        \n          B\n          \n            n\n          \n        \n        )\n      \n    \n    {\\displaystyle P(A)=\\sum _{n}P(A\\cap B_{n})}\n  \n\nor, alternatively,\n\n  \n    \n      \n        P\n        (\n        A\n        )\n        =\n        \n          ∑\n          \n            n\n          \n        \n        P\n        (\n        A\n        ∣\n        \n          B\n          \n            n\n          \n        \n        )\n        P\n        (\n        \n          B\n          \n            n\n          \n        \n        )\n        ,\n      \n    \n    {\\displaystyle P(A)=\\sum _{n}P(A\\mid B_{n})P(B_{n}),}\n  \n\nwhere, for any \n  \n    \n      \n        n\n      \n    \n    {\\displaystyle n}\n  \n, if \n  \n    \n      \n        P\n        (\n        \n          B\n          \n            n\n          \n        \n        )\n        =\n        0\n      \n    \n    {\\displaystyle P(B_{n})=0}\n  \n, then these terms are simply omitted from the summat",
+      "url": "https://en.wikipedia.org/wiki/Law of total probability",
+      "tags": [],
+      "created_at": "2026-09-15T12:23:22.428722",
+      "usage_count": 0
+    },
+    {
+      "id": "1789455202431",
+      "query": "what is 100 x 5000",
+      "source": "wikipedia",
+      "title": "Wikipedia: Stock split",
+      "content": "A stock split or stock divide increases the number of shares in a company. For example, after a 2-for-1 split, each investor will own double the number of shares, and each share will be worth half as much. A stock split causes a decrease of market price of individual shares, but does not change the total market capitalization of the company: stock dilution does not occur.\nA company may split its stock when the market price per share is so high that it becomes unwieldy when traded. One of the reasons is that a very high share price may deter small investors from buying the shares. Stock splits are usually initiated after a large run up in share price.\n\n\n== Effects ==\nThe main effect of stock splits is an increase in the liquidity of a stock: there are more buyers and sellers for 10 shares at $10 than 1 share at $100. Some companies avoid a stock split to obtain the opposite strategy: by refusing to split the stock and keeping the price high, they reduce trading volume. Berkshire Hathaway is a notable example of this. As of 2025, the company has never split its stock and trades at over US$750,000.\nOne possible explanation for increased trading volume is confusion. If some investors are unable to recognize that a split stock should trade at a lower price than before the split, the result can be a temporary increase in demand and the share price. Others contend that the management of a company, by initiating a stock split, is implicitly signaling its confidence in the future prospects of the company.\nIn a market where there is a high minimum number of shares, or a penalty for trading in so-called odd lots (a non multiple of some arbitrary number of shares), a reduced share price may attract more attention from small investors. Small investors such as these, however, will have negligible impact on the overall price.\n\n\n== Split ratios ==\nRatios of 2-for-1, 3-for-1, and 3-for-2 splits are the most common, but any ratio is possible. Splits of 4-for-3, 5-for-2, and 5-for-4 a",
+      "url": "https://en.wikipedia.org/wiki/Stock split",
+      "tags": [],
+      "created_at": "2026-09-15T12:23:22.431404",
+      "usage_count": 0
+    },
+    {
+      "id": "1789455202435",
+      "query": "what is 100 x 5000",
+      "source": "wikipedia",
+      "title": "Wikipedia: Semi-variable cost",
+      "content": "In business and accounting, a semi-variable cost (also referred to as a mixed or semi-fixed cost) is an expense which contains both a fixed cost component and a variable cost component. It is often used to project financial performance at different scales of production. It is related to the scale of production within a business where there is a fixed cost which remains constant across all scales of production while the variable cost increases proportionally to production levels.\nUsing a factory as an example, fixed costs can include the leasing of the factory building and insurance, while the variable costs include overtime pay and the purchase price of the raw materials.\n\n\n== Calculating semi-variable costs ==\n\n\n=== Linear costs ===\nIn the simplest case, where cost is linear in output, the equation for the total semi-variable cost is as follows:\n\n  \n    \n      \n        Y\n        =\n        a\n        +\n        b\n        X\n      \n    \n    {\\displaystyle Y=a+bX}\n  \n\nwhere \n  \n    \n      \n        Y\n      \n    \n    {\\displaystyle Y}\n  \n is the total cost, \n  \n    \n      \n        a\n      \n    \n    {\\displaystyle a}\n  \n is the fixed cost, \n  \n    \n      \n        b\n      \n    \n    {\\displaystyle b}\n  \n is the variable cost per unit, and \n  \n    \n      \n        X\n      \n    \n    {\\displaystyle X}\n  \n is the number of units (i.e. the output produced).\n\n\n==== Example with linear costs ====\nA factory costs £5000 per week to produce goods at a minimum level and due to high demand it has to produce for an extra 20 hours in the week. Including the wages, utility bills, raw materials etc. the extra cost per hour (the variable cost) is £300. In this example, the weekly fixed cost (\n  \n    \n      \n        a\n      \n    \n    {\\displaystyle a}\n  \n) is £5000, the variable cost (\n  \n    \n      \n        b\n      \n    \n    {\\displaystyle b}\n  \n) is £300 per hour, and the output (\n  \n    \n      \n        X\n      \n    \n    {\\displaystyle X}\n  \n) is 20 hours. To find the total cost \n  \n    \n    ",
+      "url": "https://en.wikipedia.org/wiki/Semi-variable cost",
+      "tags": [],
+      "created_at": "2026-09-15T12:23:22.435091",
+      "usage_count": 0
+    },
+    {
+      "id": "1789455202438",
+      "query": "what is 100 x 5000",
+      "source": "wikipedia",
+      "title": "Wikipedia: Dragon Quest X",
+      "content": "Dragon Quest X: Awakening of the Five Tribes Online, also known as Dragon Quest X Online, is a 2012 massively multiplayer online role-playing game (MMORPG) by Square Enix. It is the tenth mainline entry in the Dragon Quest series. It was originally released for the Wii and was later ported to the Wii U, Windows, PlayStation 4, Nintendo Switch, Android, iOS, and Nintendo 3DS. Other than a discontinued Windows version in China, the game was not released outside of Japan. A single-player remake, Dragon Quest X Offline, was released in Japan in 2022 and later throughout Asia.\nDragon Quest X is set in the world of Astoltia, with the player character being initially human before an attack by Nelgel the Netherlord, after which their soul is forced into the body of another race and their sibling is accidentally transported to the past by the player character in an attempt to protect them from Nelgel. Following this, they must travel the world on a quest to seal Nelgel away . Gameplay follows a combination of elements from the Dragon Quest and other contemporary MMORPGs, such as real-time combat in an open world environment and a job system tied to skills and abilities.\nConcepts for an MMORPG within the Dragon Quest series began among a small team during the later development of Dragon Quest VIII. Development progressed alongside that of Dragon Quest IX. The aim was to make it accessible to series fans and newcomers alike, along with creating a long-term content plan. The development team featured multiple series veterans, including series creator and designer Yuji Horii, artist Akira Toriyama, and composer Koichi Sugiyama. New staff members included producer Yosuke Saito, who had previously worked on the Drakengard series and whose company Orca helped with development; and Chikara Saito, who took over as director in 2013.\nCritical reception to the game have been generally positive, with praise going to its integrating of Dragon Quest features into an MMORPG structure. The g",
+      "url": "https://en.wikipedia.org/wiki/Dragon Quest X",
+      "tags": [],
+      "created_at": "2026-09-15T12:23:22.438028",
+      "usage_count": 0
+    },
+    {
+      "id": "1789457210600",
+      "query": "who was Barack Obama",
+      "source": "wikipedia",
+      "title": "Wikipedia: Barack Obama Sr.",
+      "content": "Barack Hussein Obama (; born Baraka Hussein Obama, 18 June 1934 – 24 November 1982) was a Kenyan senior governmental economist and the father of Barack Obama, the 44th president of the United States. He is a central figure of his son's memoir, Dreams from My Father (1995). Obama married in 1954 and had two children with his first wife, Kezia. He was selected for a special program to attend college in the United States and studied at the University of Hawaii where he met Ann Dunham, whom he married in 1961 following the conception of his son, Barack. Obama and Dunham divorced three years later. Obama then went to Harvard University for graduate school, where he earned an MA in economics, and returned to Kenya in 1964. He saw his son Barack once more, when his son was about 10.\nIn late 1964, Obama married Ruth Beatrice Baker, an American woman he had met in Massachusetts. They had two sons together before separating in 1971 and divorcing in 1973. Obama first worked for an oil company, before beginning work as an economist with the Kenyan Ministry of Transport. He was promoted to senior economic analyst in the Ministry of Finance. He was among a cadre of young Kenyan men who had been educated in the West in a program supported by Tom Mboya. Obama had conflicts with Kenyan president Jomo Kenyatta, which adversely affected his career. He was fired and blacklisted in Kenya, finding it nearly impossible to get a job. Obama was involved in three serious car accidents during his final years; he died as a result of the last one in 1982.\n\n\n== Early life ==\nBaraka Hussein Obama was born in 1934 in Rachuonyo District on the shores of Lake Victoria just outside Kendu Bay, Kenya, at the time a colony and protectorate of the British Empire. He was raised in the village of Nyang'oma Kogelo, Siaya District, Nyanza Province. His family were members of the Luo people. His father was Onyango Obama (c. 1895–1979), and his mother was Habiba Akumu Nyanjango (c. 1918–2006) of Karabondi, Ken",
+      "url": "https://en.wikipedia.org/wiki/Barack Obama Sr.",
+      "tags": [],
+      "created_at": "2026-09-15T12:56:50.600261",
+      "usage_count": 0
+    },
+    {
+      "id": "1789457210604",
+      "query": "who was Barack Obama",
+      "source": "wikipedia",
+      "title": "Wikipedia: Barack Obama tan suit controversy",
+      "content": "On August 28, 2014, U.S. president Barack Obama held a live press conference in which he discussed the prospect of escalating the U.S. military response to the Islamic State in Syria (ISIS). He wore a tan suit for the conference, designed by Martin Greenfield Clothiers. It received considerable attention, with whether it was appropriate for the subject matter of terrorism being discussed in the media. The issue remained prominent for several days and was widely discussed, often humorously, on television talk shows.\n\n\n== Background ==\nOn August 28, 2014, President Barack Obama held a press conference about the situation regarding ISIS in Syria, and how the U.S. military was planning to respond to it. At the conference, Obama said that the U.S. had yet to develop a plan regarding the removal of ISIS, and talked extensively about his concerns in the region. During the conference he wore a tan suit, which until that point was uncommon for Obama.\nThe suit was created by Martin Greenfield Clothiers, a company owned by Holocaust survivor Martin Greenfield. Obama had picked out a tan-colored suit from his closet, asking for another of the same color. The suit was being worked on as early as March 2012, for its first public wearing on 16 June 2012. The suit, location unknown, has two pairs of pants: pleated and flat front.\nAlthough it is common for men to wear light-colored suits in Washington during the summer due to the city's heat and humidity, it was seen by conservative commentator and Fox Business Network host Lou Dobbs as \"shocking to a lot of people\". The controversy was seen in the context of the slow news season before the run-up to the 2014 election campaign. The suit received mixed reviews from a sartorial perspective.\nAt the time, the unusual attention given to a male leader's fashion choices was contrasted with that of his 2008 Democratic rival Hillary Clinton's \"regular experience\" as a woman in politics.\n\n\n== Immediate response ==\n\nU.S. representative Peter K",
+      "url": "https://en.wikipedia.org/wiki/Barack Obama tan suit controversy",
+      "tags": [],
+      "created_at": "2026-09-15T12:56:50.604558",
+      "usage_count": 0
+    },
+    {
+      "id": "1789457210608",
+      "query": "who was Barack Obama",
+      "source": "wikipedia",
+      "title": "Wikipedia: Barack Obama",
+      "content": "Barack Hussein Obama II (born August 4, 1961) is an American politician who served as the 44th president of the United States from 2009 to 2017. A member of the Democratic Party, he was the first African American  to serve as president. Obama represented Illinois in the United States Senate from 2005 to 2008 and served as an Illinois state senator from 1997 to 2004.\nBorn in Honolulu, Obama graduated from Columbia University in 1983 and later worked as a community organizer in Chicago. In 1988, Obama enrolled at Harvard Law School, where he was the first Black president of the Harvard Law Review. He became a civil rights attorney and an academic, teaching constitutional law at the University of Chicago Law School from 1992 to 2004. In 1996, Obama was elected to represent the 13th district in the Illinois Senate. In 2000, Obama ran for Illinois's 1st congressional district, but came in second to the incumbent Representative, Bobby Rush. Following his loss in the House race, he kept his position he held in the State Senate until 2004, when he successfully ran for the U.S. Senate. In the 2008 presidential election, after a close primary campaign against Hillary Clinton, he was nominated by the Democratic Party for president. Obama selected Joe Biden as his running mate and defeated Republican nominee John McCain and his running mate Sarah Palin.\nObama was awarded the 2009 Nobel Peace Prize for efforts in international diplomacy, a decision that drew both praise and criticism. During his first term, his administration responded to the 2008 financial crisis with measures including the American Recovery and Reinvestment Act of 2009 to address the Great Recession; a partial extension of the Bush tax cuts; legislation to reform health care; and the Dodd–Frank Wall Street Reform and Consumer Protection Act, a major financial regulation reform bill. Obama also appointed Supreme Court justices Sonia Sotomayor and Elena Kagan, the former being the first Hispanic American on the ",
+      "url": "https://en.wikipedia.org/wiki/Barack Obama",
+      "tags": [],
+      "created_at": "2026-09-15T12:56:50.608252",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458626842",
+      "query": "when was the Second World War held",
+      "source": "wikipedia",
+      "title": "Wikipedia: World War II",
+      "content": "World War II, or the Second World War (1 September 1939 – 2 September 1945), was a global conflict between two coalitions: the Allies and the Axis powers. Nearly all of the world's countries participated, with many engaging in total war on an unprecedented scale. World War II was the deadliest conflict in history, causing the deaths of 60 to 75 million people, a majority of whom were civilians. Millions died as a result of massacres, starvation, disease, and genocides including the Holocaust. After the Allied victory, Germany, Austria, Japan, and Korea were occupied, and German and Japanese leaders were tried for war crimes.\nThe causes of World War II included unresolved tensions in the aftermath of World War I and the rise of fascism in Europe and militarism in Japan. Key events preceding the war included Japan's invasion of Manchuria in 1931, the Spanish Civil War, the outbreak of the Second Sino-Japanese War in 1937, and Germany's annexations of Austria and the Sudetenland. World War II is generally considered to have begun on 1 September 1939, when Nazi Germany, under Adolf Hitler, invaded Poland, after which the United Kingdom and France declared war on Germany. Poland was also invaded by the Soviet Union in mid-September, and was partitioned between the two states under the Molotov–Ribbentrop Pact. In 1940, the Soviet Union annexed the Baltic states and parts of Finland and Romania, while Germany conquered Norway, Denmark, Belgium, Luxembourg, and the Netherlands. After the fall of France in June 1940, the war continued, mainly between Germany, now assisted by Fascist Italy, and the British Empire and British Commonwealth, with fighting in the Balkans, Mediterranean, Middle East, East Africa, the aerial Battle of Britain, the Blitz, and the naval Battle of the Atlantic. By mid-1941, Yugoslavia and Greece had also been defeated by Axis countries. In June 1941, Germany invaded the Soviet Union, opening the Eastern Front.\nIn December 1941, Japan attacked American",
+      "url": "https://en.wikipedia.org/wiki/World War II",
+      "tags": [],
+      "created_at": "2026-09-15T13:20:26.842198",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458626847",
+      "query": "when was the Second World War held",
+      "source": "wikipedia",
+      "title": "Wikipedia: World War I",
+      "content": "World War I, or the First World War (28 July 1914 – 11 November 1918), also known as the Great War, was a global conflict between two coalitions: the Allies (or Entente) and the Central Powers. One of the deadliest conflicts in history, World War I resulted in an estimated 15 to 22 million deaths, including those in war crimes and genocides. The war also helped spread the Spanish flu pandemic. The conflict saw important developments in weaponry, including the first large-scale use of machine guns, artillery, aircraft, chemical weapons, and tanks.\nThe causes of World War I included the rise of the German Empire, which disturbed the long-standing balance of power in Europe, and the exacerbation of imperial rivalries, as reflected in new alliances and an arms race between the great powers. Tensions in the Balkans reached a breaking point on 28 June 1914 when Gavrilo Princip, a Bosnian Serb, assassinated Franz Ferdinand, the heir to the Austro-Hungarian throne. Austria-Hungary blamed Serbia and declared war on 28 July, upon which the Russian Empire mobilised in Serbia's defence. In early August, Germany declared war on Russia and France; the United Kingdom entered the war after Germany invaded Belgium. Germany's strategy in 1914 was to quickly defeat France, but its advance was halted in September, and the Western Front solidified into a near-continuous line of fortified trenches from the English Channel to Switzerland. The Eastern Front was more dynamic, but neither side gained a decisive advantage, despite costly offensives. The Ottoman Empire joined the Central Powers in November, which was followed by a failed Allied campaign at Gallipoli. Japan and Italy also joined the Allies.  \nMajor battles, including those at Verdun, the Somme, and Passchendaele, failed to break the stalemate on the Western Front. In April 1917, the United States joined the Allies after Germany resumed unrestricted submarine warfare against Atlantic shipping. Later that year, the Bolsheviks sei",
+      "url": "https://en.wikipedia.org/wiki/World War I",
+      "tags": [],
+      "created_at": "2026-09-15T13:20:26.847385",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458626849",
+      "query": "when was the Second World War held",
+      "source": "wikipedia",
+      "title": "Wikipedia: Second Sino-Japanese War",
+      "content": "The Second Sino-Japanese War was fought between the Republic of China and the Empire of Japan and its puppet states between 1937 and 1945, following a period of conflict localized to Manchuria that started in 1931. It is often regarded as the beginning of World War II in Asia, as the wars became heavily intertwined after Japan attacked the United States. It was the largest Asian war in the 20th century.\nOn 18 September 1931, the Japanese staged the Mukden incident, a false flag event fabricated to justify their invasion of Manchuria and establishment of the puppet state of Manchukuo. This is sometimes marked as the beginning of the war. From 1931 to 1937, China and Japan engaged in skirmishes, including in Shanghai and in Northern China. Nationalist and Chinese Communist Party (CCP) forces, respectively led by Chiang Kai-shek and Mao Zedong, had fought each other in the Chinese Civil War since 1927. In late 1933, Chiang Kai-shek encircled the Chinese Communists in an attempt to finally destroy them, forcing the Communists into the Long March, resulting in the Communists losing around 90% of their men. As a Japanese invasion became imminent, Chiang eventually formed a United Front with the Communists in 1936, a process that was hastened by the Xi'an Incident.\nThe war is considered to have begun on 7 July 1937 after the Marco Polo Bridge incident near Beijing, which escalated into full-scale Japanese invasion of the rest of China. Following the protracted Battle of Shanghai, the Japanese captured the capital of Nanjing in 1937 and perpetrated the Nanjing Massacre. After failing to stop the Japanese capture of Wuhan in 1938, China's de facto capital at the time, the Nationalist government relocated to Chongqing in the Chinese interior. After the Sino-Soviet Non-Aggression Pact, Soviet aid bolstered the National Revolutionary Army and Air Force. By 1939, after Chinese victories at Changsha and with Japan's lines of communication stretched deep into the interior, the war",
+      "url": "https://en.wikipedia.org/wiki/Second Sino-Japanese War",
+      "tags": [],
+      "created_at": "2026-09-15T13:20:26.849834",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458626852",
+      "query": "when was the Second World War held",
+      "source": "wikipedia",
+      "title": "Wikipedia: Allies of World War II",
+      "content": "The Allies, or Allied powers, formally referred to as the United Nations from 1942, were an international military coalition formed during World War II (1939–1945) to oppose the Axis powers. Its principal members were the \"Big Four\"—the United Kingdom, the Soviet Union, the United States, and China.\nMembership in the Allies varied during the course of the war. When the conflict broke out on 1 September 1939, the Allied coalition consisted of the United Kingdom, France, and Poland, as well as their respective dependencies, such as British India. They were joined by the independent dominions of the British Commonwealth: Canada, Australia, New Zealand and South Africa. Consequently, the initial alliance resembled that of the First World War. As Axis forces began invading northern Europe and the Balkans, the Allies added the Netherlands, Belgium, Norway, Greece, and Yugoslavia. The Soviet Union, which initially had a non-aggression pact with Germany (which resulted in the Soviet invasion of Poland) joined the Allies after the German invasion of the Soviet Union in June 1941. The United States, while providing some material support to European Allies since September 1940, remained formally neutral until the Japanese attack on Pearl Harbor in December 1941, after which it declared war and officially joined the Allies. The  Republic of China had already been at war with Japan since 1937 after the Marco Polo Bridge incident, and formally joined the Allies in December 1941.\nThe \"Big Three\"—the United Kingdom, the Soviet Union, and the United States—were the principal contributors of manpower, resources and strategy, each playing a key role in achieving victory. Relations between the United Kingdom and the United States were especially close, with their bilateral Atlantic Charter forming the basis of their alliance. A series of conferences between Allied leaders, diplomats, and military officials gradually shaped the makeup of the alliance, the direction of the war, and ultim",
+      "url": "https://en.wikipedia.org/wiki/Allies of World War II",
+      "tags": [],
+      "created_at": "2026-09-15T13:20:26.852330",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458990204",
+      "query": "what could be done to stop global warming",
+      "source": "wikipedia",
+      "title": "Wikipedia: Climate change",
+      "content": "Present-day climate change includes both global warming—the ongoing increase in global average temperature—and its wider effects on Earth's climate system. In a broader sense, climate change also includes previous long-term changes to Earth's climate. The modern-day rise in global temperatures is driven by human activities, especially fossil fuel (coal, oil and natural gas) burning since the Industrial Revolution. Fossil fuel use, deforestation, and some agricultural and industrial practices release greenhouse gases. These gases absorb some of the heat that the Earth radiates after it warms from sunlight, warming the lower atmosphere. Earth's atmosphere now has roughly 50% more carbon dioxide, the main gas driving global warming, than it did at the end of the pre-industrial era, reaching levels not seen for millions of years.\nClimate change has an increasingly large impact on the environment. Heat waves and wildfires are becoming more common. Amplified warming in the Arctic has contributed to thawing permafrost, retreat of glaciers and sea ice decline. Higher temperatures are also causing more intense storms, droughts, and other weather extremes. Rapid environmental change in mountains, coral reefs, and the Arctic is forcing many species to relocate or become extinct. Even if efforts to minimize future warming are successful, some effects will continue for centuries. These include ocean heating, ocean acidification and sea level rise.\nClimate change threatens people with increased flooding, extreme heat, increased food and water scarcity, more disease, and economic loss. Human migration and conflict can also be a result. The World Health Organization calls climate change one of the biggest threats to global health in the 21st century. Societies and ecosystems will experience more severe risks without action to limit warming. Adapting to climate change through efforts like flood control measures or drought-resistant crops partially reduces climate change risks, altho",
+      "url": "https://en.wikipedia.org/wiki/Climate change",
+      "tags": [
+        "climate"
+      ],
+      "created_at": "2026-09-15T13:26:30.204720",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458990209",
+      "query": "what could be done to stop global warming",
+      "source": "wikipedia",
+      "title": "Wikipedia: Special Report on Global Warming of 1.5 °C",
+      "content": "The Special Report on Global Warming of 1.5 °C (SR15) was published by the Intergovernmental Panel on Climate Change (IPCC) on 8 October 2018. The report, approved in Incheon, South Korea, includes over 6,000 scientific references, and was prepared by 91 authors from 40 countries. In December 2015, the 2015 United Nations Climate Change Conference called for the report. The report was delivered at the United Nations' 48th session of the IPCC to \"deliver the authoritative, scientific guide for governments\" to deal with climate change. Its key finding is that meeting a 1.5 °C (2.7 °F) target is possible but would require \"deep emissions reductions\" and \"rapid, far-reaching and unprecedented changes in all aspects of society\". Furthermore, the report finds that \"limiting global warming to 1.5 °C compared with 2 °C would reduce challenging impacts on ecosystems, human health and well-being\" and that a 2 °C temperature increase would exacerbate extreme weather, rising sea levels and diminishing Arctic sea ice, coral bleaching, and loss of ecosystems, among other impacts. \nSR15 also has modelling that shows that, for global warming to be limited to 1.5 °C, \"Global net human-caused emissions of carbon dioxide (CO2) would need to fall by about 45 percent from 2010 levels by 2030, reaching 'net zero' around 2050.\" The reduction of emissions by 2030 and its associated changes and challenges, including rapid decarbonisation, was a key focus on much of the reporting which was repeated through the world.\nWhen the Paris Agreement was adopted, the UNFCCC invited the Intergovernmental Panel on Climate Change to write a special report on \"How can humanity prevent the global temperature rise more than 1.5 degrees above pre-industrial level\". Its full title is \"Global Warming of 1.5 °C, an IPCC special report on the impacts of global warming of 1.5 °C above pre-industrial levels and related global greenhouse gas emission pathways, in the context of strengthening the global response to",
+      "url": "https://en.wikipedia.org/wiki/Special Report on Global Warming of 1.5 °C",
+      "tags": [
+        "climate"
+      ],
+      "created_at": "2026-09-15T13:26:30.209071",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458990212",
+      "query": "what could be done to stop global warming",
+      "source": "wikipedia",
+      "title": "Wikipedia: Climate change denial",
+      "content": "Climate change denial (also global warming denial) is a form of science denial characterized by rejecting, refusing to acknowledge, disputing, or fighting the extensive evidence for anthropogenic global warming that has led to a scientific consensus on climate change. Those promoting denial commonly use rhetorical tactics to give the appearance of a scientific controversy where none exists. Climate change denial includes raising unreasonable doubts about the extent to which climate change is caused by humans, its effects on nature and human society, and understating the costs of climate change adaptation while overstating the costs of mitigating it. To a lesser extent, climate change denial can also be implicit when people accept the science but fail to reconcile it with their belief or action. Several studies have analyzed these positions as forms of denialism, pseudoscience, or propaganda.\nMany issues that are settled in the scientific community, such as human responsibility for climate change, remain the subject of politically or economically motivated attempts to downplay, dismiss or deny them—an ideological phenomenon academics and scientists call climate change denial. Climate scientists, especially in the United States, have reported government and oil-industry pressure to censor or suppress their work and hide scientific data, with directives not to discuss the subject publicly. The fossil fuels lobby has been identified as overtly or covertly supporting efforts to undermine or discredit the scientific consensus on climate change.\nIndustrial, political and ideological interests organize activity to undermine public trust in climate science. Climate change denial has been associated with the fossil fuels lobby, the Koch brothers, industry advocates, ultraconservative think tanks, and ultraconservative alternative media, often in the U.S. More than 90% of papers that are skeptical of climate change originate from right-wing think tanks. Climate change denial i",
+      "url": "https://en.wikipedia.org/wiki/Climate change denial",
+      "tags": [
+        "climate"
+      ],
+      "created_at": "2026-09-15T13:26:30.212293",
+      "usage_count": 0
+    },
+    {
+      "id": "1789458990215",
+      "query": "what could be done to stop global warming",
+      "source": "wikipedia",
+      "title": "Wikipedia: Cool It: The Skeptical Environmentalist's Guide to Global Warming",
+      "content": "Cool It: The Skeptical Environmentalist's Guide to Global Warming is a book by Danish statistician Bjørn Lomborg. It is a sequel to The Skeptical Environmentalist (first published in Danish in 1998), which in English translation brought the author to international attention. In Cool It, Lomborg argues his view that many negative impacts of climate change are overstated, and mitigation approaches are expensive and have poor return on investment; he instead proposes alternative solutions. The book was adapted into a 2010 documentary film of the same name.\nReleased amid a period of public debate over global warming, reception for the book was mixed. Howard Friel wrote a book-length response called The Lomborg Deception which challenges its veracity.\n\n\n== Content ==\nIn Cool It, Lomborg argues his view that many of the elaborate and expensive actions being considered to stop global warming will cost hundreds of billions of dollars without the same return on investment, often are based on emotional rather than strictly scientific assumptions, and may have very little impact on the world's temperature for centuries. He attempts to dispel what he views as climate change \"myths\", arguing that it is too soon to say if Greenland's ice is melting, and that the impacts of sea level rise, extreme weather, droughts and floods are overhyped. He argues that rising temperatures could save more than 1.3 million lives per year, as more cold-related deaths than would be prevented than heat-related respiratory fatalities. Lomborg concludes that reducing carbon emissions is not an effective solution, and that the Kyoto Protocol would only delay the impacts of climate change. He instead proposes a limited carbon tax is needed in the First World as well as subsidies from the First World to the Third World to help fight ongoing humanitarian crises.\n\n\n== Reception and critique ==\nIn a review in The New York Times, Andrew Revkin says that Lomborg uses the book to reprise \"his earlier argument ",
+      "url": "https://en.wikipedia.org/wiki/Cool It: The Skeptical Environmentalist's Guide to Global Warming",
+      "tags": [
+        "climate"
+      ],
+      "created_at": "2026-09-15T13:26:30.215017",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459028793",
+      "query": "computer vision",
+      "source": "wikipedia",
+      "title": "Wikipedia: Computer vision",
+      "content": "Computer vision tasks include methods for acquiring, processing, analyzing, and understanding digital images, and extraction of high-dimensional data from the real world in order to produce numerical or symbolic information, e.g. in the form of decisions. \"Understanding\" in this context signifies the transformation of visual images into descriptions of the world that make sense to thought processes and can elicit appropriate action. This image understanding can be seen as the disentangling of symbolic information from image data using models constructed with the aid of geometry, physics, statistics, and learning theory.\nThe scientific discipline of computer vision is concerned with the theory behind artificial systems that extract information from images. Image data can take many forms, such as video sequences, views from multiple cameras, multi-dimensional data from a 3D scanner, 3D point clouds from LiDaR sensors, or medical scanning devices. The technological discipline of computer vision seeks to apply its theories and models to the construction of computer vision systems.\nSubdisciplines of computer vision include scene reconstruction, object detection, event detection, activity recognition, video tracking, object recognition, 3D pose estimation, learning, indexing, motion estimation, visual servoing, 3D scene modeling, and image restoration.\n\n\n== Definition ==\nComputer vision is an interdisciplinary field that deals with how computers can be made to gain high-level understanding from digital images or videos. From the perspective of engineering, it seeks to automate tasks that the human visual system can do. \"Computer vision is concerned with the automatic extraction, analysis, and understanding of useful information from a single image or a sequence of images. It involves the development of a theoretical and algorithmic basis to achieve automatic visual understanding.\" As a scientific discipline, computer vision is concerned with the theory behind artificial s",
+      "url": "https://en.wikipedia.org/wiki/Computer vision",
+      "tags": [
+        "tech"
+      ],
+      "created_at": "2026-09-15T13:27:08.793819",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459028798",
+      "query": "computer vision",
+      "source": "wikipedia",
+      "title": "Wikipedia: Computer vision syndrome",
+      "content": "Computer vision syndrome (CVS) is a condition resulting from focusing the eyes on a computer, smartphone or other display device for protracted, uninterrupted periods of time and the eye's muscles being unable to recover from the constant tension required to maintain focus on a close object.\n\n\n== Symptoms and signs ==\n\nSome symptoms of CVS include headaches, blurred vision, neck pain, fatigue, eye strain, dry eyes, irritated eyes, double vision, vertigo/dizziness, polyopia, and difficulty refocusing the eyes.  These symptoms can be further aggravated by improper lighting conditions (i.e. glare, strong blue-spectrum backlights, watching phone on dark environments, or bright overhead lighting) or air moving past the eyes (e.g. overhead vents, or direct air from a fan).\n\n\n== Diagnosis ==\n\n\n== Therapy ==\nAsthenopic (eye strain) symptoms in the eye are responsible for much of the severity in CVS. Proper rest to the eye and its muscles is recommended to relieve the associated eye strain. Observations from persons experiencing chronic eye strain have shown that most people who claim to be getting enough sleep are actually not. This, unaware to them, causes the eye strain to build up over a period of time, when if they had obtained seven to eight hours of uninterrupted sleep, their eye muscles would have recovered during the sleep and the strain would not have built up.\nComputer workers are often advised to take breaks and look at distant objects. A routinely recommended approach is to consciously blink the eyes every now and then to help replenish the tear film and to look out the window to a distant object or to the sky—doing so provides rest to the ciliary muscles. An example of a common catchphrase is the \"20–20–20 rule\": every 20 minutes, focus the eyes on an object 20 feet (approximately 6 meters) away for 20 seconds. This gives a convenient distance and timeframe for a person to follow advice from an optometrist or ophthalmologist.\nA number of computer and smartphone",
+      "url": "https://en.wikipedia.org/wiki/Computer vision syndrome",
+      "tags": [
+        "tech"
+      ],
+      "created_at": "2026-09-15T13:27:08.798666",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459028802",
+      "query": "computer vision",
+      "source": "wikipedia",
+      "title": "Wikipedia: List of computer science conferences",
+      "content": "This is a list of current and past academic conferences in computer science. Only conferences with separate articles are included; within each field, the conferences are listed alphabetically by their short names.\n\n\n== General ==\nFCRC – Federated Computing Research Conference\n\n\n== Algorithms and theory ==\n\nConferences accepting a broad range of topics from theoretical computer science, including algorithms, data structures, computability, computational complexity, automata theory and formal languages:\n\nCCC - Computational Complexity Conference\nFCT – International Symposium on Fundamentals of Computation Theory\nFOCS – IEEE Symposium on Foundations of Computer Science\nICALP – International Colloquium on Automata, Languages and Programming\nISAAC – International Symposium on Algorithms and Computation\nSTACS – Symposium on Theoretical Aspects of Computer Science\nSTOC – ACM Symposium on Theory of Computing\n\n\n=== Algorithms ===\nConferences whose topic is algorithms and data structures considered broadly, but that do not include other areas of theoretical computer science such as computational complexity theory:\n\nESA – European Symposium on Algorithms\nSODA – ACM–SIAM Symposium on Discrete Algorithms\nSWAT and WADS – SWAT and WADS conferences\n\n\n=== Geometric algorithms ===\nConferences on computational geometry, graph drawing, and other application areas of geometric computing:\n\nGD – International Symposium on Graph Drawing\nSoCG – Symposium on Computational Geometry\n\n\n=== Other specialized subtopics ===\nCIAA – International Conference on Implementation and Application of Automata\nCCC – Computational Complexity Conference\nDCFS – International Workshop on Descriptional Complexity of Formal Systems\nDLT – International Conference on Developments in Language Theory\nISSAC – International Symposium on Symbolic and Algebraic Computation\nRP – International Conference on Reachability Problems\nSEA – Symposium on Experimental Algorithms\n\n\n== Languages and software ==\n\n\n=== Programming lan",
+      "url": "https://en.wikipedia.org/wiki/List of computer science conferences",
+      "tags": [
+        "tech"
+      ],
+      "created_at": "2026-09-15T13:27:08.802393",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459028806",
+      "query": "computer vision",
+      "source": "wikipedia",
+      "title": "Wikipedia: Homography (computer vision)",
+      "content": "In the field of computer vision, any two images of the same planar surface in space are related by a homography (assuming a pinhole camera model).  This has many practical applications, such as image rectification, image registration, or camera motion—rotation and translation—between two images.   Once camera resectioning has been done from an estimated homography matrix, this information may be used for navigation, or to insert models of 3D objects into an image or video, so that they are rendered with the correct perspective and appear to have been part of the original scene (see Augmented reality).\n\n\n== 3D plane to plane equation ==\nWe have two cameras a and b, looking at points \n  \n    \n      \n        \n          P\n          \n            i\n          \n        \n      \n    \n    {\\displaystyle P_{i}}\n  \n in a plane.\nPassing from the projection \n  \n    \n      \n        \n          \n\n          \n          \n            b\n          \n        \n        \n          p\n          \n            i\n          \n        \n        =\n        \n          (\n          \n            \n              \n\n              \n              \n                b\n              \n            \n            \n              u\n              \n                i\n              \n            \n            ;\n            \n              \n\n              \n              \n                b\n              \n            \n            \n              v\n              \n                i\n              \n            \n            ;\n            1\n          \n          )\n        \n      \n    \n    {\\displaystyle {}^{b}p_{i}=\\left({}^{b}u_{i};{}^{b}v_{i};1\\right)}\n  \n of \n  \n    \n      \n        \n          P\n          \n            i\n          \n        \n      \n    \n    {\\displaystyle P_{i}}\n  \n in b to the projection \n  \n    \n      \n        \n          \n\n          \n          \n            a\n          \n        \n        \n          p\n          \n            i\n          \n        \n        =\n        \n          (\n          \n            \n              \n\n             ",
+      "url": "https://en.wikipedia.org/wiki/Homography (computer vision)",
+      "tags": [
+        "tech"
+      ],
+      "created_at": "2026-09-15T13:27:08.806313",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459028809",
+      "query": "computer vision",
+      "source": "wikipedia",
+      "title": "Wikipedia: Computer vision dazzle",
+      "content": "Computer vision dazzle, also known as CV dazzle, dazzle makeup, or anti-surveillance makeup, is a type of camouflage used to hamper facial recognition software. However, the approach draws human attention and is readily spotted by human monitors.\n\n\n== Methods ==\nCV dazzle combines stylized makeup, asymmetric hair, and sometimes infrared lights built in to glasses or clothing to break up detectable facial patterns recognized by computer vision algorithms. \nCV dazzle has been shown to be somewhat successful at defeating face detection software in common use, including that employed by Facebook. CV dazzle attempts to block detection by facial recognition technologies such as DeepFace \"by creating an 'anti-face'\". \nThe approach uses occlusion, covering certain facial features; transformation, altering the shape or colour of parts of the face; and a combination of the two. Prominent artists employing this technique include Adam Harvey and Jillian Mayer.\n\n\n== Use in protests ==\nComputer vision dazzle makeup has been used by protestors in several different protest movements. Its use as a protesting aid has often been found ineffective. It may be effective to thwart computer technology, but draws human attention, is easy for human monitors to spot on security cameras, and makes it hard for protestors to blend in within a crowd. Advances in facial recognition technology make dazzle makeup increasingly ineffective.\n\n\n== In popular culture ==\nFeatured in the song \"CV Dazzle\" about mass surveillance, from the album Swooner (2016) by The Zolas.\n\n\n== See also ==\nAdversarial machine learning\n\n\n== References ==",
+      "url": "https://en.wikipedia.org/wiki/Computer vision dazzle",
+      "tags": [
+        "tech"
+      ],
+      "created_at": "2026-09-15T13:27:08.809567",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459193744",
+      "query": "LLM, SLM",
+      "source": "wikipedia",
+      "title": "Wikipedia: List of large language models",
+      "content": "A large language model (LLM) is a type of machine learning model designed for natural language processing tasks such as language generation. LLMs are language models with many parameters, and are trained with self-supervised learning on a vast amount of text.\n\n\n== List ==\nFor the training cost column, 1 petaFLOP-day equals 1 petaFLOP/sec × 1 day, or 8.64×1019 FLOP (floating point operations). Only the cost of the largest model is shown. The number of parameters is measured in billions, and the training cost is measured in petaFLOP-days.\n\n\n=== 2018 ===\n\n\n=== 2019 ===\n\n\n=== 2020 ===\n\n\n=== 2021 ===\n\n\n=== 2022 ===\n\n\n=== 2023 ===\n\n\n=== 2024 ===\n\n\n=== 2025 ===\n\n\n=== 2026 ===\n\n\n== See also ==\nComparison of deep learning software\nComparison of machine learning software\nList of AI-assisted software development tools\nList of chatbots\nList of language model benchmarks\nOpenRouter — LLM gateway to multiple AI providers\nOpen weights\nSmall language model\n\n\n== Notes ==\n\n\n== References ==",
+      "url": "https://en.wikipedia.org/wiki/List of large language models",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:29:53.744254",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459193748",
+      "query": "LLM, SLM",
+      "source": "wikipedia",
+      "title": "Wikipedia: Small language model",
+      "content": "Small language models (SLM) or compact language models are artificial intelligence language models designed for human natural language processing including language and text generation. Small language models typically have less than forty billion parameters. This make them feasible to train or host entirely on consumer electronics such as personal computers, laptops, or smart devices.\nIn contrast, a large language model typically contains hundreds of billions of training parameters, with some models exceeding a trillion parameters. This enables the model to encode vast amounts of information, improving the generalizability and accuracy of its outputs. However, training and hosting such models demands enormous computational resources, rendering it infeasible for an individual to do so using a single computer and graphics processing unit.\nMost contemporary small language models use the same architecture as a large language model, but with a smaller parameter count and sometimes lower arithmetic precision. Similar to LLMs, SLMs are optimized via knowledge distillation, pruning, and quantization. \n\n\n== Models ==\nNotable families with some models under ten billion parameters include:\n\nQwen by Alibaba Cloud\nGemma by Google DeepMind\nGranite by IBM\nNemotron by Nvidia\nMuse Glimmer by Meta Superintelligence Labs\nMistral Small by Mistral AI\nSmolLM by Hugging Face family of SMLs, including SmolLM2 models with 135 million, 360 million, and 1.7 billion parameters.\n\n\n== Language model with small pre-training dataset ==\nTraditional AI language systems need enormous computers and vast amounts of data.  \nPre-training matters, even tiny models show significant performance improvements when pre-trained performance increases with larger pre-training datasets. Classification accuracy improves when pre-training and test datasets share similar tokens. \nShallow architectures can replicate deep model performance through collaborative learning.\n\n\n== See also ==\nEdge computing\n\n\n== References ",
+      "url": "https://en.wikipedia.org/wiki/Small language model",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:29:53.748487",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459193751",
+      "query": "LLM, SLM",
+      "source": "wikipedia",
+      "title": "Wikipedia: Qwen",
+      "content": "Qwen (also known as Tongyi Qianwen, Chinese: 通义千问; pinyin: Tōngyì Qiānwèn) is a family of predominantly open weights large and small language models (LLM and SLM) developed by Alibaba Cloud.\nIts latest version, Qwen3.8; the 2.4 trillion parameter model was the second largest and second most powerful open weights LLM and Chinese LLM released by 12 August 2026, after Kimi K3. Larger models require a revenue sharing agreement from providers generating more than US$50 million annually. The distilled Qwen3.8 27B was released under a more permissive Apache License. \nThe first iteration of Qwen, based on Meta AI's Llama 1, launched a beta in April 2023, releasing the weights of its 72B model that December.\nA local version of Qwen  is used by Apple Intelligence in China, integrated with the operating system. Permissive licenses and smaller releases make them a common starting point for further fine-tuned and abliterated models in the open-source community.\n\n\n== Models ==\n\n\n=== Qwen ===\nAlibaba launched a beta of Qwen in April 2023 under the name Tongyi Qianwen, then opened it for public use in September 2023 after regulatory clearance.\nThe model's architecture was based on the Llama architecture developed by Meta AI. In December 2023, it released its 72B and 1.8B models for download, while Qwen 7B weights were released in August.\n\n\n=== Qwen2 ===\nQwen2 was released in June 2024, and in September it released some of its models with open weights, while keeping its most advanced models proprietary. Qwen2 contains both dense and sparse models.\nIn November 2024, QwQ-32B-Preview, a model focusing on reasoning similar to OpenAI's o1, was released under the Apache 2.0 License, although only the weights were released, not the dataset or training method. QwQ has a 32K token context length and performs better than o1 on some benchmarks. It was also in November 2024 that the Accio application was launched.\nThe Qwen-VL series is a line of visual language models that combines a vision tra",
+      "url": "https://en.wikipedia.org/wiki/Qwen",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:29:53.751957",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459193754",
+      "query": "LLM, SLM",
+      "source": "wikipedia",
+      "title": "Wikipedia: Lists of open-source artificial intelligence software",
+      "content": "These lists include projects which release their software under open-source licenses and are related to artificial intelligence projects. These include software libraries, frameworks, platforms, and tools used for machine learning, deep learning, natural language processing, computer vision, reinforcement learning, artificial general intelligence, and more.\n\n\n== Agentic AI ==\n\nAuto-GPT — experimental open-source autonomous GPT-based agent\nOpenClaw — autonomous task-executing AI agent\n\n\n== Agentic AI frameworks ==\nCrewAI — framework for building and orchestrating multi-agent AI systems\nLangChain — framework for building applications and agents powered by large language models\nTheia AI — framework for integrating AI capabilities and agents into integrated development environments (IDEs).\n\n\n== AI-assisted software development ==\n\nCodex CLI – AI coding agent and command-line interface developed by OpenAI.\nCline – AI coding agent for IDEs and the command line.\nDeepSeek Coder – large language model designed for code generation and AI-assisted software development.\ngoose – AI coding agent for the desktop and command line.\nGrok Build – SpaceXAI's terminal-based AI coding agent.\nHermes Agent – AI coding agent for the command line and IDE extensions.\nKilo Code — CLI and IDE extension developed by Anaconda\nOpenCode — CLI, desktop app, web app, and IDE extentions\nOpenHands — AI software development agent\nOh My Pi – terminal-based AI coding agent developed as a fork of Pi.\nPi – terminal-based AI coding agent.\nZed – source-code editor with integrated AI-assisted development and agentic coding features.\n\n\n== AI hardware and inference acceleration ==\n\n\n=== LLM inference and serving frameworks ===\nllama.cpp — library that can perform inference on various LLMs such as Llama, Mistral, Gemma, DeepSeek or Qwen.\nMLX – Apple's ML framework, the MLX LM package provides large language model inference and fine-tuning on Apple silicon.\nSGLang – framework for structured generation and high-per",
+      "url": "https://en.wikipedia.org/wiki/Lists of open-source artificial intelligence software",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:29:53.754740",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459193757",
+      "query": "LLM, SLM",
+      "source": "wikipedia",
+      "title": "Wikipedia: Foundation model",
+      "content": "In artificial intelligence, a foundation model (FM), also known as large x model (LxM, where \"x\" is a variable representing any text, image, sound, etc.), is a machine learning or deep learning model trained on vast datasets so that it can be applied across a wide range of use cases. Generative AI applications like large language models (LLMs) are common examples of foundation models.\nBuilding foundation models is often highly resource-intensive, with the most advanced models costing hundreds of millions of dollars to cover the expenses of acquiring, curating, and processing massive datasets, as well as the compute power required for training. These costs stem from the need for sophisticated infrastructure, extended training times, and advanced hardware, such as graphics processing units. In contrast, adapting an existing foundation model for a specific task or using it directly is far less costly, as it uses pre-trained capabilities and typically requires only fine-tuning on smaller, task-specific datasets.\nEarly examples of foundation models are language models like OpenAI's GPT series and Google's BERT. Beyond text, foundation models have been developed across a range of modalities, including DALL-E, Stable Diffusion, and Flamingo for images, MusicGen and LLark for music, and RT-2 for robotic control. Foundation models are also being developed for fields like astronomy, radiology, \nophthalmology,\ngenomics, earth sciences, coding, time series forecasting, mathematics, and chemistry.\n\n\n== Definitions ==\nThe Stanford Institute for Human-Centered Artificial Intelligence's (HAI) Center for Research on Foundation Models (CRFM) coined the term \"foundation model\" in August 2021 to mean \"any model that is trained on broad data (generally using self-supervision at scale) that can be adapted (e.g., fine-tuned) to a wide range of downstream tasks\". This was based on their observation that preexisting terms, while overlapping, were not adequate, stating that \"'large language ",
+      "url": "https://en.wikipedia.org/wiki/Foundation model",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:29:53.757626",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459237974",
+      "query": "give a short but brief explanation how is virtual Ram linked to LLM locally working",
+      "source": "duckduckgo",
+      "title": "VRAM vs System RAM: What Actually Limits Running LLMs Locally? - Dewan’s Blog",
+      "content": "December 17, 2025 - Modern inference runtimes (vLLM, llama.cpp, TensorRT-LLM, and PyTorch-based stacks) try very hard to keep as much of this as possible in VRAM.",
+      "url": "https://www.dewanahmed.com/vrams-rams/",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:30:37.974377",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459237977",
+      "query": "give a short but brief explanation how is virtual Ram linked to LLM locally working",
+      "source": "duckduckgo",
+      "title": "RAM Requirements for Local LLMs",
+      "content": "Think of RAM as your computer's workbench: it's the temporary, high-speed memory space where your computer holds the data and programs it's actively working on. When you want to use an LLM, the first step is loading the model's data into memory. LLMs are \"large\" primarily because they consist of billions of parameters, which are essentially the learned values the model uses to make predictions.",
+      "url": "https://apxml.com/courses/getting-started-local-llms/chapter-2-preparing-local-environment/hardware-ram",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:30:37.977952",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459237981",
+      "query": "give a short but brief explanation how is virtual Ram linked to LLM locally working",
+      "source": "duckduckgo",
+      "title": "How to Run Large Language Models Locally: Hardware, VRAM, and Setup Explained | by Mehul Gupta | Data Science in Your Pocket | Medium",
+      "content": "November 30, 2025 - Monitor VRAM and RAM usage. Verify that GPU utilization stays high. Keep benchmark prompts for side-by-side testing between models and quantization settings. Performance and quality can silently shift with version updates or configuration changes, so validation becomes part of normal operation. Running an LLM locally is less about chasing the largest model and more about matching workload to hardware reality.",
+      "url": "https://medium.com/data-science-in-your-pocket/how-to-run-large-language-models-locally-hardware-vram-and-setup-explained-7caec36ef181",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:30:37.981248",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459237983",
+      "query": "give a short but brief explanation how is virtual Ram linked to LLM locally working",
+      "source": "duckduckgo",
+      "title": "VRAM Requirements for Local LLMs: The Complete Guide (2026) | Local AI Guide | LLM Configurator",
+      "content": "July 12, 2026 - If the model doesn't fit in VRAM, it spills over to system RAM (CPU offload): ... CPU offload is viable for low-latency tasks (e.g., short questions) but frustrating for long documents.",
+      "url": "https://llmconfigurator.com/en/guides/vram-requirements-guide",
+      "tags": [
+        "ai"
+      ],
+      "created_at": "2026-09-15T13:30:37.984004",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459485920",
+      "query": "Tesla",
+      "source": "wikipedia",
+      "title": "Wikipedia: Nikola Tesla",
+      "content": "Nikola Tesla (10 July 1856 – 7 January 1943) was a Serbian-American engineer, futurist, and inventor. He is known for his contributions to the design of the modern alternating current (AC) electricity supply system.\nBorn and raised in the Austro-Hungarian Empire, Tesla first studied engineering and physics in the 1870s without receiving a degree. He then gained practical experience in the early 1880s working in telephony and at Continental Edison in the new electric power industry. In 1884, he migrated to the United States, where he became a naturalized citizen. He worked for a short time at the Edison Machine Works in New York City before he struck out on his own. With the help of partners to finance and market his ideas, Tesla set up laboratories and companies in New York to develop a range of electrical and mechanical devices. His AC induction motor and related polyphase AC patents, licensed by Westinghouse Electric in 1888, earned him a considerable amount of money and became the cornerstone of the polyphase system, which Westinghouse marketed.\nTesla conducted a range of experiments with mechanical oscillators/generators, electrical discharge tubes, and early X-ray imaging among other things, in an attempt to develop inventions he could patent and market. He built a wirelessly controlled boat, one of the first wirelessly controlled vehicles ever produced. Tesla became well known as an inventor and demonstrated his achievements to celebrities and wealthy patrons at his lab. He was noted for his showmanship at public lectures. Throughout the 1890s, Tesla pursued his ideas for wireless lighting and worldwide wireless electric power distribution in his high-voltage, high-frequency power experiments in New York and Colorado Springs. In 1893, he made pronouncements on the possibility of wireless communication with his devices. Tesla tried to put these ideas to practical use in his unfinished Wardenclyffe Tower project, an intercontinental wireless communication and po",
+      "url": "https://en.wikipedia.org/wiki/Nikola Tesla",
+      "tags": [],
+      "created_at": "2026-09-15T13:34:45.920090",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459485931",
+      "query": "Tesla",
+      "source": "wikipedia",
+      "title": "Wikipedia: Tesla Model 3",
+      "content": "The Tesla Model 3 is a battery electric powered mid-size sedan with a fastback body style built by Tesla, Inc., introduced in 2017. The Model 3 was marketed as a more affordable option compared to Tesla's previous vehicles, the Model S and Model X. The Model 3 was the world's top-selling plug-in electric car for three years, from 2018 to 2020, before the Tesla Model Y, a crossover SUV based on the Model 3 chassis, took the top spot. In June 2021, the Model 3 became the first electric car to pass global sales of 1 million.\n\nA facelifted Model 3 with revamped interior and exterior styling was introduced in late 2023 for countries supplied by Gigafactory Shanghai and in early 2024 in North America and other countries supplied by the Tesla Fremont Factory.\n\n\n== History ==\n\nIn a 2006 interview with Wired Science, Elon Musk presented the Model 3 as likely being affordable by most people able to purchase new cars, aiming for a $30,000 price point. In 2008 the car was stated to be a family car. In 2017 Tesla added that the Standard Range version of the all-electric car would have an estimated EPA-rated range of 215 miles (346 km), a five-passenger seating capacity, front and rear trunks, and promised sports-car levels of acceleration performance. Tesla said it would have a five-star safety rating and have a drag coefficient of Cd=0.225. This is lower than the Tesla Model S drag coefficient of Cd=0.24, which, in 2014, was the lowest among the production cars of the time.\nWithin a week of unveiling the Model 3 in 2016, Tesla revealed they had taken 325,000 reservations for the car. These reservations represented potential sales of over US$14 billion. By August 2017, there were 455,000 net reservations.\nIndustry experts were dubious when, in May 2016, Tesla announced its decision to advance its 500,000-total-unit build plan (combined for Model S, Model X, and Model 3) to 2018, two years earlier than previously planned, in order to accelerate its target for Model 3 output. As p",
+      "url": "https://en.wikipedia.org/wiki/Tesla Model 3",
+      "tags": [],
+      "created_at": "2026-09-15T13:34:45.931511",
+      "usage_count": 0
+    },
+    {
+      "id": "1789459485934",
+      "query": "Tesla",
+      "source": "duckduckgo",
+      "title": "Tesla",
+      "content": "Tesla most commonly refers to:Nikola Tesla (1856–1943), Serbian-American electrical engineer and inventorTesla, Inc., an American electric vehicle and clean energy company, formerly Tesla Motors, Inc.Tesla (unit) (symbol: T), the SI-derived unit of magnetic flux densityTesla may also refer to:",
+      "url": "https://en.wikipedia.org/wiki/Tesla",
+      "tags": [],
+      "created_at": "2026-09-15T13:34:45.934480",
+      "usage_count": 0
+    },
+    {
+      "id": "1789461961113",
+      "query": "illuminati",
+      "source": "wikipedia",
+      "title": "Wikipedia: Illuminati (comics)",
+      "content": "The Illuminati are a secret society group of superheroes appearing in American comic books published by Marvel Comics. The characters joined forces and secretly work behind the scenes. The Illuminati was established to exist (via story retcon) in their first published appearance in New Avengers #7 (July 2005), written by Brian Michael Bendis. Their history was discussed in the special New Avengers: Illuminati (May 2006). The group was revealed to have been formed shortly after the Kree–Skrull War.\nAn alternate version of the Illuminati appeared in the Marvel Cinematic Universe film Doctor Strange in the Multiverse of Madness.\n\n\n== Members ==\nCreator Bendis says of the group's members:\n\nThey each represent a certain something that is very special to the Marvel Universe:\nNamor is a King of the Atlantis and the Seven Oceans and represents the antihero mindset.\nTony Stark represents the Avenger type of hero, one who understands and appreciates that a hero can work with the government, rather than outside of it. He also represents the common human, as he possesses no natural superhuman abilities.\nMister Fantastic: Leader of Fantastic Four. Represents the science-based part of the superhero community.\nBlack Bolt: King of Inhumans, who are an important part of Marvel history and play an important part in events that have not yet come to pass. He also represents a ruler/king archetype, one that has also been filled by Namor.\nDoctor Stephen Strange: Sorcerer Supreme of Earth. Speaks for the mystical/non-scientific side of the Marvel universe.\nProfessor Charles Xavier: Leader of the X-Men is there on behalf of the mutant community.\nThey all bring with them a unique viewpoint and perspective that isn't shared by the others.\nThe group forms at some time in the aftermath of the Kree-Skrull War, and probably after the Avengers/Defenders war. Iron Man realizes that each of the individual members had information about these alien races beforehand, and they could have collectively s",
+      "url": "https://en.wikipedia.org/wiki/Illuminati (comics)",
+      "tags": [],
+      "created_at": "2026-09-15T14:16:01.113472",
+      "usage_count": 0
+    },
+    {
+      "id": "1789461961116",
+      "query": "illuminati",
+      "source": "wikipedia",
+      "title": "Wikipedia: Illuminati (disambiguation)",
+      "content": "Illuminati, in both Latin and Italian, means \"illuminated/enlightened (ones)\" and primarily refers to a Bavarian Enlightenment-era secret society.\nIlluminati and variants of the term may also refer to:\n\n\n== Movements ==\nAlumbrados or Illuminati, practitioners of a mystical form of Christianity in 16th-century Spain\nIlluminism, 18th–19th-century European esoteric movement\n\n\n== Books ==\nIlluminati, the title of the German and Greek editions of Dan Brown's novel Angels & Demons\nThe Illuminati, a novel by Larry Burkett\nIlluminati (comics), a group of superheroes created by Marvel Comics\n\n\n== Games ==\nIlluminati, a fictional secret society and a player faction in the game The Secret World\nIlluminati (Deus Ex), a fictional secret society in the game Deus Ex\nIlluminati (game), a card game by Steve Jackson Games\nIlluminati: New World Order, another card game by Steve Jackson Games\nIlluminati (play-by-mail game)\n\n\n== Albums ==\nIlluminati (The Pastels album)\nIlluminati (Ten album)\nIlluminati (EP), a 2002 EP by Fatboy Slim\nIluminatti, a 2019 album by Natti Natasha\n\n\n== Songs ==\n\"Illuminati\" (Madonna song), from Madonna's thirteenth studio album Rebel Heart\n\"Illuminati\" (Dabzee song), from the 2024 Indian Malayalam film Aavesham\n\"Illuminati\", a song by Korn from The Path of Totality\n\"Illuminati\" (Malice Mizer song), 1998 song by Malice Mizer\n\"Illuminati\", 2020 song by Lil' Pump and Anuel AA\n\"Illuminati\", a song by Ghanaian rapper Sarkodie from the album Sarkology\n\n\n== Other uses ==\nIlluminati II, a cotton brand producing cotton fabrics from Ugandan organic and fair trade cotton\n\n\n== See also ==\nList of Illuminati members\nCabal (disambiguation)\nIlluminata (disambiguation)\nIlluminate (disambiguation)\nIlluminatus (disambiguation)\nIllumination (disambiguation)",
+      "url": "https://en.wikipedia.org/wiki/Illuminati (disambiguation)",
+      "tags": [],
+      "created_at": "2026-09-15T14:16:01.116989",
+      "usage_count": 0
+    },
+    {
+      "id": "1789461961120",
+      "query": "illuminati",
+      "source": "wikipedia",
+      "title": "Wikipedia: Illuminati (game)",
+      "content": "Illuminati is a card game made by Steve Jackson Games (SJG), inspired by the 1975 book series The Illuminatus! Trilogy by Robert Anton Wilson and Robert Shea. The game has ominous secret societies competing with each other to control the world through various means, including legal, illegal, and even mystical.  It was designed as a \"tongue-in-cheek rather than serious\" take on conspiracy theories. It contains groups named similarly to real-world organizations, such as the Society for Creative Anachronism and the Symbionese Liberation Army.  It can be played by two to eight players. Depending on the number of players, a game can take between one and six hours.\n\n\n== Origins ==\nIn September 1981, Steve Jackson and his regular freelance cover artist Dave Martin discussed their shared admiration of Robert Shea and Robert Anton Wilson's Illuminatus! Trilogy. The latter suggested a game. Steve Jackson decided against adapting the novel because of the expense of game rights, and the difficulty of adapting a novel with such a convoluted plot. He decided \"a game about the secret-conspiracy idea behind Illuminatus!\" was viable. After researching the Illuminati and conspiracy theories, and \"extensive and enthusiastic playtesting\" it went on the market in July 1982 in the (at the time) usual SJG Pocket Box format.  Over the next few years, three expansions for the Pocket Box Illuminati game were published.  The first two were substantially incorporated into the deluxe edition, while the third was a version of what would become Illuminati: Brainwash.\nCo-author Shea provided a four-paragraph introduction to the rulebook for the Illuminati Expansion Set 1 (1983), in which he wrote, \"Maybe the Illuminati are behind this game. They must be—they are, by definition, behind everything.\"\nWithout specifically naming the card game, in 2001, the trilogy's co-author Wilson criticized some products for exploiting the Illuminatus! name without paying royalties by taking advantage of legal loop",
+      "url": "https://en.wikipedia.org/wiki/Illuminati (game)",
+      "tags": [],
+      "created_at": "2026-09-15T14:16:01.120212",
+      "usage_count": 0
+    },
+    {
+      "id": "1789461961123",
+      "query": "illuminati",
+      "source": "wikipedia",
+      "title": "Wikipedia: Illuminati in popular culture",
+      "content": "The term Illuminati (; plural of Latin illuminatus, 'enlightened') is a name given to several groups, both real and fictitious. Historically, the name usually refers to the Bavarian Illuminati, an Enlightenment-era secret society founded on 1 May 1776 by Adam Weishaupt. They have been referred to in popular culture, in books and comics, television and films, and games. A number of novelists, playwrights and composers are alleged to have been Illuminati members and to have reflected this in their work. Early conspiracy theories surrounding the Illuminati have inspired various creative works, and continue to do so.\n\n\n== Books and comics ==\nGothic literature had a particular interest in the theme of the Illuminati. The Cambridge Companion to Gothic Fiction states that readers had a \"scandalous vogue for German tales of the Illuminati.\" The Illuminati have a role in Horrid Mysteries, as in Montague Summers' introduction to a later reprint of it. The Illuminati also turn up in two spoofs of the gothic genre, which both also reference Horrid Mysteries, Northanger Abbey by Jane Austen and Nightmare Abbey by Thomas Love Peacock.\nA number of writers have pointed out Mary Shelley's familiarity with the early anti-Illuminati text, Memoirs Illustrating the History of Jacobinism (1797–98), due to Percy Bysshe Shelley's enthusiasm for it. They describe the Memoirs influence in Frankenstein, and point to Frankenstein's monster as an amalgam of Shelley's Illuminati-influenced ideas as well as of the Illuminati itself, with the monster being created in Ingolstadt, where the Illuminati had been formed.\nThe Illuminatus! Trilogy by Robert Shea and Robert Anton Wilson is a three-book science fiction series published in the 1970s, which is regarded as a cult classic. An incomplete comic book version of the Illuminatus! was produced and published by Eye-n-Apple Productions and Rip Off Press between 1987 and 1991. A nine-hour theatrical adaptation was produced by Ken Campbell.\nRobert Anton",
+      "url": "https://en.wikipedia.org/wiki/Illuminati in popular culture",
+      "tags": [],
+      "created_at": "2026-09-15T14:16:01.123317",
+      "usage_count": 0
+    },
+    {
+      "id": "1789461961126",
+      "query": "illuminati",
+      "source": "duckduckgo",
+      "title": "Illuminati",
+      "content": "The Illuminati (; plural of Latin illuminatus, 'enlightened') is a name given to several groups, both real and fictitious. Historically, the name usually refers to the Bavarian Illuminati, an Enlightenment-era secret society founded on 1 May 1776 in the Electorate of Bavaria. The society's stated goals were to oppose superstition, obscurantism, religious influence over public life, and abuses of state power by monarchs. \"The order of the day\", they wrote in their general statutes, \"is to put an end to the machinations of the purveyors of injustice, to control them without dominating them.\"The Illuminati—along with Freemasonry and other secret societies—were outlawed through edict by Charles Theodore, Elector of Bavaria, with the encouragement of the Catholic Church, in 1784, 1785, 1787 and 1790. During subsequent years, the group was generally vilified by conservative and religious critics, who claimed that the Illuminati continued underground and were responsible for the French Revolu",
+      "url": "https://en.wikipedia.org/wiki/Illuminati",
+      "tags": [],
+      "created_at": "2026-09-15T14:16:01.126063",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462167391",
+      "query": "sex",
+      "source": "wikipedia",
+      "title": "Wikipedia: Anal sex",
+      "content": "Anal sex or anal intercourse principally means the insertion and thrusting of the erect penis into a person's anus, or anus and rectum, for sexual pleasure. Other forms of anal sex include anal fingering, the use of sex toys, anilingus, and pegging. Although anal sex most commonly means penile–anal penetration, sources sometimes use anal intercourse to exclusively denote penile–anal penetration, and anal sex to denote any form of anal sexual activity, especially between pairings as opposed to anal masturbation.\nWhile anal sex is commonly associated with male homosexuality, research shows that not all homosexual men engage in anal sex and that it is not uncommon in heterosexual relationships. Types of anal sex can also be part of lesbian sexual practices. People may experience pleasure from anal sex by stimulation of the anal nerve endings, and orgasm may be achieved through anal penetration – by indirect stimulation of the prostate in men, indirect stimulation of the clitoris or an area in the vagina (sometimes called the G-spot) in women, and other sensory nerves (especially the pudendal nerve). People may also find anal sex painful, sometimes extremely so, which may be due to psychological factors in some cases.\nAs with most forms of sexual activity, anal sex can facilitate the spread of sexually transmitted infections (STIs). Anal sex is considered a high-risk sexual practice because of the vulnerability of the anus and rectum. The anal and rectal tissue are delicate and do not, unlike the vagina, provide lubrication. They can easily tear and permit disease transmission, especially if a personal lubricant is not used. Anal sex without protection of a condom is considered the riskiest form of sexual activity, and therefore health authorities such as the World Health Organization (WHO) recommend safe sex practices for anal sex.\nStrong views are often expressed about anal sex. It is controversial in various cultures, often because of religious prohibitions  against ",
+      "url": "https://en.wikipedia.org/wiki/Anal sex",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:27.391216",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462167395",
+      "query": "sex",
+      "source": "wikipedia",
+      "title": "Wikipedia: Sexual intercourse",
+      "content": "Sex, more formally known as sexual intercourse, coitus, or copulation, is an intimate social activity typically involving the insertion of the erect male penis inside the female vagina and followed by thrusting motions for erotic pleasure, biological reproduction, or both. This specific type of sex is also known as vaginal intercourse (or vaginal sex). However, other forms of penetrative sexual intercourse also exist, including anal sex (penetration of the anus by the penis), oral sex (penetration of the mouth by the penis or oral contact with or penetration of the female genitalia), fingering (sexual penetration by the fingers) and penetration by use of a dildo (especially a strap-on dildo), and vibrators. The desire for these activities is grounded in natural human instinct and they involve physical intimacy between two or more people, usually enacted by humans solely for physical-emotional pleasure, sometimes contributing to human bonding.\nThere are different views on what constitutes sexual intercourse or other sexual activity, which can impact views of sexual health. Although sexual intercourse, particularly the term coitus, generally denotes penile–vaginal penetration and the possibility of creating offspring, it also commonly denotes penetrative oral sex and penile–anal sex, especially the latter. It usually encompasses any sexual penetration (a term especially common in statutory law), while non-penetrative sex has been labeled outercourse, but non-penetrative sex may also be considered sexual intercourse by some people or in some less-common definitions. Because people can be at risk of contracting sexually transmitted infections during these activities, safer sex practices are recommended by health professionals to reduce transmission risk.\nVarious jurisdictions place restrictions on certain sexual acts, such as adultery, incest, sexual activity with minors, prostitution, rape, zoophilia, sodomy, premarital sex and extramarital sex. Religious beliefs also ",
+      "url": "https://en.wikipedia.org/wiki/Sexual intercourse",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:27.395320",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462167398",
+      "query": "sex",
+      "source": "wikipedia",
+      "title": "Wikipedia: Sex position",
+      "content": "A sex position is a positioning of the bodies that people use to engage in sexual intercourse or other sexual activities. Sexual acts are generally described by the positions the participants adopt in order to perform those acts. Though sexual intercourse generally involves penetration of the body of one person by another, sex positions commonly involve non-penetrative sexual activities.\nThree broad and overlapping categories of sexual activity are commonly practiced: vaginal sex, anal sex, and oral sex (mouth-on-genital or mouth-on-anus). Sex acts may also be part of a fourth category, manual sex, which is stimulating the genitals or anus by using fingers or hands. Some acts may include stimulation by a device (sex toy), such as a dildo or vibrator. There are numerous sex positions that participants may adopt in any of these types of sex acts, and some authors have argued that the number of sex positions is essentially limitless.\n\n\n== History ==\n\nSex manuals typically present a guide to sex positions. They have a long history. In the Greco-Roman era, a sex manual was written by\nPhilaenis of Samos, possibly a hetaira (courtesan) of the Hellenistic period (3rd–1st century BC). The Kama Sutra of Vatsyayana, believed to have been written in the 1st to 6th centuries, has a notorious reputation as a sex manual. Different sex positions result in differences in the depth and angle of sexual penetration. Alfred Kinsey categorized six primary positions. The earliest known European medieval text dedicated to sexual positions is the Speculum al foder, (The Mirror of Coitus) a 15th-century Catalan text discovered in the 1970s.\n\n\n== Exclusively penetrative ==\n\nThese positions involve the insertion of a phallic object(s) (such as a penis, strap-on dildo, plug, or other nonporous object(s)) into a vagina, anus or mouth.\n\n\n=== Penetrating partner on top with front entry ===\n\nIn the missionary position, the participants face each other. The receiving partner lies on their back with ",
+      "url": "https://en.wikipedia.org/wiki/Sex position",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:27.398211",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462167400",
+      "query": "sex",
+      "source": "wikipedia",
+      "title": "Wikipedia: Unsimulated sex",
+      "content": "In the film industry, unsimulated sex is the presentation of sex scenes in which actors genuinely perform the depicted sex acts instead of simulating them. While ubiquitous in pornographic films, unsimulated sex scenes are uncommon in other types of film.\n\n\n== History ==\nIn the first half of the 20th century, sex and nudity in film was restricted by law and also by self-imposed industry standards such as the Motion Picture Production Code. Films showing explicit sexual activity were confined to privately distributed underground films such as stag films or \"porn loops\". In the 1960s and 70s, social attitudes toward sexuality liberalized and sexually explicit material was decriminalized in several countries.\nIn 1969, Andy Warhol's Blue Movie started the Golden Age of Pornography and also inspired filmmakers to include scenes of hardcore sex in non-pornographic stories. Notable examples include two of the eight Bedside-films and the six Zodiac-films, all of which contained hardcore sex scenes but had mainstream casts and crews and premiered in mainstream theaters.\nSince the late 1970s, the number of films with hardcore sex scenes scenes has declined, but the controversy surrounding Lars von Trier's The Idiots in 1998 inspired a wave of art-house films depicting unsimulated sexual activity, such as Romance (1999), Baise-moi (2000), Intimacy (2001), The Brown Bunny (2003), and 9 Songs (2004).\n\n\n== Prosthesis ==\nThe use of prostheses has blurred the line between what could be classified as simulated and unsimulated sexual activity due to the fact that stimulation of genitals by an inanimate object could still be perceived as genuine sexual activity. In the context of filming, the use of prosthesis is to prevent genital contact between the cast members and therefore falls under the category of simulated.\n\n\n== Notable filmmakers ==\n\n\n=== Catherine Breillat ===\nCatherine Breillat is a French director, screenwriter, and novelist whose films have a focus on female sexuality, i",
+      "url": "https://en.wikipedia.org/wiki/Unsimulated sex",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:27.401004",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462167403",
+      "query": "sex",
+      "source": "duckduckgo",
+      "title": "Sex",
+      "content": "Sex most commonly refers to:Biological sex, the trait of certain reproducing organisms producing either male or female gametesSexual reproduction, reproduction that combines multiple gametesHuman sexual activity, a broad range of reproductive or erotic human practicesHuman sexuality, the way people express themselves in terms of, or experience, the above activitiesSexual intercourse, the activity of using reproductive organs penetrativelyAnimal sexual behaviour, the reproductive or erotic activities of non-human animalsCopulation (zoology), in which a male introduces sperm to a female's bodyLegal sex or legal gender, a legal statusSex or sexual may also refer to:",
+      "url": "https://en.wikipedia.org/wiki/Sex",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:27.403636",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462199623",
+      "query": "wikipedia",
+      "source": "wikipedia",
+      "title": "Wikipedia: English Wikipedia",
+      "content": "The English Wikipedia is the primary English-language edition of Wikipedia, an online encyclopedia. It was created by Jimmy Wales and Larry Sanger on 15 January 2001, as Wikipedia's first edition.\nThe English Wikipedia is hosted alongside other language editions by the Wikimedia Foundation, an American nonprofit organization. Its content, written independently of other editions by volunteer editors known as Wikipedians, is in various varieties of English while aiming to stay consistent within articles. Its internal newspaper is The Signpost.\nThe English Wikipedia is the most read version of Wikipedia, accounting for 48% of Wikipedia's cumulative traffic, with the remaining percentage split among the other languages. The English Wikipedia has the most articles of any edition, at 7,239,896 as of September 2026. It contains 10.6% of articles in all Wikipedias, although it lacks millions of articles found in other editions.\nEnglish Wikipedia, often as a stand-in for Wikipedia overall, has been praised for its enablement of the democratization of knowledge, extent of coverage, unique structure, culture, and reduced degree of commercial bias. It has been criticized for exhibiting systemic bias, particularly gender bias against women and ideological bias. While its reliability was frequently criticized in the 2000s, it has improved over time, receiving greater praise in the late 2010s and throughout the 2020s, having become an important fact-checking site. English Wikipedia has been characterized as having less cultural bias than other language editions due to its broader editor base.\n\n\n== Articles ==\n\nThe English Wikipedia surpassed seven million articles on 28 May 2025. In November 2022, the total volume of the compressed texts of its articles amounted to 20 gigabytes.\nThe edition's one-billionth edit was made on 13 January 2021 by Ser Amantio di Nicolao (Steven Pruitt) who was as of that date and remains as of January 2026 the user with the highest number of edits on th",
+      "url": "https://en.wikipedia.org/wiki/English Wikipedia",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:59.623244",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462199628",
+      "query": "wikipedia",
+      "source": "wikipedia",
+      "title": "Wikipedia: List of Wikipedia mobile apps",
+      "content": "A number of organizations within the Wikimedia movement including the Wikimedia Foundation publish official mobile apps for mobile access to Wikipedia.  All are available via the appropriate app store (e.g. Google Play, App Store, Microsoft Store, F-Droid). They can also be downloaded independently of any third-party store from the Wikimedia Foundation's releases website, which also keeps old and beta versions.\n\n\n== Official apps ==\n\n\n=== Wikimedia Foundation ===\nWikipedia apps from the Wikimedia Foundation are called \"Wikipedia\".\n\n\n==== Android ====\nThe Android app allows users to read and edit articles directly from the app. It is available on Play Store, Galaxy Store, Aptoide, Cafe Bazaar, F-Droid, and GetJar.\nA separate app on the Play Store provides access to beta features that may not be available in the standard Wikipedia app.\nIn June 2025, a quiz game called Which Came First? was introduced to the app, which allows users to answer five questions regarding which historical event of two given events occurred first. A feature called Year in Review that allows users to see the time and topics they spent reading for a given year was also introduced that year.\n\n\n==== iOS ====\nThe iOS app also allows users to read and edit articles directly from the app, similar to the Android app and mobile web version. It allows users to share an article via Facebook and other social websites, and to find geotagged articles near their current location. It does not allow users to see categories or see the normal desktop version.\n\n\n==== Windows ====\nThe Metro-style app provides a read-only version of Wikipedia, similar to the mobile web version. The app when used in Windows RT is incapable of showing moving pictures.\n\n\n==== KaiOS ====\nThe KaiOS app was released in April 2024.\n\n\n=== Kiwix ===\nKiwix has developed a number of offline apps based on Wikipedia content.\n\n\n== Unassociated apps ==\nThese apps were mainly developed to display articles and are often used on platforms for which",
+      "url": "https://en.wikipedia.org/wiki/List of Wikipedia mobile apps",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:59.628233",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462199633",
+      "query": "wikipedia",
+      "source": "wikipedia",
+      "title": "Wikipedia: Wikipedia (disambiguation)",
+      "content": "Wikipedia is a free, collaborative and multilingual Internet encyclopedia.\nWikipedia may also refer to:\n\nEnglish Wikipedia, Wikipedia's first and largest edition\n274301 Wikipedia, an asteroid\n\"Wikipedia\", a single by American singer Jean Deaux\n\"Wikipedia\", a single by Swedish rapper Jireel\n\n\n== See also ==\nAll pages with titles containing Wikipedia\nList of Wikipedias\nWiki (disambiguation)",
+      "url": "https://en.wikipedia.org/wiki/Wikipedia (disambiguation)",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:59.633046",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462199636",
+      "query": "wikipedia",
+      "source": "wikipedia",
+      "title": "Wikipedia: List of Wikipedias",
+      "content": "Wikipedia is a free multilingual wiki-based open-source online encyclopedia edited and maintained by a community of volunteer editors, started on 15 January 2001 as an English-language encyclopedia. Non-English editions followed in the same year: the German and Catalan editions were created on 16 March, the French edition was created on 23 March, and the Swedish edition was created on 23 May. As of September 2026, Wikipedia articles have been created in 364 editions, with 348 currently active, 16 closed and 11 moved to Wikimedia Incubator.\nThe Meta-Wiki language committee manages policies on creating new Wikimedia projects. To be eligible, a language must have a valid ISO 639 code, be \"sufficiently unique\", and have a \"sufficient number of fluent users\".\n\n\n== Variations in editions ==\n\nWikipedia projects vary in how they divide dialects and variants. For example, the English Wikipedia includes most modern varieties of English including American English and British English. Similarly, the Catalan Wikipedia encompasses all Catalan variants, such as Valencian, Balearic, or France's Catalan; Spanish Wikipedia includes both Peninsular Spanish and Latin American Spanish; and the Portuguese Wikipedia includes both European Portuguese and Brazilian Portuguese. In contrast, some languages have multiple Wikipedias. For example, Serbo-Croatian encompasses four Wikipedia editions: Serbo-Croatian and three different standardized varieties (Bosnian, Croatian, and Serbian).\nAdditionally, some Wikipedia projects apply different approaches to orthography. For instance, the Chinese Wikipedia automatically transliterates between six standard forms: three using simplified Chinese characters (Mainland China, Malaysia, and Singapore) and three using traditional Chinese characters (Taiwan, Hong Kong, and Macau). And rather than relying on transliteration, Belarusian has separate Wikipedia projects for the official Narkamaŭka and Taraškievica orthographies.\n\n\n== Wikipedia edition codes ==\n",
+      "url": "https://en.wikipedia.org/wiki/List of Wikipedias",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:59.636133",
+      "usage_count": 0
+    },
+    {
+      "id": "1789462199639",
+      "query": "wikipedia",
+      "source": "duckduckgo",
+      "title": "Wikipedia",
+      "content": "Wikipedia is a free online encyclopedia written and maintained by a community of volunteers, known as Wikipedians, through open collaboration and the wiki software MediaWiki. Founded by Jimmy Wales and Larry Sanger in 2001, Wikipedia has been hosted since 2003 by the Wikimedia Foundation, an American nonprofit organization funded mainly by donations from readers. Wikipedia is the largest and most read reference work in history.Initially available only in English, Wikipedia has grown to over 300 languages and is one of the world's most visited websites as of 2026. The English Wikipedia, with over 7 million articles, remains the largest of the editions, which together comprise more than 68 million articles and attract more than 1.5 billion unique device visits and 13 million edits per month (about five edits per second on average) as of April 2024. As of December 2025, over 25% of Wikipedia's traffic comes from the United States, while Japan accounts for nearly 7%, and the United Kingdom",
+      "url": "https://en.wikipedia.org/wiki/Wikipedia",
+      "tags": [],
+      "created_at": "2026-09-15T14:19:59.639423",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 119,
+    "total_searches": 166,
     "total_queries": 0
   }
 }

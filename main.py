@@ -45,16 +45,20 @@ logging.basicConfig(
 # `scipy.io.wavfile`.  If the library is missing we fall back to a helpful error.
 
 def record_audio(duration: int = 5, sample_rate: int = 16000) -> str:
-    """Record `duration` seconds of mono audio and return the path to a temporary WAV file.
+    """Record audio with silence detection until max duration or silence threshold.
+
+    Records until either:
+    - MAX_RECORDING_SECONDS (default 15s) is reached, OR
+    - SILENCE_CONSECUTIVE_SECONDS (default 1.5s) of near-silence detected
 
     Args:
-        duration: Recording length in seconds.
+        duration: Initial recording duration in seconds (used as min record time).
         sample_rate: Sample rate for the WAV file.
 
     Returns:
         Path to the temporary WAV file.
     """
-    logging.info("Recording audio (duration=%ds)...", duration)
+    logging.info(f"Recording audio (min {duration}s, max {MAX_RECORDING_SECONDS}s)...")
     try:
         import numpy as np
         import sounddevice as sd
@@ -65,9 +69,51 @@ def record_audio(duration: int = 5, sample_rate: int = 16000) -> str:
         )
         raise e
 
-    # Record – `sd.rec` returns a NumPy array of shape (samples, channels).
-    recording = sd.rec(int(duration * sample_rate), samplerate=sample_rate, channels=1, dtype="int16")
-    sd.wait()  # Block until recording is finished.
+    # Record in chunks and check for silence
+    max_samples = int(MAX_RECORDING_SECONDS * sample_rate)
+    recording = sd.rec(max_samples, samplerate=sample_rate, channels=1, dtype="int16")
+
+    # Wait for max duration, but check for silence
+    import time
+    start_time = time.time()
+    silence_chunks = 0
+    min_chunks = int(duration * sample_rate)
+
+    while True:
+        # Check if we've recorded minimum duration
+        current_samples = int((time.time() - start_time) * sample_rate)
+        if current_samples >= min_chunks:
+            # Start checking for silence
+            chunk_start = len(recording) - min_chunks
+            chunk_end = len(recording)
+            chunk = recording[chunk_start:chunk_end] if chunk_end <= len(recording) else None
+
+            if chunk is not None:
+                # Convert to float and check RMS
+                import math
+                chunk_float = chunk.astype(float) / 32768.0
+                rms = math.sqrt(np.mean(chunk_float ** 2))
+
+                if rms < SILENCE_THRESHOLD:
+                    silence_chunks += 1
+                    if silence_chunks >= SILENCE_CONSECUTIVE_SECONDS:
+                        logging.info(f"Silence detected after {silence_chunks}s, stopping recording")
+                        break
+                else:
+                    silence_chunks = 0
+
+        # Check if we've hit max duration
+        if current_samples >= max_samples:
+            logging.info(f"Max recording duration ({MAX_RECORDING_SECONDS}s) reached")
+            break
+
+        time.sleep(0.1)  # Small delay to prevent CPU spin
+
+    sd.wait()  # Block until recording is finished
+
+    # Trim to actual recorded duration
+    actual_length = min(len(recording), int((time.time() - start_time) * sample_rate))
+    recording = recording[:actual_length]
 
     # Write to a temporary WAV file.
     fd, path = tempfile.mkstemp(suffix=".wav")
@@ -101,7 +147,13 @@ def main_loop():
                     os.remove(wav_path)
                 except OSError:
                     pass
-            logging.info("Transcription result: %s", text)
+
+            # Log raw transcription immediately
+            logging.info(f"TRANSCRIPTION: '{text}'")
+
+            if not text or len(text.strip()) < 2:
+                logging.warning("Empty or very short transcription, skipping")
+                continue
 
             # Route request to brain.
             logging.info("Routing request to brain...")

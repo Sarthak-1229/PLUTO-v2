@@ -41,6 +41,7 @@ def _bytes_to_data_uri(data: bytes, mime: str = "audio/mpeg") -> str:
 # ------------------------------------------------------------------
 @app.post("/process")
 async def process(query: Query):
+    """Process a user query and return answer with optional audio."""
     try:
         # Run the PLUTO brain (with self-learning & local Ollama)
         answer = handle_request(query.text)
@@ -57,7 +58,7 @@ async def process(query: Query):
         return {"answer": answer, "audio_uri": audio_uri}
     except Exception as exc:
         logging.exception("Error in /process")
-        raise HTTPException(status_code=500, detail=str(exc))
+        return {"error": f"Processing failed: {str(exc)}", "status": "error"}
 
 # ------------------------------------------------------------------
 # VRAM monitoring endpoint

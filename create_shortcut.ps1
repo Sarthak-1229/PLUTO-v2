@@ -1,10 +1,8 @@
-$WshShell = New-Object -comObject WScript.Shell
-$DesktopPath = [Environment]::GetFolderPath("Desktop")
-$Shortcut = $WshShell.CreateShortcut("$DesktopPath\PLUTO v2.lnk")
+$WshShell = New-Object -ComObject WScript.Shell
+$Shortcut = $WshShell.CreateShortcut("$env:USERPROFILE\Desktop\PLUTO v2.lnk")
 $Shortcut.TargetPath = "$PSScriptRoot\start_pluto.bat"
 $Shortcut.WorkingDirectory = "$PSScriptRoot"
-$Shortcut.Description = "Launch PLUTO v2 AI Agent"
-# Try to use a built-in icon or leave default
-$Shortcut.IconLocation = "%SystemRoot%\System32\SHELL32.dll,22" 
+$Shortcut.Description = "PLUTO v2 - Local AI Research Assistant"
+$Shortcut.IconLocation = "$PSScriptRoot\logo3.png,0"
 $Shortcut.Save()
-Write-Host "Shortcut created at $DesktopPath\PLUTO v2.lnk"
+Write-Host "Desktop shortcut created: PLUTO v2.lnk"

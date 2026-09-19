@@ -2008,10 +2008,296 @@
       "tags": [],
       "created_at": "2026-09-15T14:19:59.639423",
       "usage_count": 0
+    },
+    {
+      "id": "1789713894794",
+      "query": "list all the trigonometry formulas that you know",
+      "source": "wikipedia",
+      "title": "Wikipedia: Trigonometry",
+      "content": "Trigonometry (from Ancient Greek  τρίγωνον (trígōnon) 'triangle' and  μέτρον (métron) 'measure') is a branch of mathematics concerned with relationships between angles and side lengths of triangles. In particular, the trigonometric functions relate the angles of a right triangle with ratios of its side lengths. The field emerged in the Hellenistic world during the 3rd century BC from applications of geometry to astronomical studies. The Greeks focused on the calculation of chords, while mathematicians in India created the earliest-known tables of values for trigonometric ratios (also called trigonometric functions) such as sine.\nThroughout history, trigonometry has been applied in areas such as geodesy, surveying, celestial mechanics, and navigation.\nTrigonometry is known for its many identities. These \ntrigonometric identities are commonly used for rewriting trigonometrical expressions with the aim to simplify an expression, to find a more useful form of an expression, or to solve an equation.\n\n\n== Trigonometric ratios ==\n\nTrigonometric ratios are the ratios between edges of a right triangle. These ratios depend only on one acute angle of the right triangle, since any two right triangles with the same acute angle are similar. \nSo, these ratios define functions of this angle that are called trigonometric functions. Explicitly, they are defined below as functions of the known angle A, where a, b and h refer to the lengths of the sides in the accompanying figure.\nIn the following definitions, the hypotenuse is the side opposite to the 90-degree angle in a right triangle; it is the longest side of the triangle and one of the two sides adjacent to angle A. The adjacent leg is the other side that is adjacent to angle A. The opposite side is the side that is opposite to angle A. The terms perpendicular and base are sometimes used for the opposite and adjacent sides respectively. See below under Mnemonics.\n\nSine (denoted sin), defined as the ratio of the side opposite the ",
+      "url": "https://en.wikipedia.org/wiki/Trigonometry",
+      "tags": [],
+      "created_at": "2026-09-18T12:14:54.794127",
+      "usage_count": 0
+    },
+    {
+      "id": "1789713894798",
+      "query": "list all the trigonometry formulas that you know",
+      "source": "wikipedia",
+      "title": "Wikipedia: History of trigonometry",
+      "content": "Early study of triangles can be traced to Egyptian mathematics (Rhind Mathematical Papyrus) and Babylonian mathematics during the 2nd millennium BC. Systematic study of trigonometric functions began in Hellenistic mathematics, reaching India as part of Hellenistic astronomy. In Indian astronomy, the study of trigonometric functions flourished in the Gupta period, especially due to Aryabhata (6th century AD), who discovered the sine function, cosine function, and versine function.\nDuring the Middle Ages, the study of trigonometry continued in Islamic mathematics, building on earlier foundations from Indian (notably Aryabhata's sine and cosine concepts) and Greek (Hipparchus' chord table) sources. Mathematicians such as al-Khwarizmi and Abu al-Wafa made important contributions, but the field was fundamentally transformed by Nasir al-Din al-Tusi (1201–1274).\nAl-Tusi was the first to treat trigonometry as an independent mathematical discipline, separate from astronomy. He fully established all six trigonometric functions (sine, cosine, tangent, cotangent, secant, cosecant) with complete proofs, and formulated the plane and spherical law of sines, the form still taught in schools and universities today. He also rewrote and corrected Ptolemy's Almagest, replacing chords with sine and tangent tables and adding practical, real-world examples.\nThrough translations of Arabic and Greek texts, this knowledge reached the Latin West. However, during the Renaissance, Regiomontanus (c. 1464) translated al-Tusi's work into Latin without crediting him, effectively erasing al-Tusi's name from European historiography. Consequently, for centuries, European textbooks mistakenly attributed the development of trigonometry to Regiomontanus and earlier Greek sources, sidelining al-Tusi's central role.\nModern scholarship has since restored al-Tusi's credit: he is now recognized in academic literature as the \"Master of Trigonometry\", the one who gave the field its modern, independent form.\nThe",
+      "url": "https://en.wikipedia.org/wiki/History of trigonometry",
+      "tags": [],
+      "created_at": "2026-09-18T12:14:54.798604",
+      "usage_count": 0
+    },
+    {
+      "id": "1789713894800",
+      "query": "list all the trigonometry formulas that you know",
+      "source": "wikipedia",
+      "title": "Wikipedia: Inverse trigonometric functions",
+      "content": "In mathematics, the inverse trigonometric functions (occasionally also called antitrigonometric, cyclometric, or arcus functions) are the inverse functions of the trigonometric functions, under suitably restricted domains. Specifically, they are the inverses of the sine, cosine, tangent, cotangent, secant, and cosecant functions, and are used to obtain an angle from any of the angle's trigonometric ratios. Inverse trigonometric functions are widely used in engineering, navigation, physics, and geometry.\n\n\n== Notation ==\n\nThere are several notations for the inverse trigonometric functions. The most common uses the prefix arc-: arcsin(x), arccos(x), arctan(x), etc. (This convention is used throughout this article.)  This notation arises from the following geometric relationships:\nwhen measuring in radians, an angle of θ radians will correspond to an arc whose length is rθ, where r is the radius of the circle. Thus in the unit circle, the cosine of x function is both the arc and the angle, because the arc of a circle of radius 1 is the same as the angle. Or, \"the arc whose cosine is x\" is the same as \"the angle whose cosine is x\", because the length of the arc of the circle in radii is the same as the measurement of the angle in radians. In computer programming languages, the inverse trigonometric functions are often called by the abbreviated forms asin, acos, atan.\nAnother common notation in English sources uses a superscript f−1: sin−1(x), cos−1(x), tan−1(x), etc., as introduced by John Herschel in 1813. This conflicts with the common syntax sin2(x), which denote exponentiation rather than function composition, and therefore may result in confusion between notation for the reciprocal (multiplicative inverse) and inverse function. The inverse function convention using a superscript in brackets is unambiguous but not commonly used: sin[−1](x), cos[−1](x), tan[−1](x). \nThe ambiguity is mitigated by the use of special names for reciprocal trigonometric functions — for ex",
+      "url": "https://en.wikipedia.org/wiki/Inverse trigonometric functions",
+      "tags": [],
+      "created_at": "2026-09-18T12:14:54.800895",
+      "usage_count": 0
+    },
+    {
+      "id": "1789713894802",
+      "query": "list all the trigonometry formulas that you know",
+      "source": "wikipedia",
+      "title": "Wikipedia: Taylor series",
+      "content": "In mathematical analysis, the Taylor series or Taylor expansion of a function is an infinite sum of terms that are expressed in terms of the function's derivatives at a single point. For most common functions, the function and the sum of its Taylor series are equal near this point. Taylor series are named after Brook Taylor, who introduced them in 1715. A Taylor series is also called a Maclaurin series when 0 is the point where the derivatives are considered, after Colin Maclaurin, who made extensive use of this special case of Taylor series in the 18th century.\nThe partial sum formed by the first n + 1 terms of a Taylor series is a polynomial of degree n that is called the nth Taylor polynomial of the function. Taylor polynomials are approximations of a function, which become generally more accurate as n increases. Taylor's theorem gives quantitative estimates on the error introduced by the use of such approximations. If the Taylor series of a function is convergent, its sum is the limit of the infinite sequence of the Taylor polynomials. A function may differ from the sum of its Taylor series, even if its Taylor series is convergent. A function is analytic at a point x if it is equal to the sum of its Taylor series in some open interval (or open disk in the complex plane) containing x. This implies that the function is analytic at every point of the interval (or disk).\n\n\n== Definition ==\nThe Taylor series of a real or complex-valued function f(x), that is infinitely differentiable at a real or complex number a, is the power series\n\n  \n    \n      \n        f\n        (\n        a\n        )\n        +\n        \n          \n            \n              \n                f\n                ′\n              \n              (\n              a\n              )\n            \n            \n              1\n              !\n            \n          \n        \n        (\n        x\n        −\n        a\n        )\n        +\n        \n          \n            \n              \n                f\n           ",
+      "url": "https://en.wikipedia.org/wiki/Taylor series",
+      "tags": [],
+      "created_at": "2026-09-18T12:14:54.802891",
+      "usage_count": 0
+    },
+    {
+      "id": "1789719997196",
+      "query": "when was the 9/11 attack launched",
+      "source": "wikipedia",
+      "title": "Wikipedia: 9/11 conspiracy theories",
+      "content": "Various conspiracy theories attribute the preparation and execution of the September 11 attacks against the United States to parties other than, or in addition to, al-Qaeda. These include the theory that high-level government officials had advance knowledge of the attacks. Government investigations and independent reviews have rejected these theories. Proponents of these theories assert that there are inconsistencies in the commonly accepted version, or that there is evidence that was ignored, concealed, or overlooked. Most of these theories either lack evidence or have been debunked by experts.\nThe most prominent conspiracy theory is that the collapse of the Twin Towers and 7 World Trade Center were the result of controlled demolitions rather than structural failure due to impact and fire. Another prominent belief is that the Pentagon was hit by a missile launched by elements from inside the U.S. government, or that hijacked planes were remotely controlled, or that commercial airliners were allowed to hit the targets via an effective stand-down of the U.S. military. Motives conspiracy theorists ascribe to such actions include justifying the U.S. invasions of Afghanistan in 2001 and Iraq in 2003 (even though the U.S. government concluded Iraq was not involved in the attacks) to advance U.S. geostrategic interests, such as plans to construct a natural gas pipeline through Afghanistan. Other conspiracy theories revolve around authorities having advance knowledge of the attacks and deliberately ignoring or assisting the attackers.\nThe National Institute of Standards and Technology (NIST) and the technology magazine Popular Mechanics investigated and rejected these theories. The 9/11 Commission and most of the civil engineering community accept that the impacts of jet aircraft at high speeds in combination with subsequent fires, not controlled demolition, led to the Twin Towers' collapse, but some conspiracy theory groups, including Architects & Engineers for 9/11 Truth",
+      "url": "https://en.wikipedia.org/wiki/9/11 conspiracy theories",
+      "tags": [],
+      "created_at": "2026-09-18T13:56:37.196947",
+      "usage_count": 0
+    },
+    {
+      "id": "1789719997199",
+      "query": "when was the 9/11 attack launched",
+      "source": "wikipedia",
+      "title": "Wikipedia: Timeline for the day of the September 11 attacks",
+      "content": "The September 11 attacks of 2001, in addition to being a unique act of terrorism, constituted a media event on a scale not seen since the advent of civilian global satellite links. Instant worldwide reaction and debate were made possible by round-the-clock television news organizations and by the internet. As a result, most of the events were known by a large portion of the world's population as they occurred.\nThe attacks themselves lasted less than two hours; the first hijacking commenced at approximately 8:14 am, and the final hijacked plane crashed at 10:03 am. All times given are in Eastern Daylight Time, (UTC−04:00).\n\n\n== Major events ==\n\n7:59 a.m.: American Airlines Flight 11, a Boeing 767 with registration number N334AA, carrying 76 passengers (excluding the hijackers) and 11 crew members, departs 14 minutes late from Logan International Airport in Boston, bound for Los Angeles International Airport. Five hijackers are on board. Hijacker and ringleader Mohamed Atta would pilot the plane into the North Tower of the World Trade Center.\n8:14: United Airlines Flight 175, a Boeing 767, with registration number N612UA carrying 56 passengers (excluding the hijackers) and 9 crew members, departs 14 minutes late from Logan International Airport in Boston, bound for Los Angeles International Airport. Five hijackers are on board. Lead hijacker-pilot Marwan al-Shehhi would pilot the plane into the South Tower of the World Trade Center.\n8:14: Flight 11 is hijacked over Central Massachusetts, turning first northwest, then south heading straight to New York.\n8:20: American Airlines Flight 77, a Boeing 757 with registration number N644AA with 58 passengers (excluding the hijackers) and 6 crew members, departs 10 minutes late from Washington Dulles International Airport, for Los Angeles International Airport. Five hijackers are on board. Lead hijacker-pilot Hani Hanjour will pilot the plane into the West side of the Pentagon.\n8:42–8:46 (approx.): Flight 175 is hijacked above ",
+      "url": "https://en.wikipedia.org/wiki/Timeline for the day of the September 11 attacks",
+      "tags": [],
+      "created_at": "2026-09-18T13:56:37.199409",
+      "usage_count": 0
+    },
+    {
+      "id": "1789719997201",
+      "query": "when was the 9/11 attack launched",
+      "source": "wikipedia",
+      "title": "Wikipedia: Aftermath of the September 11 attacks",
+      "content": "The September 11 attacks have had profound and wide-ranging political, economic, health and societal effects. They also reshaped global security policies and international relations, prompting lasting changes in how nations address terrorism and collective safety. It gave rise to the Global War on Terrorism, which included occupations of Afghanistan (2001–21) and Iraq (2003–11) and various other US-led interventions in the region. \nThe attacks elicited major rescue and recovery efforts in the affected areas, in particular at the World Trade Center site, which was rebuilt to include a memorial to the victims. Many of the hundreds of workers assisting in these efforts, as well as survivors and people living and working near the site, became seriously ill in the following years and decades due to exposure to toxins, which had spread throughout New York City as a result of the Twin Towers’ collapse. Mental health problems, especially post-traumatic stress disorder (PTSD) among ordinary citizens and first responders also increased as a result of the attacks.\nNationalism, solidarity and widespread support for first responders and the military pervaded the United States throughout the immediate aftermath of the attacks. Islamophobia, anti-Arab racism, and hate crimes and other discriminatory actions surged against members of ethnic and religious minorities in the US and other Western countries. The attacks cost billions of US dollars in damage and insurance claims, caused thousands of office workers to be displaced or lose their jobs, and dealt damage to the global economy. Cultural effects include millions of dollars worth in artwork being lost at the World Trade Center and the Pentagon, and media being adapted to remove any possible similarities to the attacks or references to the Twin Towers in the immediate aftermath.\nHaving occurred early in the twenty-first century, 9/11 is considered to be a turning point in the history of the US, which was in a relatively unchallen",
+      "url": "https://en.wikipedia.org/wiki/Aftermath of the September 11 attacks",
+      "tags": [],
+      "created_at": "2026-09-18T13:56:37.201999",
+      "usage_count": 0
+    },
+    {
+      "id": "1789719997204",
+      "query": "when was the 9/11 attack launched",
+      "source": "wikipedia",
+      "title": "Wikipedia: September 11 attacks",
+      "content": "The September 11 attacks, colloquially known as 9/11, were a coordinated series of suicide attacks perpetrated by the Islamic terrorist organization al-Qaeda against the United States in 2001. A total of 19 hijackers commandeered four commercial passenger airliners. The first two planes were flown into each of the Twin Towers at the World Trade Center in New York City, while the third plane crashed into the Pentagon, the headquarters of the United States Department of Defense, in Arlington County, Virginia. The fourth plane crashed in a rural field in Pennsylvania during a passenger revolt.\nThe ringleader, Mohamed Atta, flew American Airlines Flight 11 into the North Tower of the World Trade Center at 8:46 a.m. At 9:03 a.m. Marwan al-Shehhi flew United Airlines Flight 175 into the South Tower. Both collapsed within an hour and forty-two minutes, destroying the remaining five structures in the complex. Hani Hanjour flew American Airlines Flight 77 into the Pentagon at 9:37 a.m., causing a partial collapse. United Airlines Flight 93, hijacked by Ziad Jarrah, was believed to target either the United States Capitol or the White House. Alerted to the previous attacks, the passengers revolted and the hijackers crashed the aircraft into a field near Shanksville, Pennsylvania, at 10:03 a.m. The Federal Aviation Administration ordered a ground stop for all traffic in U.S. airspace, requiring all airborne aircraft to return to their point of origin or divert to Canada. The actions undertaken in Canada to support incoming aircraft and their occupants were collectively titled Operation Yellow Ribbon.\nThat evening, the Central Intelligence Agency informed President George W. Bush that its Counterterrorism Center had identified the attacks as having been the work of al-Qaeda under Osama bin Laden. The United States responded by invading Afghanistan and launching its Global War on Terror, with the stated goal of eliminating hostile groups it deemed terrorist organizations and the ",
+      "url": "https://en.wikipedia.org/wiki/September 11 attacks",
+      "tags": [],
+      "created_at": "2026-09-18T13:56:37.204576",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720498712",
+      "query": "Resignation of education minister of India 2026",
+      "source": "arxiv",
+      "title": "Trends and Characteristics of High-Frequency Type II Bursts Detected by CALLISTO Spectrometers",
+      "content": "Solar radio type II bursts serve as early indicators of incoming geo-effective space weather events such as coronal mass ejections (CMEs). In order to investigate the origin of high-frequency type II bursts (HF type II bursts), we have identified 51 of them (among 180 type II bursts from SWPC reports) that are observed by ground-based Compound Astronomical Low-cost Low-frequency Instrument for Spectroscopy and Transportable Observatory (CALLISTO) spectrometers and whose upper-frequency cutoff (of either fundamental or harmonic emission) lies in between 150 MHz-450 MHz during 2010-2019. We found that 60% of HF type II bursts, whose upper-frequency cutoff $\\geq$ 300 MHz originate from the western longitudes. Further, our study finds a good correlation $\\sim $ 0.73 between the average shock speed derived from the radio dynamic spectra and the corresponding speed from CME data. Also, we found that analyzed HF type II bursts are associated with wide and fast CMEs located near the solar disk. In addition, we have analyzed the spatio-temporal characteristics of two of these high-frequency type II bursts and compared the derived from radio observations with those derived from multi-spacecraft CME observations from SOHO/LASCO and STEREO coronagraphs.",
+      "url": "http://arxiv.org/abs/2106.09310v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:04:58.712247",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720498714",
+      "query": "Resignation of education minister of India 2026",
+      "source": "arxiv",
+      "title": "Twelve Years of Education and Public Outreach with the Fermi Gamma-ray Space Telescope",
+      "content": "During the past twelve years, NASA's Fermi Gamma-ray Space Telescope has supported a wide range of Education and Public Outreach (E/PO) activities, targeting K-14 students and the general public. The purpose of the Fermi E/PO program is to increase student and public understanding of the science of the high-energy Universe, through inspiring, engaging and educational activities linked to the mission's science objectives. The E/PO program has additional more general goals, including increasing the diversity of students in the Science, Technology, Engineering and Mathematics (STEM) pipeline, and increasing public awareness and understanding of Fermi science and technology. Fermi's multi-faceted E/PO program includes elements in each major outcome category: Higher Education; Elementary and Secondary Education; Informal Education and Public Outreach.",
+      "url": "http://arxiv.org/abs/1303.0042v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:04:58.714487",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720498716",
+      "query": "Resignation of education minister of India 2026",
+      "source": "arxiv",
+      "title": "Cinema, Fermi Problems, & General Education",
+      "content": "During the past several years the authors have developed a new approach to the teaching of Physical Science, a general education course typically found in the curricula of nearly every college and university. This approach, called `Physics in Films', uses scenes from popular movies to illustrate physical principles and has excited student interest and improved student performance.   The analyses of many of the scenes in `Physics in Films' are a direct application of Fermi calculations -- estimates and approximations designed to make solutions of complex and seemingly intractable problems understandable to the student non-specialist. The intent of this paper is to provide instructors with examples they can use to develop skill in recognizing Fermi problems and making Fermi calculations in their own courses.",
+      "url": "http://arxiv.org/abs/physics/0608058v2",
+      "tags": [],
+      "created_at": "2026-09-18T14:04:58.716414",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720498718",
+      "query": "Resignation of education minister of India 2026",
+      "source": "arxiv",
+      "title": "Multi-Point Detection of the Powerful Gamma Ray Burst GRB221009A Propagation through the Heliosphere on October 9, 2022",
+      "content": "We present the results of processing the effects of the powerful Gamma Ray Burst GRB221009A captured by the charged particle detectors (electrostatic analyzers and solid-state detectors) onboard spacecraft at different points in the heliosphere on October 9, 2022. To follow the GRB221009A propagation through the heliosphere we used the electron and proton flux measurements from solar missions Solar Orbiter and STEREO-A; Earth magnetosphere and the solar wind missions THEMIS and Wind; meteorological satellites POES15, POES19, MetOp3; and MAVEN - a NASA mission orbiting Mars. GRB221009A had a structure of four bursts: less intense Pulse 1 - the triggering impulse - was detected by gamma-ray observatories at 131659 UT (near the Earth); the most intense Pulses 2 and 3 were detected on board all the spacecraft from the list, and Pulse 4 detected in more than 500 s after Pulse 1. Due to their different scientific objectives, the spacecraft, which data was used in this study, were separated by more than 1 AU (Solar Orbiter and MAVEN). This enabled tracking GRB221009A as it was propagating across the heliosphere. STEREO-A was the first to register Pulse 2 and 3 of the GRB, almost 100 seconds before their detection by spacecraft in the vicinity of Earth. MAVEN detected GRB221009A Pulses 2, 3, and 4 at the orbit of Mars about 237 seconds after their detection near Earth. By processing the time delays observed we show that the source location of the GRB221009A was at RA 288.5 degrees, D",
+      "url": "http://arxiv.org/abs/2309.05856v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:04:58.718386",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720498720",
+      "query": "Resignation of education minister of India 2026",
+      "source": "arxiv",
+      "title": "UIC-AIHealth4All at ArchEHR-QA 2026: Answer-First Evidence Grounding for Clinical Question Answering",
+      "content": "We describe the UIC-AIHealth4All system for ArchEHR-QA 2026, a shared task on grounded question answering from electronic health records. We participated in Subtasks 2 (evidence identification), 3 (answer generation), and 4 (answer-evidence alignment). For Subtasks 2 and 3, we propose an answer-first pipeline in which the model generates candidate answers citing specific note sentences before classifying the full evidence set, exploiting the asymmetry between judging relevance in the abstract versus relative to a generated answer. For Subtask 4, we apply self-consistency voting over five independent model calls, retaining links by vote threshold. Our pipeline ranked third on evidence identification (Strict Micro F1 62.90), ninth on answer generation (Overall 31.90), and fifth on answer-evidence alignment (F1 79.81). A post-hoc linguistic analysis of 45 stylistic features reveals that model outputs remain 3.2 Flesch-Kincaid grade levels harder to read than clinician-authored references despite matching their word and sentence counts, suggesting readability warrants explicit optimization in clinical NLP systems. Code and prompts are available at https://github.com/mo-arvan/archehr-qa-2026-uic-aihealth4all.",
+      "url": "http://arxiv.org/abs/2608.27467v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:04:58.720869",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720583564",
+      "query": "What is E=mc2 in LaTeX",
+      "source": "wikipedia",
+      "title": "Wikipedia: Albert Einstein",
+      "content": "Albert Einstein (14 March 1879 – 18 April 1955) was a German-born theoretical physicist best known for developing the theory of relativity. Einstein also made important contributions to quantum theory. His mass–energy equivalence formula E = mc2, which arises from special relativity, has been called \"the world's most famous equation\". He received the 1921 Nobel Prize in Physics for \"his services to theoretical physics, and especially for his discovery of the law of the photoelectric effect\".\nBorn as a subject to the Kingdom of Württemberg, part of the German Empire, Einstein moved to Switzerland in 1895, forsaking his citizenship the following year. In 1896, at the age of seventeen, he enrolled in the mathematics and physics teaching diploma program at the Swiss federal polytechnic school in Zurich, graduating in 1900. He acquired Swiss citizenship a year later, which he kept for the rest of his life, and afterwards secured a permanent position at the Swiss Patent Office in Bern. In 1905, he submitted a successful PhD dissertation to the University of Zurich. In 1914, he moved to Berlin to join the Prussian Academy of Sciences and the Humboldt University of Berlin, becoming director of the Kaiser Wilhelm Institute for Physics in 1917; he also became a Prussian and consequently also German citizen again. In 1933, while Einstein was visiting the United States, Adolf Hitler came to power in Germany. Horrified by the Nazi persecution of his fellow Jews, he decided to remain in the US, and was granted American citizenship in 1940. On the eve of World War II, he endorsed a letter to President Franklin D. Roosevelt alerting him to the potential German nuclear weapons program and recommending that the US begin similar research, later carried out as the Manhattan Project.\nIn 1905, sometimes described as his annus mirabilis (miracle year), he published four groundbreaking papers. In them, he outlined a theory of the photoelectric effect, explained Brownian motion, introduced ",
+      "url": "https://en.wikipedia.org/wiki/Albert Einstein",
+      "tags": [],
+      "created_at": "2026-09-18T14:06:23.564647",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720583566",
+      "query": "What is E=mc2 in LaTeX",
+      "source": "wikipedia",
+      "title": "Wikipedia: Mathematical notation",
+      "content": "Mathematical notation consists of using symbols for representing operations, unspecified numbers, relations, and any other mathematical objects and assembling them into expressions and formulas. Mathematical notation is widely used in mathematics, science, and engineering for representing complex concepts and properties in a concise, unambiguous, and accurate way.\nFor example, the physicist Albert Einstein's formula \n  \n    \n      \n        E\n        =\n        m\n        \n          c\n          \n            2\n          \n        \n      \n    \n    {\\displaystyle E=mc^{2}}\n  \n is the quantitative representation in mathematical notation of mass–energy equivalence.\nMathematical notation was first introduced by François Viète at the end of the 16th century and largely expanded during the 17th and 18th centuries by René Descartes, Isaac Newton, Gottfried Wilhelm Leibniz, and overall Leonhard Euler.\n\n\n== Symbols and typeface ==\n\nThe use of many symbols is the basis of mathematical notation. They play a similar role as words in natural languages. They may play different roles in mathematical notation similarly as verbs, adjective and nouns play different roles in a sentence.\n\n\n=== Letters as symbols ===\n\nLetters are typically used for naming—in mathematical jargon, one says representing—mathematical objects. The Latin and Greek alphabets are used extensively, but a few letters of other alphabets are also used sporadically, such as the Hebrew ⁠\n  \n    \n      \n        ℵ\n      \n    \n    {\\displaystyle \\aleph }\n  \n⁠, Cyrillic Ш, and Hiragana よ. Uppercase and lowercase letters are considered as different symbols. For Latin alphabet, different typefaces also provide different symbols. For example, \n  \n    \n      \n        r\n        ,\n        R\n        ,\n        \n          R\n        \n        ,\n        \n          \n            R\n          \n        \n        ,\n        \n          \n            r\n          \n        \n        ,\n      \n    \n    {\\displaystyle r,R,\\mathbb {R} ,{\\mathcal {R}},{\\mat",
+      "url": "https://en.wikipedia.org/wiki/Mathematical notation",
+      "tags": [],
+      "created_at": "2026-09-18T14:06:23.566945",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720583569",
+      "query": "What is E=mc2 in LaTeX",
+      "source": "wikipedia",
+      "title": "Wikipedia: Subscript and superscript",
+      "content": "A subscript or superscript is a character (such as a number or letter) that is set slightly below or above the normal line of type, respectively. It is usually smaller than the rest of the text. Subscripts appear at or below the baseline, while superscripts are above. Subscripts and superscripts are often used in formulas, mathematical expressions, and specifications of chemical compounds and isotopes, but have many other uses as well.\nIn professional typography, subscript and superscript characters are not simply ordinary characters reduced in size; to keep them visually consistent with the rest of the font, typeface designers make them slightly heavier (i.e. medium or bold typography) than a reduced-size character would be. The vertical distance that sub- or superscripted text is moved from the original baseline varies by typeface and by use.\nIn typesetting, such types are traditionally called \"superior\" and \"inferior\" letters, figures, etc., or just \"superiors\" and \"inferiors\". In English, most nontechnical use of superiors is archaic. Superior and inferior figures on the baseline are used for fractions and most other purposes, while lowered inferior figures are needed for chemical and mathematical subscripts.\n\n\n== Uses ==\n\nA single typeface may contain sub- and superscript glyphs at different positions for different uses. The four most common positions are listed here. Because each position is used in different contexts, not all alphanumerics may be available in all positions. For example, subscript letters on the baseline are quite rare, and many typefaces provide only a limited number of superscripted letters. Despite these differences, all reduced-size glyphs go by the same generic terms subscript and superscript, which are synonymous with the terms inferior letter (or number) and superior letter (or number), respectively. Most fonts that contain superscript/subscript will have predetermined size and orientation that is dependent on the design of the font.\n\n\n",
+      "url": "https://en.wikipedia.org/wiki/Subscript and superscript",
+      "tags": [],
+      "created_at": "2026-09-18T14:06:23.569076",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720583571",
+      "query": "What is E=mc2 in LaTeX",
+      "source": "wikipedia",
+      "title": "Wikipedia: Orders of magnitude (energy)",
+      "content": "This list compares various energies in joules (J), organized by order of magnitude.\n\n\n== Below 1 J ==\n\n\n== 1 to 105 J ==\n\n\n== 106 to 1011 J ==\n\n\n== 1012 to 1017 J ==\n\n\n== 1018 to 1023 J ==\n\n\n== Over 1024 J ==\n\n\n== SI multiples ==\n\nThe joule is named after James Prescott Joule. As with every SI unit named after a person, its symbol starts with an upper case letter (J), but when written in full, it follows the rules for capitalisation of a common noun; i.e., joule becomes capitalised at the beginning of a sentence and in titles but is otherwise in lower case.\n\n\n== See also ==\n\nConversion of units of energy\nEnergy conversion efficiency\nEnergy density\nMetric system\nOutline of energy\nScientific notation\nTNT equivalent\nOrders of magnitude (power)\n\n\n== Notes ==",
+      "url": "https://en.wikipedia.org/wiki/Orders of magnitude (energy)",
+      "tags": [],
+      "created_at": "2026-09-18T14:06:23.571168",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720630912",
+      "query": "Iphone Duo",
+      "source": "arxiv",
+      "title": "Moving to Communicate, Moving to Interact: Patterns of Body Motion in Musical Duo Performance",
+      "content": "Skilled ensemble musicians coordinate with high precision, even when improvising or interpreting loosely-defined notation. Successful coordination is supported primarily through shared attention to the musical output; however, musicians also interact visually, particularly when the musical timing is irregular. This study investigated the performance conditions that encourage visual signalling and interaction between ensemble members. Piano and clarinet duos rehearsed a new piece as their body motion was recorded. Analyses of head movement showed that performers communicated gesturally following held notes. Gesture patterns became more consistent as duos rehearsed, though consistency dropped again during a final performance given under no-visual-contact conditions. Movements were smoother and interperformer coordination was stronger during irregularly-timed passages than elsewhere in the piece, suggesting heightened visual interaction. Performers moved more after rehearsing than before, and more when they could see each other than when visual contact was occluded. Periods of temporal instability and increased familiarity with the music and co-performer seem to encourage visual interaction, while specific communicative gestures are integrated into performance routines through rehearsal. We propose that visual interaction may support successful ensemble performance by affirming coordination throughout periods of temporal instability and serving as a social motivator to promote c",
+      "url": "http://arxiv.org/abs/1911.09018v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:07:10.912844",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720630916",
+      "query": "Iphone Duo",
+      "source": "arxiv",
+      "title": "Duo property for rings by the quasinilpotent perspective",
+      "content": "In this paper, we focus on the duo ring property via quasinilpotent elements which gives a new kind of generalizations of commutativity. We call this kind of ring qnil-duo. Firstly, some properties of quasinilpotents in a ring are provided. Then the set of quasinilpotents is applied to the duo property of rings, in this perspective, we introduce and study right (resp., left) qnil-duo rings. We show that this concept is not left-right symmetric. Among others it is proved that if the Hurwitz series ring $H(R; α)$ is right qnil-duo, then $R$ is right qnil-duo. Every right qnil-duo ring is abelian. A right qnil-duo exchange ring has stable range 1.",
+      "url": "http://arxiv.org/abs/2102.03811v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:07:10.916304",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720630919",
+      "query": "Iphone Duo",
+      "source": "arxiv",
+      "title": "The duo Bregman and Fenchel-Young divergences",
+      "content": "By calculating the Kullback-Leibler divergence between two probability measures belonging to different exponential families, we end up with a formula that generalizes the ordinary Fenchel-Young divergence. Inspired by this formula, we define the duo Fenchel-Young divergence and report a majorization condition on its pair of generators which guarantees that this divergence is always non-negative. The duo Fenchel-Young divergence is also equivalent to a duo Bregman divergence. We show the use of these duo divergences by calculating the Kullback-Leibler divergence between densities of nested exponential families, and report a formula for the Kullback-Leibler divergence between truncated normal distributions. Finally, we prove that the skewed Bhattacharyya distance between nested exponential families amounts to an equivalent skewed duo Jensen divergence.",
+      "url": "http://arxiv.org/abs/2202.10726v7",
+      "tags": [],
+      "created_at": "2026-09-18T14:07:10.919434",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720630922",
+      "query": "Iphone Duo",
+      "source": "arxiv",
+      "title": "DuoLungo: Usability Study of Duo 2FA",
+      "content": "Multi-Factor Authentication (MFA) enhances login security by requiring multiple authentication factors. Its adoption has increased in response to more frequent and sophisticated attacks. Duo is widely used by organizations including Fortune 500 companies and major educational institutions, yet its usability has not been examined thoroughly or recently. Earlier studies focused on technical challenges during initial deployment but did not measure core usability metrics such as task completion time or System Usability Scale (SUS) scores. These results are also outdated, originating from a time when MFA was less familiar to typical users.   We conducted a long-term, large-scale Duo usability study at the University of California Irvine during the 2024-2025 academic year, involving 2559 participants. Our analysis uses authentication log data and a survey of 57 randomly selected users. The average overhead of a Duo Push task is nearly 8 seconds, which participants described as short to moderate. Overhead varies with time of day, field of study, and education level. The rate of authentication failures due to incomplete Duo tasks is 4.35 percent, and 43.86 percent of survey respondents reported at least one Duo login failure. The Duo SUS score is 70, indicating good usability. Participants generally find Duo easy to use but somewhat annoying, while also reporting an increased sense of account security. They also described common issues and offered suggestions for improvement.",
+      "url": "http://arxiv.org/abs/2602.01489v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:07:10.922179",
+      "usage_count": 0
+    },
+    {
+      "id": "1789720630924",
+      "query": "Iphone Duo",
+      "source": "arxiv",
+      "title": "Approximating Weighted Duo-Preservation in Comparative Genomics",
+      "content": "Motivated by comparative genomics, Chen et al. [9] introduced the Maximum Duo-preservation String Mapping (MDSM) problem in which we are given two strings $s_1$ and $s_2$ from the same alphabet and the goal is to find a mapping $π$ between them so as to maximize the number of duos preserved. A duo is any two consecutive characters in a string and it is preserved in the mapping if its two consecutive characters in $s_1$ are mapped to same two consecutive characters in $s_2$. The MDSM problem is known to be NP-hard and there are approximation algorithms for this problem [3, 5, 13], but all of them consider only the \"unweighted\" version of the problem in the sense that a duo from $s_1$ is preserved by mapping to any same duo in $s_2$ regardless of their positions in the respective strings. However, it is well-desired in comparative genomics to find mappings that consider preserving duos that are \"closer\" to each other under some distance measure [19]. In this paper, we introduce a generalized version of the problem, called the Maximum-Weight Duo-preservation String Mapping (MWDSM) problem that captures both duos-preservation and duos-distance measures in the sense that mapping a duo from $s_1$ to each preserved duo in $s_2$ has a weight, indicating the \"closeness\" of the two duos. The objective of the MWDSM problem is to find a mapping so as to maximize the total weight of preserved duos. In this paper, we give a polynomial-time 6-approximation algorithm for this problem.",
+      "url": "http://arxiv.org/abs/1708.09325v1",
+      "tags": [],
+      "created_at": "2026-09-18T14:07:10.924233",
+      "usage_count": 0
+    },
+    {
+      "id": "1789799394852",
+      "query": "what is 15% of 340",
+      "source": "wikipedia",
+      "title": "Wikipedia: Saab 340 AEW&C",
+      "content": "The Saab 340 AEW&C is a Swedish airborne early warning and control (AEW&C) aircraft. A variant of the Saab 340 aircraft, it was designated S 100B Argus by the Swedish Air Force.\n\n\n== Radar ==\nCompared to the traditional circular radar on AWACS planes, such as the E-3 Sentry and the Beriev A-50, the Saab 340 has a static PS-890 AESA radar, which is the core of the Erieye system. It offers lower drag, but has a dead zone directly behind and in front of the plane, with a 120 degree zone of scan on either side of the airframe. The mounted radar is capable of tracking ships, planes and missiles up to 190–250 mi (300–400 km), while at an altitude of 20,000 ft (6,100 m).\n\n\n== Operational history ==\nSix S 100B Argus aircraft were produced for the Swedish Air Force. Four were permanently equipped with the Erieye active electronically scanned array (AESA) early warning radar. Two were fitted for transport missions during peacetime.\nTwo planes were loaned to Greece prior to the delivery of EMB-145 Erieye systems, which commenced in 2003.\nIn July 2006, Saab was awarded a contract to upgrade two of the Swedish Air Force's S 100B aircraft for surveillance missions, and for deployment in multi-national operations. The upgraded Saab 340 AEW-300 aircraft (S 100D Argus), entered service in 2009.\nIn November 2007, Thailand announced the intention to buy two S 100B AEW aircraft from the Swedish Air Force.\nOn 16 August 2012, nine Tehrik-e-Taliban militants assaulted Pakistan Air Force (PAF) Base Minhas at about 2 am.  After a pitched battle all nine attackers were killed while two Pakistani security officials also died. The militants allegedly also destroyed one Saab 2000 Erieye plane.\nOn May 29th, 2024, the Swedish Ministry of Defense announced that two Airborne Surveillance and Control aircraft (ASC 890) will be sent to Ukraine, in the 16th military support package.\nThe Saab 2000 Erieye AEW&C fleet of the Pakistan Air Force was used during the 2025 India–Pakistan conflict. Following a",
+      "url": "https://en.wikipedia.org/wiki/Saab 340 AEW&C",
+      "tags": [],
+      "created_at": "2026-09-19T11:59:54.852830",
+      "usage_count": 0
+    },
+    {
+      "id": "1789799394854",
+      "query": "what is 15% of 340",
+      "source": "wikipedia",
+      "title": "Wikipedia: WhatsApp",
+      "content": "WhatsApp Messenger, commonly known simply as WhatsApp, is an American social media, instant messaging (IM), and Voice over IP (VoIP) service accessible via desktop and mobile app. Owned by Meta Platforms, the service allows users to send text messages, voice messages, and video messages, make voice and video calls, and share images, documents, user locations, and other content. The service requires a cellular mobile telephone number to register. WhatsApp was launched in May 2009. In January 2018, WhatsApp released a standalone business app called WhatsApp Business which can communicate with the standard WhatsApp client. As of May 2025, the service had 3 billion monthly active users, making it the most popular messenger app. The name of the app is meant to sound like \"what's up\".\nThe service was created by WhatsApp Inc. of Mountain View, California, which was acquired by Facebook in February 2014 for approximately US$19.3 billion. It became the world's most popular messaging application in 2015, with 900 million users, and had more than 2 billion active users worldwide in February 2020. WhatsApp Business had approximately 200 million monthly users in 2023. By 2016, it had become the primary means of Internet communication in regions including the Americas, the Indian subcontinent, and large parts of Europe and Africa.\n\n\n== History ==\n\n\n=== 2009–2014 ===\nWhatsApp was founded by Brian Acton and Jan Koum, former employees of Yahoo. Koum incorporated WhatsApp Inc. in California on February 24, 2009. A month earlier, Koum had purchased an iPhone, and he and Acton decided to create an app for the App Store. The idea started off as an app that would display statuses in a phone's Contacts menu, showing if a person was at work or on a call.\nTheir discussions often took place at the home of Koum's Russian friend Alex Fishman in West San Jose. They realized that to take the idea further, they would need an iPhone developer. Fishman visited RentACoder.com, found Russian develope",
+      "url": "https://en.wikipedia.org/wiki/WhatsApp",
+      "tags": [],
+      "created_at": "2026-09-19T11:59:54.854998",
+      "usage_count": 0
+    },
+    {
+      "id": "1789799394856",
+      "query": "what is 15% of 340",
+      "source": "wikipedia",
+      "title": "Wikipedia: Airbus A340",
+      "content": "The Airbus A340 is a long-range, wide-body passenger airliner that was developed and produced by Airbus.\nIn the mid-1970s, Airbus conceived several derivatives of the A300, its first airliner, and developed the A340 quadjet in parallel with the A330 twinjet. In June 1987, Airbus launched both designs with their first orders, and the A340-300 took its maiden flight on 25 October 1991. It was certified along with the A340-200 on 22 December 1992 and both versions entered service in March 1993 with launch customers Lufthansa and Air France. The larger A340-500/600 were launched on 8 December 1997; the A340-600 flew for the first time on 23 April 2001 and entered service on 1 August 2002.\nKeeping the eight-abreast economy cross-section of the A300, the early A340-200/300 has a similar airframe to the A330-200/300, sharing the wing while having slightly different fuselage lengths. Differences include four 151 kN (34,000 lbf) CFM56s instead of two high-thrust turbofans to bypass ETOPS restrictions on trans-oceanic routes, and a three-leg main landing gear instead of two for a heavier 276 t (608,000 lb) Maximum Takeoff Weight (MTOW). Both airliners have fly-by-wire controls, which was first introduced on the A320, as well as a similar glass cockpit. The A340-500/600 have significant longer fuselages, have a larger wing, and are powered by 275 kN (62,000 lbf) Rolls-Royce Trent 500 for a heavier 380 t (840,000 lb) MTOW.\nThe shortest A340-200 measured 59.4 m (194 ft 11 in), and had a 15,000-kilometre (8,100-nautical-mile; 9,300-mile) range with 210–250 seats in a three-class configuration. The most common A340-300 reached 63.7 m (209 ft 0 in) to accommodate 250–290 passengers and could cover 13,500 km (7,300 nmi; 8,400 mi). The A340-500 was 67.9 m (222 ft 9 in) long to seat 270–310 over 16,670 km (9,000 nmi; 10,360 mi), the longest-range airliner at the time. The longest A340-600 was stretched to 75.4 m (247 ft 5 in), then the longest airliner, to accommodate 320–370 passenge",
+      "url": "https://en.wikipedia.org/wiki/Airbus A340",
+      "tags": [],
+      "created_at": "2026-09-19T11:59:54.856898",
+      "usage_count": 0
+    },
+    {
+      "id": "1789799394858",
+      "query": "what is 15% of 340",
+      "source": "wikipedia",
+      "title": "Wikipedia: U.S. Route 340",
+      "content": "U.S. Route 340 (US 340) is a spur route of US 40, and runs from Greenville, Virginia, to Frederick, Maryland.  In Virginia, it runs north–south, parallel and east of US 11, from US 11 north of Greenville via Waynesboro, Grottoes, Elkton, Luray, Front Royal, and Berryville to the West Virginia state line.  A short separate piece crosses northern Loudoun County on its way from West Virginia to Maryland.\nIn West Virginia, it runs north–south in Jefferson County, between Clarke County, Virginia and Loudoun County, Virginia. It is the main route between Charles Town and Harpers Ferry, and it is known as the William L. Wilson Freeway through that stretch. The southern portion of the highway, between the Virginia state line and Charles Town, is known as Berryville Pike.\nIn Maryland, the U.S. highway runs east–west, for 17.01 miles (27.37 km) from the Virginia state line at the Potomac River at Sandy Hook east to its northern (eastern) terminus at US 15 and US 40 (the Frederick Freeway) in Frederick.  US 340, which is known for most of its length as Jefferson National Pike, connects Frederick with the communities of Jefferson, Brunswick, and Knoxville in the southern part of the Middletown Valley of western Frederick County and Weverton in far southern Washington County.  The U.S. highway also links Frederick with Harpers Ferry and Charles Town in the Eastern Panhandle of West Virginia.  US 340 is a part of the National Highway System for its entire length in Maryland.\nUS 340 was one of the original state roads designated by the Maryland State Roads Commission.  The state road was constructed from Frederick to Knoxville in the early 1910s and completed to Harpers Ferry in 1919.  The highway was designated Maryland's portion of US 340 in 1926.  US 340 originally crossed the Potomac River at Harpers Ferry; however, the U.S. highway's bridge was destroyed by a flood in 1936.  The modern US 340 Bridge was constructed at Sandy Hook between 1940 and 1947, with a long interruption",
+      "url": "https://en.wikipedia.org/wiki/U.S. Route 340",
+      "tags": [],
+      "created_at": "2026-09-19T11:59:54.858793",
+      "usage_count": 0
     }
   ],
   "stats": {
-    "total_searches": 166,
+    "total_searches": 192,
     "total_queries": 0
   }
 }

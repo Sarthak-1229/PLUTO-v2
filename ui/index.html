@@ -381,6 +381,39 @@
       50% { height: 18px; }
     }
 
+    /* Research/thinking progress indicator */
+    .pluto-spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid var(--border-light, #d0d0d0);
+      border-top-color: var(--primary, #99462A);
+      border-radius: 50%;
+      animation: plutoSpin 0.7s linear infinite;
+      flex-shrink: 0;
+    }
+    @keyframes plutoSpin {
+      to { transform: rotate(360deg); }
+    }
+    .progress-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .progress-dots::after {
+      content: '';
+      animation: plutoDots 1.4s steps(4, end) infinite;
+    }
+    @keyframes plutoDots {
+      0%   { content: ''; }
+      25%  { content: '.'; }
+      50%  { content: '..'; }
+      75%  { content: '...'; }
+      100% { content: ''; }
+    }
+
     /* Slide-over Telemetry Drawer */
     .drawer {
       position: fixed;
@@ -935,6 +968,24 @@
       input.focus();
     }
 
+    // Client-side path guess — mirrors the backend classify_query / route_intent
+    // triggers closely enough to pick the right progress message. It does NOT
+    // decide backend behavior; it only chooses which loading indicator to show.
+    function guessQueryPath(text) {
+      const t = text.toLowerCase().trim();
+      if (/(create|write)\s+a\s+report\s+(on|about)\b/.test(t)) return 'report';
+      // Research triggers (kept in sync with core/self_learner.classify_query)
+      const researchTriggers = [
+        /\b(research|look\s+up|find\s+out|sources?\s+on)\b/,
+        /\b(who\s+is|who\s+was|who\s+made|who\s+created)\b/,
+        /\b(latest|recent|current|currently|news|today|2024|2025|2026)\b/,
+        /\b(explain|describe|elaborate|analyze|compare)\b/,
+        /\btell\s+me\s+about\b/,
+      ];
+      if (researchTriggers.some(re => re.test(t))) return 'research';
+      return 'simple';
+    }
+
     // Main Query Dispatch
     async function handleSend() {
       const input = document.getElementById('userInput');
@@ -950,14 +1001,25 @@
       userDiv.innerText = text;
       stream.appendChild(userDiv);
 
-      // Loading bubble
+      // Loading bubble — message reflects the likely path so research-flavored
+      // queries get a visible "Searching sources…" progress cue rather than a
+      // generic one. Backend classification is authoritative; this is a hint.
+      const path = guessQueryPath(text);
+      const progressText = {
+        report:   'Searching the web and compiling your report',
+        research: 'Searching sources and reasoning with Qwen 2.5',
+        simple:   'Thinking',
+      }[path];
       const loadingDiv = document.createElement('div');
       loadingDiv.id = 'loadingTurn';
       loadingDiv.className = 'msg-assistant-wrapper';
       loadingDiv.innerHTML = `
         <div class="msg-avatar"><img src="/logo3.png" onerror="this.src='/logo.jpg'" alt="P" style="width:100%;height:100%;object-fit:contain;"/></div>
-        <div class="msg-assistant-card" style="color: var(--text-muted); font-style: italic;">
-          Researching sources, reasoning with Qwen 2.5, and generating response...
+        <div class="msg-assistant-card">
+          <div class="progress-row">
+            <span class="pluto-spinner"></span>
+            <span><span id="progressLabel">${progressText}</span><span class="progress-dots"></span></span>
+          </div>
         </div>
       `;
       stream.appendChild(loadingDiv);
@@ -976,9 +1038,24 @@
         if (!response.ok) throw new Error(`HTTP ${response.status}`);
         const data = await response.json();
 
+        // app.py's error boundary returns {error, status:"error"} with HTTP 200.
+        // Surface it honestly instead of rendering an empty/fake answer bubble.
+        if (data.status === "error" || data.error) {
+          throw new Error(data.error || "The assistant could not process that request.");
+        }
+
         const answer = data.answer || "No response content.";
         const audioUri = data.audio_uri || "";
+        const answerSource = data.answer_source || "local_model";
         const id = 'resp_' + Date.now();
+
+        // Source badge mapping
+        const sourceBadges = {
+          "local_model": { emoji: "🧠", label: "Local model", color: "#99462A" },
+          "web_research": { emoji: "🌐", label: "Web research", color: "#3D608A" },
+          "knowledge_base_cache": { emoji: "💾", label: "From memory", color: "#535F6F" },
+        };
+        const badge = sourceBadges[answerSource] || sourceBadges["local_model"];
 
         // Render formatted response
         const assistantDiv = document.createElement('div');
@@ -1007,7 +1084,12 @@
             </div>
 
             <div style="display:flex; align-items:center; justify-content:space-between; padding-top:8px; border-top:1px solid var(--border-light); font-size:11px; color:var(--text-subtle);">
-              <span>Pluto v2 • Qwen 2.5</span>
+              <span style="display:flex; align-items:center; gap:6px;">
+                <span style="background:${badge.color}; color:white; padding:2px 8px; border-radius:9999px; font-size:10px; font-weight:600;">
+                  ${badge.emoji} ${badge.label}
+                </span>
+                Pluto v2 • Qwen 2.5
+              </span>
               <button class="btn btn-secondary" style="font-size:11px; padding:4px 10px;" onclick="copyText('content_${id}')">Copy Text</button>
             </div>
           </div>
@@ -1360,6 +1442,20 @@
     function saveAutoPlaySetting(val) {
       autoPlay = val;
       localStorage.setItem('pluto-autoplay', val);
+    }
+
+    // Client-side filter for the cached-knowledge list (Knowledge Bank search box).
+    // Previously referenced by the search input's onkeyup but never defined,
+    // which threw a ReferenceError on every keystroke.
+    function filterKnowledge() {
+      const input = document.getElementById('searchKbInput');
+      const list = document.getElementById('knowledgeList');
+      if (!input || !list) return;
+      const term = input.value.trim().toLowerCase();
+      Array.from(list.children).forEach(card => {
+        const text = (card.textContent || '').toLowerCase();
+        card.style.display = (!term || text.includes(term)) ? '' : 'none';
+      });
     }
 
     // Background Telemetry Polling (every 3s)

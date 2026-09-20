@@ -14,6 +14,15 @@ from core import config
 logger = logging.getLogger(__name__)
 
 
+class LLMUnavailableError(RuntimeError):
+    """Raised when the local LLM (Ollama) cannot produce an answer.
+
+    Callers must let this propagate so the API surfaces an honest error
+    instead of silently substituting unrelated fallback content (e.g. raw
+    knowledge-base rows) dressed up as a real answer.
+    """
+
+
 def route_intent(text: str) -> Literal['chat', 'report']:
     """
     Route the input text to either 'chat' or 'report' intent.
@@ -68,7 +77,8 @@ class LLMReasoner:
             logging.warning(f"Ollama server check: {exc}")
         self.model = target_model
 
-    def reason(self, prompt: str, system_prompt: str = None) -> str:
+    def reason(self, prompt: str, system_prompt: str = None, *, num_ctx: int = None,
+               num_predict: int = None) -> str:
         """Send prompt to the Ollama model using the ollama Python package."""
         # Try discovering model if not yet verified
         if not self.model:
@@ -92,13 +102,24 @@ class LLMReasoner:
             # Log VRAM before call
             vram_info = self._log_vram("before")
 
+            # Use provided num_ctx or default
+            context_size = num_ctx if num_ctx is not None else 2048
+
+            # Cap output length independently of the context window. num_ctx is
+            # how much the model can *read*; num_predict is how much it may
+            # *write*. Research synthesis passes ~300 here so answers stay tight
+            # (≈250-350 tokens) without shrinking the context it reasons over.
+            options = {
+                "num_ctx": context_size,
+                "temperature": 0.6,
+            }
+            if num_predict is not None:
+                options["num_predict"] = num_predict
+
             response = client.chat(
                 model=self.model or config.LLM_MODEL_NAME,
                 messages=messages,
-                options={
-                    "num_ctx": 2048,
-                    "temperature": 0.6,
-                },
+                options=options,
                 keep_alive=300,  # Keep model loaded for 5 minutes for faster follow-up
             )
 
@@ -123,17 +144,28 @@ class LLMReasoner:
 
         except ollama.ResponseError as exc:
             logging.error(f"Ollama API error: {exc}")
-            # Try fallback to first available model
+            # Try recovering by rediscovering an available model, but do NOT
+            # return a human-looking sentence: a failure must raise so callers
+            # can't mistake it for a real answer.
             self._discover_model()
-            if self.model:
-                return f"I am currently unable to process this request through the local model ({self.model}). Please ensure Ollama is running with `ollama serve`."
-            return "I am currently unable to process this request through the local model."
+            raise LLMUnavailableError(
+                f"Ollama API error: {exc}. Ensure Ollama is running (`ollama serve`) "
+                f"and the model is pulled (`ollama pull {config.LLM_MODEL_NAME}`)."
+            ) from exc
         except ollama.RequestError as exc:
             logging.error(f"Ollama request error: {exc}")
-            return "I am currently unable to process this request. Please ensure Ollama is running with `ollama serve` and the model is pulled with `ollama pull qwen2.5:7b`."
+            raise LLMUnavailableError(
+                f"Ollama request error: {exc}. Ensure Ollama is running "
+                f"(`ollama serve`) and the model is pulled "
+                f"(`ollama pull {config.LLM_MODEL_NAME}`)."
+            ) from exc
+        except LLMUnavailableError:
+            raise
         except Exception as exc:
             logging.error(f"LLMReasoner error: {exc}")
-            return "I encountered an error communicating with the local language model."
+            raise LLMUnavailableError(
+                f"Error communicating with the local language model: {exc}"
+            ) from exc
 
     def _log_vram(self, stage: str, prev_info: dict = None) -> dict:
         """Log VRAM usage before/after LLM calls."""
@@ -189,7 +221,7 @@ def _extract_topic(text: str) -> str:
     return text.strip()
 
 
-def handle_request(text: str) -> str:
+def handle_request(text: str) -> tuple[str, str]:
     """
     Handle an incoming request by routing intent and reasoning.
 
@@ -200,7 +232,8 @@ def handle_request(text: str) -> str:
         text: The request text.
 
     Returns:
-        str: The response to the request.
+        tuple: (response_text, answer_source) where answer_source is one of:
+            "local_model", "web_research", "knowledge_base_cache"
     """
     from core.self_learner import get_self_learner
 
@@ -217,7 +250,7 @@ def handle_request(text: str) -> str:
         results = search_topic(topic)
         paths = compile_report(topic, results)
         md_path = paths.get("markdown", "")
-        
+
         # Generate summary if configured
         summary = "Report compiled successfully."
         if config.USE_LLM_SUMMARY and md_path:
@@ -235,10 +268,10 @@ def handle_request(text: str) -> str:
         if "markdown" in paths: files_info.append("Markdown (.md)")
         if "pdf" in paths: files_info.append("PDF (.pdf)")
         if "docx" in paths: files_info.append("Word (.docx)")
-        
-        return f"Report on '{topic}' generated successfully in {', '.join(files_info)}. Summary: {summary}"
+
+        return f"Report on '{topic}' generated successfully in {', '.join(files_info)}. Summary: {summary}", "web_research"
     else:
-        return "Unable to determine intent."
+        return "Unable to determine intent.", "local_model"
 
 
 if __name__ == "__main__":

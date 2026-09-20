@@ -1,14 +1,16 @@
 """
-Enhanced audio TTS module with better playback handling.
+Enhanced audio TTS module with better playback handling and caching.
 """
 
 import asyncio
 import io
+from functools import lru_cache
 from typing import Optional
 
 
+@lru_cache(maxsize=128)
 async def speak(text: str, voice: str = "en-US-AriaNeural") -> bytes:
-    """Generate speech audio using Edge-TTS.
+    """Generate speech audio using Edge-TTS with LRU caching.
 
     Args:
         text: The text to synthesize.

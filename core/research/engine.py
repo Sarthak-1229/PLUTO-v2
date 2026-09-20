@@ -5,6 +5,7 @@ Orchestrates searches across multiple sources.
 
 import logging
 import time
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from typing import List, Dict, Optional
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -22,6 +23,10 @@ from .extractors.pdf import PDFExtractor
 from .verification import FactVerifier
 
 logger = logging.getLogger(__name__)
+
+# Max seconds to wait on any single source before abandoning it. Keeps one
+# slow/dead source from blocking the concurrent search barrier.
+PER_SOURCE_TIMEOUT = 8
 
 
 @dataclass
@@ -111,19 +116,35 @@ class ResearchEngine:
 
         logger.info(f"ResearchEngine: Using sources {sources} for query type '{query_type}'")
 
-        # Execute parallel searches
+        # Execute source searches concurrently. Each source does blocking network
+        # I/O (requests), so a thread pool overlaps their latency instead of
+        # summing it. A per-source timeout ensures one slow/dead source cannot
+        # hold up the whole response.
         documents = []
         sources_used = []
 
-        for source_name in sources:
-            if source_name in self.sources:
+        active_sources = [s for s in sources if s in self.sources]
+        if active_sources:
+            with ThreadPoolExecutor(max_workers=len(active_sources)) as executor:
+                future_to_source = {
+                    executor.submit(self.sources[name].search, query, max_results): name
+                    for name in active_sources
+                }
                 try:
-                    source_docs = self.sources[source_name].search(query, max_results)
-                    documents.extend(source_docs)
-                    sources_used.append(source_name)
-                    logger.info(f"ResearchEngine: Got {len(source_docs)} docs from {source_name}")
-                except Exception as e:
-                    logger.warning(f"ResearchEngine: Source {source_name} failed: {e}")
+                    completed = as_completed(future_to_source, timeout=PER_SOURCE_TIMEOUT + 2)
+                    for future in completed:
+                        source_name = future_to_source[future]
+                        try:
+                            source_docs = future.result(timeout=PER_SOURCE_TIMEOUT)
+                            documents.extend(source_docs)
+                            sources_used.append(source_name)
+                            logger.info(f"ResearchEngine: Got {len(source_docs)} docs from {source_name}")
+                        except Exception as e:
+                            logger.warning(f"ResearchEngine: Source {source_name} failed or timed out: {e}")
+                except TimeoutError:
+                    # Overall barrier expired; proceed with whatever completed.
+                    pending = [n for f, n in future_to_source.items() if not f.done()]
+                    logger.warning(f"ResearchEngine: sources still pending after timeout: {pending}")
 
         # Deduplicate and rank
         documents = self._deduplicate_and_rank(documents, query)

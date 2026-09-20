@@ -41,10 +41,17 @@ def _bytes_to_data_uri(data: bytes, mime: str = "audio/mpeg") -> str:
 # ------------------------------------------------------------------
 @app.post("/process")
 async def process(query: Query):
-    """Process a user query and return answer with optional audio."""
+    """Process a user query and return answer with optional audio and source info."""
     try:
         # Run the PLUTO brain (with self-learning & local Ollama)
-        answer = handle_request(query.text)
+        result = handle_request(query.text)
+        # handle_request returns (answer, answer_source)
+        if isinstance(result, tuple):
+            answer, answer_source = result
+        else:
+            # Backward compatibility
+            answer = result
+            answer_source = "local_model"
 
         # Synthesize speech (async) - gracefully handle offline state
         audio_uri = ""
@@ -55,7 +62,7 @@ async def process(query: Query):
         except Exception as tts_err:
             logging.warning(f"TTS synthesis unavailable (likely offline): {tts_err}")
 
-        return {"answer": answer, "audio_uri": audio_uri}
+        return {"answer": answer, "audio_uri": audio_uri, "answer_source": answer_source}
     except Exception as exc:
         logging.exception("Error in /process")
         return {"error": f"Processing failed: {str(exc)}", "status": "error"}

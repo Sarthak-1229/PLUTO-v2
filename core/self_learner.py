@@ -11,7 +11,7 @@ import socket
 from typing import List, Literal
 
 from core.research.engine import get_research_engine
-from core.brain import LLMReasoner
+from core.brain import LLMReasoner, LLMUnavailableError
 from core.knowledge_base import get_knowledge_base
 from core import config
 
@@ -21,6 +21,19 @@ logger = logging.getLogger(__name__)
 SILENCE_THRESHOLD = 0.08
 SILENCE_CONSECUTIVE_SECONDS = 1.5
 MAX_RECORDING_SECONDS = 15
+
+# Context window (tokens) for the research path. The KB/web synthesis prompts
+# pack multiple source excerpts (~500 chars each) plus the question, so this is
+# set well above the simple-path window (1024) to avoid truncating that context
+# — which would produce exactly the vague/shallow answers we're trying to fix.
+RESEARCH_NUM_CTX = 4096
+
+# Max output tokens for research-synthesis answers. num_ctx (above) controls how
+# much source material the model can *read*; this caps how much it *writes*.
+# ~300 tokens keeps answers tight (roughly 250-350 tokens / a few short
+# paragraphs) so a long generation doesn't dominate latency, without shrinking
+# the context window it reasons over.
+RESEARCH_NUM_PREDICT = 300
 
 
 class SelfLearner:
@@ -52,12 +65,17 @@ class SelfLearner:
             except (OSError, socket.timeout):
                 return False
 
-    def answer(self, query: str) -> str:
-        """Provide answer using KB/LLM first, then internet if needed and available."""
+    def answer(self, query: str) -> tuple[str, str]:
+        """Provide answer using KB/LLM first, then internet if needed and available.
+
+        Returns:
+            Tuple of (answer_text, answer_source) where answer_source is one of:
+            "local_model", "web_research", "knowledge_base_cache"
+        """
         logger.info(f"SelfLearner: Answering '{query}'")
         query_stripped = query.strip()
         if not query_stripped:
-            return "How can I assist you today?"
+            return "How can I assist you today?", "local_model"
 
         # Classify the query to determine routing
         query_type = self.classify_query(query_stripped)
@@ -67,12 +85,15 @@ class SelfLearner:
         if query_type in ("smalltalk", "simple"):
             system_prompt = ("You are PLUTO, a fast and smart local voice AI. "
                            "Reply briefly in 1-3 sentences. No headers, sections, or bullet templates.")
-            try:
-                answer = self.llm.reason(query_stripped, system_prompt=system_prompt)
-                if answer and len(answer.strip()) > 2:
-                    return answer.strip()
-            except Exception as e:
-                logger.warning(f"Direct LLM answer failed: {e}")
+            # Small context window for the brief (1-3 sentence) direct path.
+            # 1024 comfortably holds the short prompt + a few-sentence answer
+            # while keeping this path far cheaper than the research path.
+            # LLMUnavailableError propagates: an outage here is a real failure,
+            # not something to paper over with a fabricated reply.
+            answer = self.llm.reason(query_stripped, system_prompt=system_prompt, num_ctx=1024)
+            if answer and len(answer.strip()) > 2:
+                return answer.strip(), "local_model"
+            raise LLMUnavailableError("LLM returned an empty direct answer.")
 
         # For research queries: check KB, then online search
         if query_type == "research":
@@ -81,26 +102,28 @@ class SelfLearner:
             if relevant:
                 ans = self._answer_from_knowledge(query_stripped, relevant)
                 if ans and len(ans.strip()) > 5:
-                    return ans
+                    return ans, "knowledge_base_cache"
 
-            # If online, perform live web search & learn into KB
+            # If online, perform live web search & learn into KB. A network/
+            # scraping failure here is recoverable — fall through to the local
+            # LLM. But an LLM outage is not, so let that propagate.
             if self.is_online():
                 try:
                     online_ans = self._answer_online(query_stripped)
                     if online_ans and len(online_ans.strip()) > 5:
-                        return online_ans
+                        return online_ans, "web_research"
+                except LLMUnavailableError:
+                    raise
                 except Exception as exc:
                     logger.warning(f"Online search error: {exc}")
 
-            # Fallback to LLM for research queries
-            try:
-                return self._answer_from_llm(query_stripped)
-            except Exception as e:
-                logger.error(f"LLM fallback failed: {e}")
-                return "I'm sorry, I couldn't generate a response. Please try again."
+            # Fallback to LLM for research queries. LLMUnavailableError
+            # propagates to the API error boundary instead of being masked by a
+            # canned apology that looks like a normal answer.
+            return self._answer_from_llm(query_stripped), "local_model"
 
         # Default fallback (shouldn't reach here)
-        return self._answer_from_llm(query_stripped)
+        return self._answer_from_llm(query_stripped), "local_model"
 
     def classify_query(self, text: str) -> Literal["smalltalk", "simple", "research"]:
         """Classify a query to determine routing strategy.
@@ -124,39 +147,65 @@ class SelfLearner:
                 return "smalltalk"
 
         # Simple patterns: math, short definitions
-        # Handle various math formats including "100 x 5000"
+        # Handle various math formats including "100 x 5000", "15% of 340", "15 percent of 340"
         math_patterns = [
             r'^\s*(what\s+is|calculate|solve|compute)?\s*\d+\s*[\+\-\*\/×÷\^]\s*\d+\s*$',
             r'\d+\s*[xX]\s*\d+',  # "100 x 5000" or "100 X 5000"
             r'\d+\s*[\*×]\s*\d+',  # "100 * 5000" or "100 × 5000"
+            r'\d+\s*%\s+of\s+\d+',  # "15% of 340"
+            r'\d+\s+percent\s+of\s+\d+',  # "15 percent of 340"
+            r'what\s+is\s+\d+\s*%\s+of\s+\d+',  # "what is 15% of 340"
+            r'what\s+is\s+\d+\s+percent\s+of\s+\d+',  # "what is 15 percent of 340"
         ]
         for pattern in math_patterns:
             if re.search(pattern, t):
                 return "simple"
 
-        simple_factual = [
-            r'^\s*(what\s+is|define)\s+[a-z]+\s*$',
-            r'^\s*(when\s+was|where\s+is)\s+[a-z]+\s*$',
-        ]
-        for pattern in simple_factual:
-            if re.search(pattern, t):
-                words = t.split()
-                if len(words) <= 6:
-                    return "simple"
-
-        # Research patterns
+        # Explicit research triggers — queries that genuinely need current info or
+        # multi-source depth. Checked BEFORE the broad simple heuristics so that
+        # time-sensitive / named-entity queries (e.g. "who is the current CEO of
+        # Nvidia") are not swallowed by the generous "what/who is ..." patterns.
         research_keywords = [
-            r'\b(research|look\s+up|find\s+out)\b',
-            r'\b(who\s+is|who\s+was|who\s+made|who\s+created)\b',
-            r'\b(latest|recent|current|news|today)\b',
-            r'\b(explain|describe|elaborate|analyze|compare)\b',
+            r'\b(research|look\s+up|find\s+out|sources?\s+on)\b',
+            r'\b(who\s+is|who\s+was|who\s+made|who\s+created)\b',   # named entities / people
+            r'\b(latest|recent|current|currently|news|today|2024|2025|2026)\b',  # time-sensitive
+            r'\b(explain|describe|elaborate|analyze|compare)\b',    # in-depth explanatory
+            r'\btell\s+me\s+about\b',                               # open-ended deep dive
         ]
         for pattern in research_keywords:
             if re.search(pattern, t):
                 return "research"
 
-        # Default to research for anything ambiguous
-        return "research"
+        # Broad "simple factual" heuristics — general knowledge answerable by the
+        # local model without a web search. These are intentionally generous and
+        # run only after the research triggers above have had first refusal.
+        simple_factual = [
+            r'^\s*(what|which)\s+is\s+the\s+',       # "what is the square root of 144"
+            r'^\s*(what|which)\s+(is|are)\s+[a-z]',  # "what is inflation", "what are primes"
+            r'^\s*define\b',                          # "define inflation"
+            r'^\s*(when|where)\s+(was|is|did|do)\b',  # "when was the printing press invented"
+            r'^\s*how\s+(many|much|do|does|did|to)\b',  # "how many continents are there"
+            r'\bsquare\s+root\b',
+            r'\bconvert\b.*\b(to|into)\b',            # unit conversions
+        ]
+        for pattern in simple_factual:
+            if re.search(pattern, t):
+                return "simple"
+
+        # ------------------------------------------------------------------
+        # Uncertain / ambiguous case.
+        #
+        # Previously this defaulted to "research", which triggered a KB lookup
+        # plus (when online) a full multi-source web search AND a synthesis LLM
+        # call for *every* unclassified query — a heavy, slow path taken for
+        # anything the fast heuristics didn't recognize.
+        #
+        # The cost asymmetry favors "simple": a wrong "simple" guess costs only a
+        # slightly-too-brief local answer, whereas a wrong "research" guess costs
+        # a full multi-source web search. So we now default to "simple" and let
+        # the local model answer directly and cheaply.
+        # ------------------------------------------------------------------
+        return "simple"
 
     def _answer_online(self, query: str) -> str:
         """Answer using internet search."""
@@ -193,31 +242,56 @@ class SelfLearner:
 
         context = "\n\n---\n\n".join(context_parts)
 
-        system_prompt = "You are PLUTO, an intelligent, helpful AI assistant. Provide a clear, well-structured, and accurate answer based on the knowledge provided."
+        system_prompt = (
+            "You are PLUTO, an intelligent, helpful AI assistant. Answer using the "
+            "knowledge provided. Keep it under ~250 words. Lead with the concrete "
+            "specifics — name the actual algorithms/methods/entities, give one "
+            "worked example with a real number, and cite real dates or figures. "
+            "Do NOT open with a long generic definition or filler; put the "
+            "specifics first because the answer length is capped."
+        )
         user_prompt = f"Knowledge:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 
-        try:
-            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
-            if answer and len(answer.strip()) > 5:
-                return answer.strip()
-        except Exception as e:
-            logger.error(f"Knowledge answer failed: {e}")
-
-        return self._format_knowledge_answer(query, knowledge)
+        # Research synthesis needs a large context window to hold the
+        # multi-source knowledge without truncation (see RESEARCH_NUM_CTX), and
+        # a capped output length (see RESEARCH_NUM_PREDICT).
+        # If the LLM is down, LLMUnavailableError propagates: we must NOT dress
+        # up an unrelated raw KB row as a synthesized answer.
+        answer = self.llm.reason(
+            user_prompt,
+            system_prompt=system_prompt,
+            num_ctx=RESEARCH_NUM_CTX,
+            num_predict=RESEARCH_NUM_PREDICT,
+        )
+        if answer and len(answer.strip()) > 5:
+            return answer.strip()
+        # Empty/too-short generation despite a healthy LLM: surface honestly.
+        raise LLMUnavailableError("LLM returned an empty knowledge-synthesis answer.")
 
     def _answer_from_llm(self, query: str) -> str:
         """Generate answer from LLM training data."""
-        system_prompt = "You are PLUTO, an intelligent AI assistant. Provide a comprehensive, accurate, and helpful response."
+        system_prompt = (
+            "You are PLUTO, an intelligent AI assistant. Answer in under ~250 "
+            "words. Lead with the concrete specifics — name the actual "
+            "algorithms/methods/entities, give one worked example with a real "
+            "number, and cite real dates or figures where relevant. Do NOT open "
+            "with a long generic definition or filler; put the specifics first "
+            "because the answer length is capped."
+        )
         user_prompt = f"Question: {query}\nAnswer:"
 
-        try:
-            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
-            if answer and len(answer.strip()) > 5:
-                return answer.strip()
-        except Exception as e:
-            logger.error(f"LLM answer failed: {e}")
-
-        return "I am currently unable to generate a response for this query."
+        # LLMUnavailableError propagates so the API can report an honest error
+        # rather than returning a canned "unable to generate" string that looks
+        # like a normal answer.
+        answer = self.llm.reason(
+            user_prompt,
+            system_prompt=system_prompt,
+            num_ctx=RESEARCH_NUM_CTX,
+            num_predict=RESEARCH_NUM_PREDICT,
+        )
+        if answer and len(answer.strip()) > 5:
+            return answer.strip()
+        raise LLMUnavailableError("LLM returned an empty answer.")
 
     def _generate_answer(self, query: str, research_result) -> str:
         """Generate answer from research results."""
@@ -238,15 +312,26 @@ class SelfLearner:
         if not context:
             return self._answer_from_llm(query)
 
-        system_prompt = "You are PLUTO, an AI assistant. Using the provided search results, provide a clear, accurate, and well-structured answer."
+        system_prompt = (
+            "You are PLUTO, an AI assistant. Using the provided search results, "
+            "answer in under ~250 words. Lead with the concrete specifics — quote "
+            "actual figures, named entities, dates, and real examples found in the "
+            "sources. Do NOT open with a long generic definition or filler; put "
+            "the specifics first because the answer length is capped."
+        )
         user_prompt = f"Search Results:\n{context}\n\nQuestion: {query}\n\nAnswer:"
 
-        try:
-            answer = self.llm.reason(user_prompt, system_prompt=system_prompt)
-            if answer and len(answer.strip()) > 5:
-                return answer.strip()
-        except Exception as e:
-            logger.error(f"Answer generation failed: {e}")
+        # LLMUnavailableError propagates (no point falling back to _answer_from_llm,
+        # which uses the same downed LLM); only an empty-but-healthy generation
+        # falls through to a plain-LLM attempt.
+        answer = self.llm.reason(
+            user_prompt,
+            system_prompt=system_prompt,
+            num_ctx=RESEARCH_NUM_CTX,
+            num_predict=RESEARCH_NUM_PREDICT,
+        )
+        if answer and len(answer.strip()) > 5:
+            return answer.strip()
 
         return self._answer_from_llm(query)
 

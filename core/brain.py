@@ -78,8 +78,16 @@ class LLMReasoner:
         self.model = target_model
 
     def reason(self, prompt: str, system_prompt: str = None, *, num_ctx: int = None,
-               num_predict: int = None) -> str:
-        """Send prompt to the Ollama model using the ollama Python package."""
+               num_predict: int = None, repeat_penalty: float = 1.3,
+               repeat_last_n: int = 128) -> str:
+        """Send prompt to the Ollama model using the ollama Python package.
+
+        Every call sets an anti-repetition penalty (repeat_penalty) and window
+        (repeat_last_n) — these are the real Ollama option names — to prevent the
+        degenerate verbatim-repetition loops that unbounded generation can fall
+        into. Callers should also pass an explicit num_predict ceiling sized to
+        the task so a runaway can't generate indefinitely before being clamped.
+        """
         # Try discovering model if not yet verified
         if not self.model:
             self._discover_model()
@@ -109,9 +117,17 @@ class LLMReasoner:
             # how much the model can *read*; num_predict is how much it may
             # *write*. Research synthesis passes ~300 here so answers stay tight
             # (≈250-350 tokens) without shrinking the context it reasons over.
+            #
+            # repeat_penalty / repeat_last_n are set on EVERY call (not just
+            # research): they penalize re-emitting tokens seen in the last
+            # `repeat_last_n` positions, which is the direct fix for the
+            # degenerate "Let's get started! 🚀"×200 loops. num_predict is the
+            # backstop ceiling so even if a loop starts it can't run unbounded.
             options = {
                 "num_ctx": context_size,
                 "temperature": 0.6,
+                "repeat_penalty": repeat_penalty,
+                "repeat_last_n": repeat_last_n,
             }
             if num_predict is not None:
                 options["num_predict"] = num_predict
@@ -125,8 +141,9 @@ class LLMReasoner:
 
             content = response.message.content.strip()
 
-            # Clean up  tags if present in reasoning models like Qwen 3
-            cleaned_content = re.sub(r'', '', content, flags=re.DOTALL).strip()
+            # Strip <think>...</think> reasoning blocks emitted by reasoning
+            # models like Qwen 3, keeping only the final answer text.
+            cleaned_content = re.sub(r'<think>.*?</think>', '', content, flags=re.DOTALL).strip()
             result = cleaned_content if cleaned_content else content
 
             # Update conversation history
@@ -258,7 +275,10 @@ def handle_request(text: str) -> tuple[str, str]:
                 from pathlib import Path
                 md_content = Path(md_path).read_text(encoding='utf-8', errors='ignore')
                 reasoner = LLMReasoner()
-                summary = reasoner.reason(f"Summarize the key findings of this report in 2 concise sentences:\n\n{md_content[:2000]}")
+                summary = reasoner.reason(
+                    f"Summarize the key findings of this report in 2 concise sentences:\n\n{md_content[:2000]}",
+                    num_ctx=2048, num_predict=200,
+                )
             except Exception as e:
                 logging.warning(f"Failed to generate LLM summary: {e}")
                 summary = f"Comprehensive research completed on {topic}."

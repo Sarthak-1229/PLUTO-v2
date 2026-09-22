@@ -32,8 +32,20 @@ RESEARCH_NUM_CTX = 4096
 # much source material the model can *read*; this caps how much it *writes*.
 # ~300 tokens keeps answers tight (roughly 250-350 tokens / a few short
 # paragraphs) so a long generation doesn't dominate latency, without shrinking
-# the context window it reasons over.
+# the context window it reasons over. Verified sufficient: observed research
+# answers run ~130-230 words (~170-300 tokens) and end cleanly, not truncated.
 RESEARCH_NUM_PREDICT = 300
+
+# Per-task output ceilings (num_predict). Every reason() call now passes one so a
+# degenerate repetition loop is bounded instead of running indefinitely.
+SMALLTALK_NUM_PREDICT = 150   # greetings / one-liners
+SIMPLE_NUM_PREDICT = 250      # short factual answers
+CREATIVE_NUM_PREDICT = 1200   # stories/skits/poems/essays — real room, still bounded
+
+# Creative long-form needs a context window large enough to hold its (short)
+# prompt PLUS the ~1200-token output; num_ctx caps prompt+generation, so a small
+# window like the simple path's 1024 would truncate the piece mid-scene.
+CREATIVE_NUM_CTX = 2048
 
 
 class SelfLearner:
@@ -88,12 +100,33 @@ class SelfLearner:
             # Small context window for the brief (1-3 sentence) direct path.
             # 1024 comfortably holds the short prompt + a few-sentence answer
             # while keeping this path far cheaper than the research path.
-            # LLMUnavailableError propagates: an outage here is a real failure,
-            # not something to paper over with a fabricated reply.
-            answer = self.llm.reason(query_stripped, system_prompt=system_prompt, num_ctx=1024)
+            # num_predict is sized to the task so a repetition loop can't run on:
+            # smalltalk 150, simple 250 tokens. LLMUnavailableError propagates:
+            # an outage here is a real failure, not something to paper over.
+            budget = SMALLTALK_NUM_PREDICT if query_type == "smalltalk" else SIMPLE_NUM_PREDICT
+            answer = self.llm.reason(query_stripped, system_prompt=system_prompt,
+                                     num_ctx=1024, num_predict=budget)
             if answer and len(answer.strip()) > 2:
-                return answer.strip(), "local_model"
+                return self._clip_runaway_repetition(answer.strip()), "local_model"
             raise LLMUnavailableError("LLM returned an empty direct answer.")
+
+        # Creative / long-form: generate directly (no KB/web), with a large but
+        # BOUNDED output budget and a context window big enough to hold it.
+        if query_type == "creative":
+            system_prompt = (
+                "You are PLUTO, a creative writer. Write the requested piece "
+                "(story, skit, script, poem, essay, etc.) in full and then STOP. "
+                "Do not repeat lines, and do not append filler, sign-offs, or "
+                "'let me know if...' padding after the piece is finished. "
+                "When dramatizing a real historical or mythological story, keep "
+                "the core factual events accurate even while inventing dialogue "
+                "and pacing."
+            )
+            answer = self.llm.reason(query_stripped, system_prompt=system_prompt,
+                                     num_ctx=CREATIVE_NUM_CTX, num_predict=CREATIVE_NUM_PREDICT)
+            if answer and len(answer.strip()) > 2:
+                return self._clip_runaway_repetition(answer.strip()), "local_model"
+            raise LLMUnavailableError("LLM returned an empty creative answer.")
 
         # For research queries: check KB, then online search
         if query_type == "research":
@@ -107,6 +140,7 @@ class SelfLearner:
             if relevant:
                 ans = self._answer_from_knowledge(query_stripped, relevant)
                 if ans and len(ans.strip()) > 5:
+                    ans = self._clip_runaway_repetition(ans)
                     return self._maybe_offline_note(ans, online), "knowledge_base_cache"
 
             # Only attempt a live web search when we actually have internet.
@@ -118,7 +152,7 @@ class SelfLearner:
                 try:
                     online_ans = self._answer_online(query_stripped)
                     if online_ans and len(online_ans.strip()) > 5:
-                        return online_ans, "web_research"
+                        return self._clip_runaway_repetition(online_ans), "web_research"
                 except LLMUnavailableError:
                     raise
                 except Exception as exc:
@@ -127,11 +161,56 @@ class SelfLearner:
             # Fallback to the local LLM (KB was thin/empty, or the web step
             # failed/was skipped). LLMUnavailableError propagates to the API
             # error boundary instead of being masked by a canned apology.
-            llm_ans = self._answer_from_llm(query_stripped)
+            llm_ans = self._clip_runaway_repetition(self._answer_from_llm(query_stripped))
             return self._maybe_offline_note(llm_ans, online), "local_model"
 
         # Default fallback (shouldn't reach here)
-        return self._answer_from_llm(query_stripped), "local_model"
+        return self._clip_runaway_repetition(self._answer_from_llm(query_stripped)), "local_model"
+
+    @staticmethod
+    def _clip_runaway_repetition(text: str, min_len: int = 15, threshold: int = 3) -> str:
+        """Defense-in-depth against degenerate repetition loops.
+
+        Model-level settings (repeat_penalty + num_predict) are the primary fix;
+        this is the safety net. If any substantial line (>= min_len chars, after
+        trimming) appears `threshold`+ times verbatim, the output has almost
+        certainly fallen into a filler loop ("Let's get started! 🚀" ×200). Cut
+        the response just before the first occurrence of the earliest such line,
+        preserving the genuine content that came before it.
+
+        Full-line exact matching (not substrings) keeps this safe for legitimate
+        structure: a skit's dialogue lines differ after the speaker name, so they
+        aren't exact duplicates; only verbatim filler triggers the clip.
+        """
+        if not text:
+            return text
+        lines = text.split("\n")
+        first_index = {}
+        counts = {}
+        for i, line in enumerate(lines):
+            norm = line.strip()
+            if len(norm) < min_len:
+                continue  # ignore blanks, separators, short labels
+            counts[norm] = counts.get(norm, 0) + 1
+            if norm not in first_index:
+                first_index[norm] = i
+
+        runaway = [norm for norm, c in counts.items() if c >= threshold]
+        if not runaway:
+            return text
+
+        cut = min(first_index[norm] for norm in runaway)
+        if cut <= 0:
+            # The whole response is the loop — nothing good to keep; leave it to
+            # the caller rather than returning an empty string.
+            logger.warning("Repetition detected at the very start; returning as-is.")
+            return text
+        clipped = "\n".join(lines[:cut]).rstrip()
+        logger.warning(
+            f"Clipped runaway repetition: dropped {len(lines) - cut} trailing line(s) "
+            f"(a line repeated {max(counts.values())}x)."
+        )
+        return clipped if clipped else text
 
     @staticmethod
     def _maybe_offline_note(answer: str, online: bool) -> str:
@@ -142,13 +221,16 @@ class SelfLearner:
         note = "(answered from local knowledge only — no internet connection detected)"
         return f"{answer.rstrip()}\n\n_{note}_"
 
-    def classify_query(self, text: str) -> Literal["smalltalk", "simple", "research"]:
+    def classify_query(self, text: str) -> Literal["smalltalk", "simple", "research", "creative"]:
         """Classify a query to determine routing strategy.
 
         Returns:
             "smalltalk": greetings, filler phrases
             "simple": arithmetic, short factual questions answerable without search
             "research": named entities, current events, explicit research requests
+            "creative": open-ended long-form generation (stories, skits, poems,
+                        essays, songs) — needs a large output budget, so it must
+                        NOT fall through to the short simple/smalltalk ceilings.
         """
         t = text.lower().strip()
 
@@ -156,7 +238,7 @@ class SelfLearner:
         smalltalk_patterns = [
             r'^(hi|hello|hey|hii?|howdy|good\s+(morning|afternoon|evening))\b',
             r'^(thanks|thank\s+you|ty)\b',
-            r'^(how\s+are\s+you|what\'?s\s+up|what\'s\s上)\b',
+            r'^(how\s+are\s+you|what\'?s\s+up|sup)\b',
             r'^(bye|goodbye|see\s+you)\b',
         ]
         for pattern in smalltalk_patterns:
@@ -177,6 +259,22 @@ class SelfLearner:
         for pattern in math_patterns:
             if re.search(pattern, t):
                 return "simple"
+
+        # Creative / long-form generation — checked before research and the simple
+        # heuristics so a request like "write an essay explaining X" routes to the
+        # generous creative budget instead of being caught by "explain" (research)
+        # or starved by the simple ceiling. ("create a report on ..." never
+        # reaches here — route_intent() sends it to the report path first.)
+        creative_forms = (r'stor(?:y|ies)|skit|script|screenplay|play|poem|essay|'
+                          r'song|rap|lyrics?|haiku|limerick|tale|fable|dialogue|'
+                          r'monologue|joke|riddle|narrative|scene|sketch|verse')
+        creative_patterns = [
+            rf'\b(write|compose|create|make|draft|generate|give\s+me|tell\s+me)\b.*\b(?:{creative_forms})\b',
+            rf'\b(?:{creative_forms})\s+about\b',
+        ]
+        for pattern in creative_patterns:
+            if re.search(pattern, t):
+                return "creative"
 
         # Explicit research triggers — queries that genuinely need current info or
         # multi-source depth. Checked BEFORE the broad simple heuristics so that

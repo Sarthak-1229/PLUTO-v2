@@ -97,17 +97,24 @@ class SelfLearner:
 
         # For research queries: check KB, then online search
         if query_type == "research":
+            # Test true external connectivity ONCE (not per source). This is a
+            # short-timeout probe of external DNS hosts — see is_online() — and
+            # is independent of whether the local Ollama LLM is reachable.
+            online = self.is_online()
+
             # Check knowledge base for verified stored facts
             relevant = self.kb.get_relevant_knowledge(query_stripped, limit=3)
             if relevant:
                 ans = self._answer_from_knowledge(query_stripped, relevant)
                 if ans and len(ans.strip()) > 5:
-                    return ans, "knowledge_base_cache"
+                    return self._maybe_offline_note(ans, online), "knowledge_base_cache"
 
-            # If online, perform live web search & learn into KB. A network/
-            # scraping failure here is recoverable — fall through to the local
-            # LLM. But an LLM outage is not, so let that propagate.
-            if self.is_online():
+            # Only attempt a live web search when we actually have internet.
+            # When offline we skip this entirely so we never block on a doomed
+            # request waiting for a timeout. A network/scraping failure while
+            # online is recoverable — fall through to the local LLM. An LLM
+            # outage is not, so let LLMUnavailableError propagate.
+            if online:
                 try:
                     online_ans = self._answer_online(query_stripped)
                     if online_ans and len(online_ans.strip()) > 5:
@@ -117,13 +124,23 @@ class SelfLearner:
                 except Exception as exc:
                     logger.warning(f"Online search error: {exc}")
 
-            # Fallback to LLM for research queries. LLMUnavailableError
-            # propagates to the API error boundary instead of being masked by a
-            # canned apology that looks like a normal answer.
-            return self._answer_from_llm(query_stripped), "local_model"
+            # Fallback to the local LLM (KB was thin/empty, or the web step
+            # failed/was skipped). LLMUnavailableError propagates to the API
+            # error boundary instead of being masked by a canned apology.
+            llm_ans = self._answer_from_llm(query_stripped)
+            return self._maybe_offline_note(llm_ans, online), "local_model"
 
         # Default fallback (shouldn't reach here)
         return self._answer_from_llm(query_stripped), "local_model"
+
+    @staticmethod
+    def _maybe_offline_note(answer: str, online: bool) -> str:
+        """Append an offline disclaimer to a research answer when there is no
+        internet, so the user knows it came from local knowledge only."""
+        if online:
+            return answer
+        note = "(answered from local knowledge only — no internet connection detected)"
+        return f"{answer.rstrip()}\n\n_{note}_"
 
     def classify_query(self, text: str) -> Literal["smalltalk", "simple", "research"]:
         """Classify a query to determine routing strategy.

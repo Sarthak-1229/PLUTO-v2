@@ -39,26 +39,51 @@ logging.basicConfig(
     datefmt="%Y-%m-%d %H:%M:%S",
 )
 
+# ------------------------------------------------------------------
+# Recording / silence-detection tuning (configurable).
+#   MAX_RECORDING_SECONDS       – hard ceiling; recording always stops here.
+#   SILENCE_CONSECUTIVE_SECONDS – stop early after this much continuous quiet
+#                                 (only once speech has actually been heard).
+#   SILENCE_THRESHOLD           – normalized RMS (0..1) below which a 100ms
+#                                 block counts as "silence".
+# These were previously referenced but never defined here (NameError at
+# runtime); defined locally so main.py is self-contained.
+# ------------------------------------------------------------------
+MAX_RECORDING_SECONDS = 15
+SILENCE_CONSECUTIVE_SECONDS = 1.5
+SILENCE_THRESHOLD = 0.02  # normalized RMS; speech typically >> this
+
 # Simple cross‑platform audio recording.
 # We use the `sounddevice` library which works on Windows, macOS and Linux.
 # It records to a NumPy array which we then write to a temporary WAV file using
 # `scipy.io.wavfile`.  If the library is missing we fall back to a helpful error.
 
-def record_audio(duration: int = 5, sample_rate: int = 16000) -> str:
-    """Record audio with silence detection until max duration or silence threshold.
+def record_audio(sample_rate: int = 16000, block_seconds: float = 0.1) -> str:
+    """Record from the microphone until silence or the max-duration ceiling.
 
-    Records until either:
-    - MAX_RECORDING_SECONDS (default 15s) is reached, OR
-    - SILENCE_CONSECUTIVE_SECONDS (default 1.5s) of near-silence detected
+    Streams audio in short blocks and computes the RMS of each block. Recording
+    stops when EITHER:
+      - ``MAX_RECORDING_SECONDS`` of audio has been captured (hard ceiling), OR
+      - ``SILENCE_CONSECUTIVE_SECONDS`` of continuous near-silence is observed
+        *after* speech has actually been detected (so the initial pause before
+        the user starts talking never triggers an early cut-off).
+
+    Timing is driven by the audio device (``stream.read`` blocks until a block
+    is available), not wall-clock sleeps, so the captured buffer is always the
+    real recorded audio — unlike the previous implementation, which sampled an
+    unfilled region of a pre-allocated buffer.
 
     Args:
-        duration: Initial recording duration in seconds (used as min record time).
-        sample_rate: Sample rate for the WAV file.
+        sample_rate: Capture sample rate (Hz).
+        block_seconds: Analysis block size in seconds (RMS is computed per block).
 
     Returns:
-        Path to the temporary WAV file.
+        Path to a temporary WAV file containing the trimmed recording.
     """
-    logging.info(f"Recording audio (min {duration}s, max {MAX_RECORDING_SECONDS}s)...")
+    logging.info(
+        "Recording (max %ss, auto-stop after %.1fs of silence)...",
+        MAX_RECORDING_SECONDS, SILENCE_CONSECUTIVE_SECONDS,
+    )
     try:
         import numpy as np
         import sounddevice as sd
@@ -69,51 +94,44 @@ def record_audio(duration: int = 5, sample_rate: int = 16000) -> str:
         )
         raise e
 
-    # Record in chunks and check for silence
-    max_samples = int(MAX_RECORDING_SECONDS * sample_rate)
-    recording = sd.rec(max_samples, samplerate=sample_rate, channels=1, dtype="int16")
+    block_size = max(1, int(sample_rate * block_seconds))
+    max_blocks = int(MAX_RECORDING_SECONDS / block_seconds)
+    silence_blocks_needed = int(SILENCE_CONSECUTIVE_SECONDS / block_seconds)
 
-    # Wait for max duration, but check for silence
-    import time
-    start_time = time.time()
-    silence_chunks = 0
-    min_chunks = int(duration * sample_rate)
+    frames = []
+    silence_run = 0
+    heard_speech = False
+    stop_reason = "max duration"
 
-    while True:
-        # Check if we've recorded minimum duration
-        current_samples = int((time.time() - start_time) * sample_rate)
-        if current_samples >= min_chunks:
-            # Start checking for silence
-            chunk_start = len(recording) - min_chunks
-            chunk_end = len(recording)
-            chunk = recording[chunk_start:chunk_end] if chunk_end <= len(recording) else None
+    with sd.InputStream(samplerate=sample_rate, channels=1, dtype="int16",
+                        blocksize=block_size) as stream:
+        for _ in range(max_blocks):
+            block, _overflowed = stream.read(block_size)
+            frames.append(block.copy())
 
-            if chunk is not None:
-                # Convert to float and check RMS
-                import math
-                chunk_float = chunk.astype(float) / 32768.0
-                rms = math.sqrt(np.mean(chunk_float ** 2))
+            # RMS of this block, normalized to 0..1 for a 16-bit signal.
+            block_float = block.astype(np.float32) / 32768.0
+            rms = float(np.sqrt(np.mean(block_float ** 2))) if block_float.size else 0.0
 
-                if rms < SILENCE_THRESHOLD:
-                    silence_chunks += 1
-                    if silence_chunks >= SILENCE_CONSECUTIVE_SECONDS:
-                        logging.info(f"Silence detected after {silence_chunks}s, stopping recording")
-                        break
-                else:
-                    silence_chunks = 0
+            if rms >= SILENCE_THRESHOLD:
+                heard_speech = True
+                silence_run = 0
+            else:
+                silence_run += 1
 
-        # Check if we've hit max duration
-        if current_samples >= max_samples:
-            logging.info(f"Max recording duration ({MAX_RECORDING_SECONDS}s) reached")
-            break
+            # Only allow a silence-triggered stop once we've heard real speech,
+            # so leading silence can't end the recording immediately.
+            if heard_speech and silence_run >= silence_blocks_needed:
+                stop_reason = f"{SILENCE_CONSECUTIVE_SECONDS}s silence"
+                break
 
-        time.sleep(0.1)  # Small delay to prevent CPU spin
+    if frames:
+        recording = np.concatenate(frames, axis=0)
+    else:
+        recording = np.zeros((0, 1), dtype="int16")
 
-    sd.wait()  # Block until recording is finished
-
-    # Trim to actual recorded duration
-    actual_length = min(len(recording), int((time.time() - start_time) * sample_rate))
-    recording = recording[:actual_length]
+    duration_s = len(recording) / sample_rate
+    logging.info("Recording stopped (%s) — %.1fs captured.", stop_reason, duration_s)
 
     # Write to a temporary WAV file.
     fd, path = tempfile.mkstemp(suffix=".wav")
@@ -133,8 +151,8 @@ def main_loop():
     logging.info("Starting push‑to‑talk loop. Press Ctrl+C to exit.")
     try:
         while True:
-            # Record audio segment.
-            wav_path = record_audio(duration=5)
+            # Record audio segment (silence-terminated, capped at max duration).
+            wav_path = record_audio()
             logging.info("Recording complete.")
 
             # Transcribe.

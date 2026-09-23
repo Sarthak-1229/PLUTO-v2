@@ -33,6 +33,9 @@ ENV/
 # Model weights are large binary files and should NEVER be committed
 models/ollama/
 ollama_home/models/
+# Ollama content-addressed store (blobs/ + manifests/) — GitHub rejects >100MB
+blobs/
+manifests/
 
 # IDE settings
 .vscode/

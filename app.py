@@ -41,7 +41,12 @@ def _bytes_to_data_uri(data: bytes, mime: str = "audio/mpeg") -> str:
 # ------------------------------------------------------------------
 @app.post("/process")
 async def process(query: Query):
-    """Process a user query and return answer with optional audio and source info."""
+    """Process a user query and return the text answer + source, WITHOUT audio.
+
+    TTS is intentionally decoupled: synthesis takes 1.5-17s and would otherwise
+    block the text from appearing. The client renders this text immediately and
+    fetches audio separately via POST /speak.
+    """
     try:
         # Run the PLUTO brain (with self-learning & local Ollama)
         result = handle_request(query.text)
@@ -53,19 +58,35 @@ async def process(query: Query):
             answer = result
             answer_source = "local_model"
 
-        # Synthesize speech (async) - gracefully handle offline state
-        audio_uri = ""
-        try:
-            audio_bytes = await speak(answer, voice=query.voice)
-            if audio_bytes:
-                audio_uri = _bytes_to_data_uri(audio_bytes)
-        except Exception as tts_err:
-            logging.warning(f"TTS synthesis unavailable (likely offline): {tts_err}")
-
-        return {"answer": answer, "audio_uri": audio_uri, "answer_source": answer_source}
+        return {"answer": answer, "answer_source": answer_source}
     except Exception as exc:
         logging.exception("Error in /process")
         return {"error": f"Processing failed: {str(exc)}", "status": "error"}
+
+
+class SpeakRequest(BaseModel):
+    text: str
+    voice: str = "en-US-AriaNeural"
+
+
+@app.post("/speak")
+async def synthesize_speech(req: SpeakRequest):
+    """Synthesize speech for already-generated text and return it as a data URI.
+
+    Thin wrapper over audio_tts.speak() — no new synthesis logic. Called by the
+    client after it has already rendered the text, so a slow or failing TTS
+    never delays the visible answer.
+    """
+    text = (req.text or "").strip()
+    if not text:
+        return {"audio_uri": ""}
+    try:
+        audio_bytes = await speak(text, voice=req.voice)
+        audio_uri = _bytes_to_data_uri(audio_bytes) if audio_bytes else ""
+        return {"audio_uri": audio_uri}
+    except Exception as tts_err:
+        logging.warning(f"TTS synthesis unavailable (likely offline): {tts_err}")
+        return {"audio_uri": "", "error": "tts_unavailable"}
 
 # ------------------------------------------------------------------
 # VRAM monitoring endpoint

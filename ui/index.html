@@ -10,33 +10,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
-  <!-- Self-contained complete Design System (Zero external CDN dependency) -->
-  <!-- Markdown & MathJax for rich response rendering -->
+  <!-- Markdown + math rendering: markdown-it with the markdown-it-texmath plugin
+       backed by KaTeX. texmath recognizes the LLM's raw \(...\) / \[...\] output
+       directly (delimiters:'brackets'), so no placeholder/substitution step is
+       needed and KaTeX renders synchronously during md.render(). -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-
-  <!-- MathJax 3 configuration — MUST appear before the library load (no async!) -->
-  <script>
-    window.MathJax = {
-      tex: {
-        inlineMath: [['$', '$'], ['\\(', '\\)']],
-        displayMath: [['$$', '$$'], ['\\[', '\\]']],
-        processEscapes: false,
-        processEnvironments: true
-      },
-      svg: {
-        fontCache: 'global'
-      },
-      startup: {
-        ready: function() {
-          MathJax.startup.defaultReady();
-          window._mathjaxReady = true;
-          console.log('[PLUTO] MathJax v' + MathJax.version + ' ready');
-        }
-      }
-    };
-  </script>
-  <script id="MathJax-script" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it-texmath/texmath.min.js"></script>
   <style>
     :root {
       --bg: #FAF9F7;
@@ -414,6 +395,17 @@
       100% { content: ''; }
     }
 
+    /* Pulsing "actively listening" state for the voice buttons */
+    .voice-listening {
+      background: var(--primary) !important;
+      color: #fff !important;
+      animation: voicePulse 1.2s ease-in-out infinite;
+    }
+    @keyframes voicePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(153, 70, 42, 0.45); }
+      50%      { box-shadow: 0 0 0 6px rgba(153, 70, 42, 0); }
+    }
+
     /* Slide-over Telemetry Drawer */
     .drawer {
       position: fixed;
@@ -537,10 +529,13 @@
       color: var(--text-muted);
     }
 
-    /* MathJax equation styling */
-    .msg-assistant-card mjx-container {
-      display: inline-block;
-      margin: 4px 0;
+    /* KaTeX equation styling */
+    .msg-assistant-card .katex { font-size: 1.05em; }
+    /* Display math (\[...\]) gets its own centered block */
+    .msg-assistant-card .katex-display {
+      margin: 10px 0;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
 
     /* Responsive */
@@ -863,25 +858,87 @@
   <script>
     let activeVoice = localStorage.getItem('pluto-voice') || 'en-US-AriaNeural';
     let autoPlay = localStorage.getItem('pluto-autoplay') !== 'false';
-    let isListening = false;
+    let isListening = false;     // is the recognizer actively capturing right now
+    let voiceModeOn = false;     // is hands-free Voice Mode toggled on (the loop)
     let recognition = null;
     let currentAudio = null;
+    let awaitingResponse = false; // true between handleSend() and TTS end/response
+    let restartTimer = null;
 
-    // Speech Recognition Setup (Web Speech API)
+    // Speech Recognition Setup (Web Speech API).
+    // Deliberately on the cloud Web Speech API (not local Faster-Whisper) for
+    // low latency. continuous + interimResults give live partial transcription
+    // and a hands-free loop.
     if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
       const SpeechClass = window.webkitSpeechRecognition || window.SpeechRecognition;
       recognition = new SpeechClass();
-      recognition.continuous = false;
-      recognition.interimResults = false;
+      recognition.continuous = true;
+      recognition.interimResults = true;
       recognition.lang = 'en-US';
 
       recognition.onresult = (e) => {
-        const text = e.results[0][0].transcript;
-        document.getElementById('userInput').value = text;
-        handleSend();
+        let interim = '';
+        let final = '';
+        for (let i = e.resultIndex; i < e.results.length; i++) {
+          if (e.results[i].isFinal) {
+            final += e.results[i][0].transcript;
+          } else {
+            interim += e.results[i][0].transcript;
+          }
+        }
+        // Live text as the user speaks; final result dispatches immediately.
+        document.getElementById('userInput').value = final || interim;
+        if (final.trim()) {
+          // Stop capturing while PLUTO answers so its own TTS isn't transcribed;
+          // the hands-free loop restarts listening after the audio ends.
+          awaitingResponse = true;
+          if (voiceModeOn) { try { recognition.stop(); } catch (_) {} }
+          handleSend();   // no artificial delay — dispatch on final transcript
+        }
       };
-      recognition.onend = () => setVoiceState(false);
-      recognition.onerror = () => setVoiceState(false);
+
+      recognition.onstart = () => setListeningUI(true);
+
+      recognition.onerror = (e) => {
+        const err = e.error;
+        if (err === 'no-speech') {
+          // Silence timeout — recover automatically if Voice Mode is still on.
+          console.log('[PLUTO] no-speech; will auto-restart if voice mode on');
+          // onend fires next and handles the restart.
+          return;
+        }
+        if (err === 'network') {
+          showVoiceNotice('Voice input needs an internet connection.');
+          stopVoiceMode();
+          return;
+        }
+        if (err === 'aborted') {
+          // Normal when we stop() intentionally; no message.
+          return;
+        }
+        console.warn('[PLUTO] speech recognition error:', err);
+        stopVoiceMode();
+      };
+
+      recognition.onend = () => {
+        setListeningUI(false);
+        // Auto-restart the recognizer when Voice Mode is on and we're not
+        // currently waiting for PLUTO to answer (that restart happens after TTS).
+        if (voiceModeOn && !awaitingResponse) {
+          scheduleRecognitionRestart();
+        }
+      };
+    }
+
+    function scheduleRecognitionRestart() {
+      if (restartTimer) clearTimeout(restartTimer);
+      // Small guard delay: the API throws if start() is called too close to a
+      // stop/end. 250ms is not artificial UX latency — it's the minimum the
+      // API needs to reset between sessions.
+      restartTimer = setTimeout(() => {
+        if (!voiceModeOn) return;
+        try { recognition.start(); } catch (_) { /* already started */ }
+      }, 250);
     }
 
     function toggleVoiceInput() {
@@ -889,35 +946,112 @@
         alert('Voice input is supported in Chrome, Edge, and modern browsers.');
         return;
       }
-      if (isListening) {
-        recognition.stop();
-        setVoiceState(false);
+      if (!navigator.onLine) {
+        showVoiceNotice('Voice input needs an internet connection.');
+        refreshVoiceAvailability();
+        return;
+      }
+      if (voiceModeOn) {
+        stopVoiceMode();
       } else {
-        try {
-          recognition.start();
-          setVoiceState(true);
-        } catch (e) {
-          console.warn(e);
-        }
+        startVoiceMode();
       }
     }
 
-    function setVoiceState(active) {
-      isListening = active;
+    function startVoiceMode() {
+      voiceModeOn = true;
+      awaitingResponse = false;
+      try {
+        recognition.start();
+      } catch (_) { /* start() throws if already running; ignore */ }
+      setVoiceModeUI(true);
+    }
+
+    function stopVoiceMode() {
+      voiceModeOn = false;
+      awaitingResponse = false;
+      if (restartTimer) { clearTimeout(restartTimer); restartTimer = null; }
+      try { recognition.stop(); } catch (_) {}
+      setVoiceModeUI(false);
+      setListeningUI(false);
+    }
+
+    // Called after PLUTO's TTS finishes (or after the response if no audio):
+    // resume the hands-free loop so the user can just keep talking.
+    function resumeVoiceLoopAfterResponse() {
+      awaitingResponse = false;
+      if (voiceModeOn) scheduleRecognitionRestart();
+    }
+
+    // Toggle-level UI (the button's on/off appearance + label).
+    function setVoiceModeUI(on) {
       const btn = document.getElementById('voiceModeBtn');
       const label = document.getElementById('voiceBtnLabel');
       const micBtn = document.getElementById('micBtn');
-
-      if (active) {
+      if (on) {
         if (btn) { btn.style.background = 'var(--primary)'; btn.style.color = '#fff'; }
-        if (label) label.innerText = 'Listening...';
+        if (label) label.innerText = 'Voice Mode: On';
         if (micBtn) { micBtn.style.background = 'var(--primary)'; micBtn.style.color = '#fff'; }
       } else {
-        if (btn) { btn.style.background = 'var(--surface)'; btn.style.color = 'var(--text)'; }
+        if (btn) { btn.style.background = 'var(--surface)'; btn.style.color = 'var(--text)'; btn.classList.remove('voice-listening'); }
         if (label) label.innerText = 'Voice Mode';
-        if (micBtn) { micBtn.style.background = 'var(--surface-container)'; micBtn.style.color = 'var(--text-muted)'; }
+        if (micBtn) { micBtn.style.background = 'var(--surface-container)'; micBtn.style.color = 'var(--text-muted)'; micBtn.classList.remove('voice-listening'); }
       }
     }
+
+    // Moment-to-moment "actively capturing" indicator (pulsing).
+    function setListeningUI(active) {
+      isListening = active;
+      const label = document.getElementById('voiceBtnLabel');
+      const btn = document.getElementById('voiceModeBtn');
+      const micBtn = document.getElementById('micBtn');
+      if (active) {
+        if (label) label.innerText = 'Listening…';
+        if (btn) btn.classList.add('voice-listening');
+        if (micBtn) micBtn.classList.add('voice-listening');
+      } else {
+        if (btn) btn.classList.remove('voice-listening');
+        if (micBtn) micBtn.classList.remove('voice-listening');
+        if (label && voiceModeOn) label.innerText = 'Voice Mode: On';
+      }
+    }
+
+    function showVoiceNotice(msg) {
+      const stream = document.getElementById('chatStream');
+      if (!stream) { alert(msg); return; }
+      const note = document.createElement('div');
+      note.className = 'msg-assistant-wrapper';
+      note.innerHTML = `
+        <div class="msg-avatar" style="background:#fff3cd;"><span style="color:#8a6d00; font-weight:bold;">!</span></div>
+        <div class="msg-assistant-card" style="background:#fff3cd; color:#6b5300;">${msg}</div>`;
+      stream.appendChild(note);
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    // Gray out / re-enable Voice Mode based on connectivity (Web Speech API
+    // needs internet). Called on load and on online/offline events.
+    function refreshVoiceAvailability() {
+      const online = navigator.onLine;
+      const btn = document.getElementById('voiceModeBtn');
+      const micBtn = document.getElementById('micBtn');
+      [btn, micBtn].forEach(el => {
+        if (!el) return;
+        if (online) {
+          el.disabled = false;
+          el.style.opacity = '';
+          el.style.cursor = '';
+          el.title = el.id === 'voiceModeBtn' ? 'Push to talk / Listen' : 'Voice Dictation';
+        } else {
+          el.disabled = true;
+          el.style.opacity = '0.45';
+          el.style.cursor = 'not-allowed';
+          el.title = 'Voice input needs an internet connection';
+        }
+      });
+      if (!online && voiceModeOn) stopVoiceMode();
+    }
+    window.addEventListener('online', refreshVoiceAvailability);
+    window.addEventListener('offline', refreshVoiceAvailability);
 
     // View Switching
     function switchView(viewName) {
@@ -1045,7 +1179,6 @@
         }
 
         const answer = data.answer || "No response content.";
-        const audioUri = data.audio_uri || "";
         const answerSource = data.answer_source || "local_model";
         const id = 'resp_' + Date.now();
 
@@ -1063,21 +1196,9 @@
         assistantDiv.innerHTML = `
           <div class="msg-avatar"><img src="/logo3.png" onerror="this.src='/logo.jpg'" alt="P" style="width:100%;height:100%;object-fit:contain;"/></div>
           <div class="msg-assistant-card">
-            ${audioUri ? `
-            <div class="audio-pill" id="audioContainer_${id}">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <button class="btn btn-primary" style="width:32px; height:32px; padding:0;" onclick="playAudio('${id}', '${audioUri}')" id="audioPlayBtn_${id}" title="Play Audio">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" id="audioIcon_${id}"><polygon points="5 3 19 12 5 21 5 3"/></svg>
-                </button>
-                <div style="font-size:12px; font-weight:600;">Neural Spoken Response</div>
-              </div>
-              <div style="display:flex; align-items:center; gap:3px;" id="waveform_${id}">
-                <div class="wave-bar wave-1"></div>
-                <div class="wave-bar wave-2"></div>
-                <div class="wave-bar wave-3"></div>
-                <div class="wave-bar wave-4"></div>
-              </div>
-            </div>` : ''}
+            <!-- Audio pill is injected here later by fetchAndPlaySpeech() once
+                 /speak resolves; text below renders immediately. -->
+            <div id="audioSlot_${id}"></div>
 
             <div id="content_${id}">
               ${renderMarkdownAndMath(answer)}
@@ -1096,33 +1217,21 @@
         `;
         stream.appendChild(assistantDiv);
 
-        // Trigger MathJax to render any equations in the newly added content
-        function runMathJax() {
-          if (!window.MathJax || !window.MathJax.typesetPromise) {
-            console.warn('[PLUTO] MathJax not available for typesetting');
-            return;
-          }
-          console.log('[PLUTO] Calling MathJax.typesetPromise, ready:', window._mathjaxReady);
-          console.log('[PLUTO] Content HTML:', assistantDiv.innerHTML.substring(0, 500));
-          window.MathJax.typesetPromise([assistantDiv]).then(() => {
-            console.log('[PLUTO] MathJax typeset complete');
-          }).catch(err => {
-            console.error('[PLUTO] MathJax typeset error:', err);
-          });
-        }
-        if (window._mathjaxReady) {
-          runMathJax();
-        } else {
-          const _cj = setInterval(() => {
-            if (window._mathjaxReady) {
-              clearInterval(_cj);
-              runMathJax();
-            }
-          }, 200);
-        }
+        // Math is already rendered by KaTeX inside renderMarkdownAndMath()
+        // (via markdown-it-texmath), so no post-insertion typesetting pass.
 
-        if (autoPlay && audioUri) {
-          playAudio(id, audioUri);
+        // Text is now visible → the UI-facing "awaiting" state is over.
+        awaitingResponse = false;
+
+        if (autoPlay) {
+          // Synthesize + play audio separately so it never delays the text.
+          // The hands-free voice loop resumes when THIS audio ends (not at text
+          // render) so PLUTO doesn't start listening while it's still speaking.
+          fetchAndPlaySpeech(id, answer);
+        } else {
+          // Auto-play off: don't synthesize audio nobody will hear. Nothing to
+          // wait for, so resume the hands-free loop immediately.
+          resumeVoiceLoopAfterResponse();
         }
 
       } catch (err) {
@@ -1139,46 +1248,93 @@
           </div>
         `;
         stream.appendChild(errDiv);
+        // A failed turn shouldn't kill the voice loop — resume listening.
+        resumeVoiceLoopAfterResponse();
       }
 
       window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    // Lightweight Offline Markdown & Visual Renderer
+    // Second-stage TTS: synthesize audio for already-rendered text via /speak,
+    // inject the audio pill, and play it. A slow/failed /speak never blocks the
+    // text (already visible) and never strands the hands-free voice loop.
+    async function fetchAndPlaySpeech(id, text) {
+      try {
+        const res = await fetch('/speak', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ text: text, voice: activeVoice })
+        });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        const audioUri = data.audio_uri || "";
+        if (!audioUri) throw new Error(data.error || 'no audio returned');
+
+        injectAudioPill(id, audioUri);
+        playAudio(id, audioUri);   // resumeVoiceLoopAfterResponse() fires on its onended
+      } catch (err) {
+        console.log('[PLUTO] /speak failed (text is unaffected):', err.message);
+        // Audio failed — but text is already usable. Don't strand the voice loop.
+        resumeVoiceLoopAfterResponse();
+      }
+    }
+
+    // Build the play/waveform pill for a resolved audio URI and place it in the
+    // message's reserved audio slot.
+    function injectAudioPill(id, audioUri) {
+      const slot = document.getElementById(`audioSlot_${id}`);
+      if (!slot) return;
+      slot.innerHTML = `
+        <div class="audio-pill" id="audioContainer_${id}">
+          <div style="display:flex; align-items:center; gap:10px;">
+            <button class="btn btn-primary" style="width:32px; height:32px; padding:0;" onclick="playAudio('${id}', '${audioUri}')" id="audioPlayBtn_${id}" title="Play Audio">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" id="audioIcon_${id}"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            </button>
+            <div style="font-size:12px; font-weight:600;">Neural Spoken Response</div>
+          </div>
+          <div style="display:flex; align-items:center; gap:3px;" id="waveform_${id}">
+            <div class="wave-bar wave-1"></div>
+            <div class="wave-bar wave-2"></div>
+            <div class="wave-bar wave-3"></div>
+            <div class="wave-bar wave-4"></div>
+          </div>
+        </div>`;
+    }
+
+    // Markdown + math renderer. markdown-it-texmath (configured with
+    // delimiters:'brackets') parses the LLM's raw \(...\)/\[...\] math and
+    // KaTeX renders it synchronously here — no placeholder substitution and no
+    // post-insertion typesetting pass needed. Falls back to the custom renderer
+    // only if the markdown-it CDN failed to load.
     function renderMarkdownAndMath(rawText) {
       if (!rawText) return '';
-
-      // Step 1: Protect LaTeX delimiters by replacing with placeholders
-      // markdown-it would otherwise consume the backslashes as escapes
-      const placeholders = {
-        inlineOpen: '__PLUTO_LATEX_INLINE_OPEN__',
-        inlineClose: '__PLUTO_LATEX_INLINE_CLOSE__',
-        displayOpen: '__PLUTO_LATEX_DISPLAY_OPEN__',
-        displayClose: '__PLUTO_LATEX_DISPLAY_CLOSE__'
-      };
-
-      let protectedText = rawText
-        .replace(/\\\(/g, placeholders.inlineOpen)
-        .replace(/\\\)/g, placeholders.inlineClose)
-        .replace(/\\\[/g, placeholders.displayOpen)
-        .replace(/\\\]/g, placeholders.displayClose);
-
-      // Step 2: Render markdown (safe — placeholders won't be touched)
-      let html;
+      const cleaned = stripDanglingMath(rawText);
       if (window._plutoMd) {
-        html = window._plutoMd.render(protectedText);
-      } else {
-        html = renderMarkdownCustom(protectedText);
+        return window._plutoMd.render(cleaned);
       }
+      return renderMarkdownCustom(cleaned);
+    }
 
-      // Step 3: Restore delimiters as $...$ for MathJax
-      html = html
-        .replace(new RegExp(placeholders.inlineOpen, 'g'), '$')
-        .replace(new RegExp(placeholders.inlineClose, 'g'), '$')
-        .replace(new RegExp(placeholders.displayOpen, 'g'), '$$')
-        .replace(new RegExp(placeholders.displayClose, 'g'), '$$');
-
-      return html;
+    // A truncated generation (the token cap cutting the reply mid-formula) can
+    // leave an UNCLOSED math delimiter at the very end, which then leaks as raw
+    // "\(\cos" / "$$\frac" source text instead of rendering. Trim that trailing
+    // dangling opener so nothing raw shows. Only acts on an opener with no close
+    // after it, so complete formulas earlier in the text are untouched. Single
+    // "$" is only trimmed when the tail clearly holds a LaTeX command (a "\"),
+    // never plain "$5" currency.
+    function stripDanglingMath(text) {
+      let t = text;
+      const openDisp = t.lastIndexOf('\\[');
+      if (openDisp !== -1 && t.indexOf('\\]', openDisp) === -1) t = t.slice(0, openDisp);
+      const openInl = t.lastIndexOf('\\(');
+      if (openInl !== -1 && t.indexOf('\\)', openInl) === -1) t = t.slice(0, openInl);
+      if (((t.match(/\$\$/g) || []).length) % 2 === 1) t = t.slice(0, t.lastIndexOf('$$'));
+      const singles = (t.replace(/\$\$/g, '').match(/\$/g) || []).length;
+      if (singles % 2 === 1) {
+        const last = t.lastIndexOf('$');
+        if (t.slice(last).includes('\\')) t = t.slice(0, last); // math, not currency
+      }
+      return t.replace(/\s+$/, '');
     }
 
     // Backwards-compatible alias
@@ -1279,10 +1435,18 @@
       currentAudio = audio;
 
       audio.onplay = () => setAudioUI(id, true);
-      audio.onended = () => setAudioUI(id, false);
+      audio.onended = () => {
+        setAudioUI(id, false);
+        // Hands-free: once PLUTO finishes speaking, start listening again.
+        resumeVoiceLoopAfterResponse();
+      };
       audio.onpause = () => setAudioUI(id, false);
 
-      audio.play().catch(e => console.log('Audio playback error:', e));
+      audio.play().catch(e => {
+        console.log('Audio playback error:', e);
+        // If playback never starts, don't strand the voice loop.
+        resumeVoiceLoopAfterResponse();
+      });
     }
 
     function setAudioUI(id, isPlaying) {
@@ -1357,24 +1521,9 @@
         const res = await fetch(`/reports/${filename}`);
         const data = await res.json();
         console.log('[PLUTO] Report content preview:', JSON.stringify(data).substring(0, 300));
+        // KaTeX renders inline during renderMarkdownAndMath() — no extra pass.
         body.innerHTML = renderMarkdownAndMath(data.content);
         console.log('[PLUTO] Report HTML rendered, length:', body.innerHTML.length);
-
-        // Trigger MathJax to render any equations in the report modal
-        function runMathJax() {
-          if (window.MathJax && window.MathJax.typesetPromise) {
-            window.MathJax.typesetPromise([body]).catch(err =>
-              console.log('MathJax rendering error:', err)
-            );
-          }
-        }
-        if (window._mathjaxReady) {
-          runMathJax();
-        } else {
-          const _check = setInterval(() => {
-            if (window._mathjaxReady) { clearInterval(_check); runMathJax(); }
-          }, 200);
-        }
       } catch (e) {
         body.innerText = 'Error loading report content: ' + e.message;
       }
@@ -1497,37 +1646,31 @@
 
     // Startup Initialization
     document.addEventListener('DOMContentLoaded', () => {
-      // Initialize markdown-it parser
-      if (window.markdownit) {
-        window._plutoMd = window.markdownit({
-          breaks: true,
-          linkify: true,
-          html: true
-        });
-        console.log('[PLUTO] markdown-it initialized:', !!window._plutoMd);
+      // Initialize markdown-it with the texmath (KaTeX) plugin.
+      // The local model is inconsistent about math delimiters: real answers use
+      // BOTH \(...\)/\[...\] (brackets) and $...$/$$...$$ (dollars), sometimes in
+      // the same reply. texmath applies one delimiter set per .use(), so we
+      // register it twice — brackets AND dollars — otherwise whichever form the
+      // model didn't happen to use leaks as raw "\frac"/"\theta" source text.
+      // Verified in a real browser: bracket + dollar, inline + display all
+      // render, while prose like "$5 per month and $10" is left as plain text.
+      if (window.markdownit && window.texmath && window.katex) {
+        const tm = window.texmath.use(window.katex);
+        window._plutoMd = window.markdownit({ html: false, breaks: true, linkify: true })
+          .use(tm, { engine: window.katex, delimiters: 'brackets', katexOptions: { throwOnError: false } })
+          .use(tm, { engine: window.katex, delimiters: 'dollars',  katexOptions: { throwOnError: false } });
+        console.log('[PLUTO] markdown-it + texmath initialized (brackets + dollars)');
+      } else if (window.markdownit) {
+        // CDN for katex/texmath unavailable — fall back to plain markdown so
+        // text still renders (math stays as raw source rather than breaking).
+        window._plutoMd = window.markdownit({ html: false, breaks: true, linkify: true });
+        console.warn('[PLUTO] texmath/katex not loaded — math will show as raw source');
       } else {
         console.warn('[PLUTO] markdown-it CDN not loaded!');
       }
 
-      // Listen for MathJax ready
-      if (window.MathJax) {
-        if (window._mathjaxReady) {
-          console.log('[PLUTO] MathJax already ready');
-        } else {
-          const _mjCheck = setInterval(() => {
-            if (window._mathjaxReady) {
-              clearInterval(_mjCheck);
-              console.log('[PLUTO] MathJax ready');
-            }
-          }, 200);
-          // Also wait for load event
-          window.addEventListener('load', () => {
-            console.log('[PLUTO] Window loaded, _mathjaxReady:', window._mathjaxReady);
-          });
-        }
-      } else {
-        console.warn('[PLUTO] MathJax not loaded!');
-      }
+      // Gray out Voice Mode if we start offline (Web Speech API needs internet).
+      refreshVoiceAvailability();
 
       pollStats();
       setInterval(pollStats, 3000);

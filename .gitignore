@@ -54,3 +54,6 @@ logs/
 
 # Knowledge base (contains user data)
 knowledge_db.json
+
+# Node (browser-verification tooling deps — reproduced from package-lock.json)
+node_modules/

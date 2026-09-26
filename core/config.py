@@ -3,17 +3,16 @@ Updated configuration for PLUTO v2 with enhanced features.
 """
 
 # ============================================================
-# VRAM & Model Configuration
+# Model Configuration
 # ============================================================
-VRAM_BUDGET_MB = 6000
 STT_MODEL_SIZE = "small"
-LLM_MODEL_NAME = "qwen2.5:7b"   # Primary LLM (~4.5GB VRAM at Q4)
+LLM_MODEL_NAME = "qwen2.5:7b"   # Primary LLM
 REPORTS_DIR = "reports"
 USE_LLM_SUMMARY = True
 
-# STT (Speech-to-Text) is intentionally kept on CPU because qwen2.5:7b
-# at Q4 quantization consumes the majority of the 6GB VRAM budget.
-# Running Whisper on GPU would trigger an OOM conflict with the LLM.
+# STT (Speech-to-Text) is intentionally kept on CPU so the GPU stays
+# dedicated to the LLM; running Whisper on GPU alongside it would risk
+# an out-of-memory conflict.
 FORCE_STT_CPU = True
 
 # ============================================================

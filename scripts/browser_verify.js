@@ -90,14 +90,34 @@ function maxLineRepeat(innerText) {
   return { worst, worstLine };
 }
 
-// Any backslash-command, math delimiter, or PLUTO_LATEX marker left in the
-// VISIBLE text is a real leak: KaTeX keeps raw TeX only in a CSS-hidden
-// <annotation>, which innerText excludes — so a rendered formula contributes
-// zero backslashes here. A surviving "\cos"/"\frac"/"\(" means it did NOT
-// render (bad delimiter config, or a truncation-tail fragment).
-function findLeaks(innerText) {
-  const m = innerText.match(/\\[a-zA-Z]+|\\[()[\]]|\$\$|PLUTO_LATEX\w*/g);
+// A real pipeline leak is raw TeX sitting in ordinary page text — a "\[…\]"
+// that markdown-it never handed to KaTeX and that shows up as a bare "[\sin…]".
+// To measure exactly that, we strip every .katex subtree out of a clone first,
+// then scan what remains: successfully-rendered formulas keep their raw TeX only
+// in a CSS-hidden <annotation> (gone with the .katex node), and a KaTeX *error*
+// span (an undefined macro the model invented) is ALSO inside .katex — that
+// means the pipeline delivered the math to KaTeX, which is the opposite of a
+// leak, so it is reported separately (katexErrors) rather than failing the gate.
+function findLeaks(nonKatexText) {
+  const m = nonKatexText.match(/\\[a-zA-Z]+|\\[()[\]]|\$\$|PLUTO_LATEX\w*/g);
   return m ? [...new Set(m)] : [];
+}
+
+// Pull the math-rendering facts out of a rendered answer element: how many
+// formulas KaTeX rendered, how many were display, how many were KaTeX errors,
+// and the visible text with all KaTeX output removed (for leak scanning).
+async function mathStats(page, id) {
+  return page.evaluate((elId) => {
+    const el = document.getElementById(elId);
+    const clone = el.cloneNode(true);
+    clone.querySelectorAll('.katex-display, .katex').forEach(n => n.remove());
+    return {
+      katex: el.querySelectorAll('.katex').length,
+      display: el.querySelectorAll('.katex-display').length,
+      katexErrors: el.querySelectorAll('.katex-error').length,
+      nonKatexText: clone.textContent || '',
+    };
+  }, id);
 }
 
 async function main() {
@@ -133,19 +153,14 @@ async function main() {
   // -> display, \(..\)/$..$ -> inline), so we report it but don't gate on it.
   try {
     const r = await sendAndWait(page, 'show me the quadratic formula as a standalone equation', 120000);
-    const dom = await page.evaluate((id) => {
-      const el = document.getElementById(id);
-      return {
-        katex: el.querySelectorAll('.katex').length,
-        display: el.querySelectorAll('.katex-display').length,
-      };
-    }, r.id);
-    const leaks = findLeaks(r.innerText);
+    const dom = await mathStats(page, r.id);
+    const leaks = findLeaks(dom.nonKatexText);
     const ok = dom.katex > 0 && leaks.length === 0;
     await page.screenshot({ path: path.join(SHOT_DIR, '01_latex_quadratic.png'), fullPage: true });
     record('LaTeX / quadratic renders (no leak)', ok,
-      `.katex=${dom.katex} (${dom.display > 0 ? 'display' : 'inline'}) leaks=[${leaks.join(', ')}] ` +
-      `(rendered in ${r.msToText}ms) -> 01_latex_quadratic.png`);
+      `.katex=${dom.katex} (${dom.display > 0 ? 'display' : 'inline'}) leaks=[${leaks.join(', ')}]` +
+      (dom.katexErrors ? ` katexErrors=${dom.katexErrors}` : '') +
+      ` (rendered in ${r.msToText}ms) -> 01_latex_quadratic.png`);
   } catch (e) {
     await page.screenshot({ path: path.join(SHOT_DIR, '01_latex_quadratic.png'), fullPage: true }).catch(()=>{});
     record('LaTeX / quadratic renders (no leak)', false, e.message + ' -> 01_latex_quadratic.png');
@@ -154,15 +169,14 @@ async function main() {
   // ---- CHECK 1b: LaTeX trig formulas (inline math present, no leakage) ----
   try {
     const r = await sendAndWait(page, 'list all trigonometry formulas', 120000);
-    const dom = await page.evaluate((id) => {
-      const el = document.getElementById(id);
-      return { katex: el.querySelectorAll('.katex').length };
-    }, r.id);
-    const leaks = findLeaks(r.innerText);
+    const dom = await mathStats(page, r.id);
+    const leaks = findLeaks(dom.nonKatexText);
     const ok = dom.katex > 0 && leaks.length === 0;
     await page.screenshot({ path: path.join(SHOT_DIR, '02_latex_trig.png'), fullPage: true });
     record('LaTeX / trigonometry formulas', ok,
-      `.katex=${dom.katex} leaks=[${leaks.join(', ')}] -> 02_latex_trig.png`);
+      `.katex=${dom.katex} leaks=[${leaks.join(', ')}]` +
+      (dom.katexErrors ? ` katexErrors=${dom.katexErrors}` : '') +
+      ` -> 02_latex_trig.png`);
   } catch (e) {
     await page.screenshot({ path: path.join(SHOT_DIR, '02_latex_trig.png'), fullPage: true }).catch(()=>{});
     record('LaTeX / trigonometry formulas', false, e.message + ' -> 02_latex_trig.png');

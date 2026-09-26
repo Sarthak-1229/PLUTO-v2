@@ -1,8 +1,16 @@
 """Diagnostic test script for PLUTO v2 fixes."""
 
 import json
+import sys
 import time
 from pathlib import Path
+
+# Windows consoles default to cp1252; force UTF-8 so unicode in model
+# responses (and the check marks below) can't crash the run.
+try:
+    sys.stdout.reconfigure(encoding="utf-8")
+except Exception:
+    pass
 
 def test_fixes():
     """Run diagnostic tests for all fixes."""
@@ -47,7 +55,7 @@ def test_fixes():
 
     # Test actual responses
     print("\n  Response length tests:")
-    response = learner.answer("hi")
+    response, _ = learner.answer("hi")
     word_count = len(response.split())
     results["fix1"]["response_lengths"] = {
         "hi": {"words": word_count, "response": response[:100]}
@@ -113,9 +121,9 @@ def test_fixes():
     print(f"  POST /process ('test'): status={response.status_code}, JSON={response.headers.get('content-type', '').startswith('application/json')}")
 
     # =========================================================================
-    # Fix 4: VRAM/Context Management
+    # Fix 4: Context Management
     # =========================================================================
-    print("\n[Fix 4] VRAM/Context Management")
+    print("\n[Fix 4] Context Management")
     print("-" * 60)
 
     from core.brain import LLMReasoner
@@ -123,11 +131,9 @@ def test_fixes():
 
     # Check conversation history is capped
     results["fix4"] = {
-        "history_capped": reasoner._max_history == 8,
-        "vr_log_enabled": hasattr(reasoner, '_log_vram')
+        "history_capped": reasoner._max_history == 8
     }
     print(f"  Conversation history cap: {reasoner._max_history} messages")
-    print(f"  VRAM logging method exists: {hasattr(reasoner, '_log_vram')}")
 
     # =========================================================================
     # Fix 5: STT Silence Detection

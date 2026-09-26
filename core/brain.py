@@ -107,9 +107,6 @@ class LLMReasoner:
             # Add current user prompt
             messages.append({"role": "user", "content": prompt})
 
-            # Log VRAM before call
-            vram_info = self._log_vram("before")
-
             # Use provided num_ctx or default
             context_size = num_ctx if num_ctx is not None else 2048
 
@@ -154,9 +151,6 @@ class LLMReasoner:
             if len(self._conversation_history) > self._max_history:
                 self._conversation_history = self._conversation_history[-self._max_history:]
 
-            # Log VRAM after call
-            self._log_vram("after", vram_info)
-
             return result
 
         except ollama.ResponseError as exc:
@@ -183,34 +177,6 @@ class LLMReasoner:
             raise LLMUnavailableError(
                 f"Error communicating with the local language model: {exc}"
             ) from exc
-
-    def _log_vram(self, stage: str, prev_info: dict = None) -> dict:
-        """Log VRAM usage before/after LLM calls."""
-        try:
-            import torch
-            if torch.cuda.is_available():
-                allocated = torch.cuda.memory_allocated() / (1024 * 1024)
-                reserved = torch.cuda.memory_reserved() / (1024 * 1024)
-                total, free = torch.cuda.mem_get_info()
-                free_mb = free / (1024 * 1024)
-                info = {
-                    "allocated_mb": round(allocated, 2),
-                    "reserved_mb": round(reserved, 2),
-                    "free_mb": round(free_mb, 2),
-                    "total_mb": round(total / (1024 * 1024), 2),
-                }
-                logger.info(f"VRAM {stage}: {info['allocated_mb']:.1f} MB allocated, {info['free_mb']:.1f} MB free")
-
-                # Warn if free VRAM is low
-                if info['free_mb'] < 5000:
-                    logger.warning(f"Low VRAM warning: only {info['free_mb']:.0f} MB free")
-
-                return info
-        except Exception as e:
-            logger.debug(f"VRAM logging failed: {e}")
-
-        return {}
-
 
 
 def _extract_topic(text: str) -> str:

@@ -3,9 +3,9 @@
 Provides a `transcribe` function that loads the model on demand, logs resource
 usage, and unloads the model to free resources.
 
-NOTE: STT runs on CPU by design (see core/config.py FORCE_STT_CPU). The qwen2.5:7b
-LLM at Q4 quantization consumes the majority of the 6GB VRAM budget, so Whisper
-is intentionally kept off the GPU to avoid an OOM conflict.
+NOTE: STT runs on CPU by design (see core/config.py FORCE_STT_CPU) so the GPU
+stays dedicated to the LLM; keeping Whisper off the GPU avoids an out-of-memory
+conflict with it.
 """
 
 import logging
@@ -21,11 +21,11 @@ from .logger import logger
 def _get_device() -> str:
     """Return the device for Whisper inference.
 
-    Respects FORCE_STT_CPU from config; if True, always uses CPU to preserve
-    VRAM for the LLM. Falls back to CUDA only when explicitly allowed.
+    Respects FORCE_STT_CPU from config; if True, always uses CPU so the GPU
+    stays free for the LLM. Falls back to CUDA only when explicitly allowed.
     """
     if FORCE_STT_CPU:
-        logger.info("STT forced to CPU mode per config (VRAM preserved for LLM)")
+        logger.info("STT forced to CPU mode per config (GPU kept free for LLM)")
         return "cpu"
     return "cpu"
 
@@ -66,7 +66,7 @@ def transcribe(audio_path: str) -> str:
 if __name__ == "__main__":
     # Demonstration block.
     demo_device = _get_device()
-    logger.info(f"STT demo: running in {demo_device} mode — no GPU VRAM consumed")
+    logger.info(f"STT demo: running in {demo_device} mode — no GPU used")
     sample_path = "sample.wav"
     try:
         result = transcribe(sample_path)

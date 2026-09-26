@@ -218,7 +218,7 @@ def main() -> int:
     state_path = state_dir / "state.json"
     log_path = state_dir / "server.log"
     environment = os.environ.copy()
-    pythonpath = [str(PROJECT_ROOT), r"E:\AI_Workspace\python_env\user_base\Python314\site-packages"]
+    pythonpath = [str(PROJECT_ROOT)]
     environment["PYTHONPATH"] = os.pathsep.join(pythonpath)
     environment["PLUTO_AUDIT_STATE_PATH"] = str(state_path)
 

@@ -1,6 +1,41 @@
-faster-whisper
-edge-tts
-duckduckgo-search
-beautifulsoup4
+# PLUTO v2 — Python dependencies
+# Install into the project's virtual environment:  pip install -r requirements.txt
+
+# --- Web server (FastAPI backend + SPA host) ---
+fastapi
+uvicorn
+pydantic
+
+# --- LLM reasoning (local, via Ollama) ---
 ollama
+
+# --- Speech ---
+faster-whisper          # speech-to-text, pinned to CPU to keep the GPU free for the LLM
+edge-tts                # text-to-speech (cloud voices, CPU-bound)
+
+# --- Research & web scraping ---
+requests
+beautifulsoup4
+ddgs                    # DuckDuckGo search (current package)
+duckduckgo-search       # legacy fallback import path
+
+# --- Report export (Markdown / PDF / DOCX) ---
+fpdf2
+md2pdf
+python-docx
+
+# --- Local voice loop (main.py CLI: record + playback) ---
+numpy
+scipy
+sounddevice
+simpleaudio
+
+# --- ML runtime (CUDA build recommended for GPU) ---
+torch
+
+# --- Config ---
 python-dotenv
+
+# --- Optional: richer PDF text extraction during research ---
+pdfplumber
+pymupdf

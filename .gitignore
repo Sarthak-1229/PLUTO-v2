@@ -32,7 +32,9 @@ ENV/
 # Ollama model storage - relocated to local models/ollama directory
 # Model weights are large binary files and should NEVER be committed
 models/ollama/
-ollama_home/models/
+# Ollama home dir: machine-specific config, cache, history, and a private
+# registry key (id_ed25519) — never commit any of it.
+ollama_home/
 # Ollama content-addressed store (blobs/ + manifests/) — GitHub rejects >100MB
 blobs/
 manifests/

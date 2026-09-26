@@ -2,7 +2,7 @@
 
 This script sets up a push‑to‑talk loop that records audio, transcribes it, routes the
 text to the brain, synthesizes a spoken response, and plays it back.  Each stage is
-logged, and if PyTorch is available the initial VRAM usage is reported.
+logged.
 """
 
 import os
@@ -20,17 +20,6 @@ try:
 except ImportError as e:
     logging.error(f"Failed to import core modules: {e}")
     sys.exit(1)
-
-# Optional: report initial VRAM usage if torch is installed.
-try:
-    import torch
-    if torch.cuda.is_available():
-        vram_bytes = torch.cuda.memory_allocated()
-        vram_mb = vram_bytes / (1024 * 1024)
-        logging.info(f"Initial VRAM usage: {vram_mb:.2f} MB")
-except Exception:
-    # torch not available or error – continue silently.
-    pass
 
 # Configure basic logging to stdout.
 logging.basicConfig(

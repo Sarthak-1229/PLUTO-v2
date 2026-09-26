@@ -11,9 +11,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
 
   <!-- Markdown + math rendering: markdown-it with the markdown-it-texmath plugin
-       backed by KaTeX. texmath recognizes the LLM's raw \(...\) / \[...\] output
-       directly (delimiters:'brackets'), so no placeholder/substitution step is
-       needed and KaTeX renders synchronously during md.render(). -->
+       backed by KaTeX. The model's \(…\)/\[…\] output is normalized to $…$/$$…$$
+       before rendering (texmath's dollar rules fire in any position, including
+       inside lists), so KaTeX renders synchronously during md.render(). -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.css">
   <script src="https://cdn.jsdelivr.net/npm/markdown-it@13/dist/markdown-it.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/katex/dist/katex.min.js"></script>
@@ -93,6 +93,7 @@
     .app-main {
       margin-left: 260px;
       flex: 1;
+      min-width: 0;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -265,6 +266,7 @@
 
     .prompt-input {
       flex: 1;
+      min-width: 0;
       border: none;
       background: transparent;
       outline: none;
@@ -538,12 +540,32 @@
       overflow-y: hidden;
     }
 
-    /* Responsive */
+    /* Prevent labels/titles from spilling their containers at any window width */
+    .app-sidebar { overflow: hidden; }
+    .app-sidebar .sidebar-text { min-width: 0; }
+    .app-sidebar .sidebar-text span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .nav-item { min-width: 0; }
+    .nav-item .sidebar-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .app-header > div { min-width: 0; }
+    .app-header > div:last-child { flex-shrink: 0; }
+    #headerTitle { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .status-badge { display: flex; align-items: center; justify-content: space-between; }
+    .drawer { max-width: 100vw; }
+
+    /* Responsive: collapse sidebar to an icon-only rail on narrow viewports */
     @media (max-width: 860px) {
       .app-sidebar { width: 72px; padding: 16px 8px; }
       .app-sidebar .sidebar-text { display: none; }
       .app-main { margin-left: 72px; }
       .prompt-dock-container { left: 72px; }
+      .nav-item { justify-content: center; gap: 0; padding: 10px; }
+    }
+    /* Phone-width: tighten header/dock chrome so nothing overlaps */
+    @media (max-width: 600px) {
+      .app-header { padding: 0 16px; gap: 8px; }
+      #headerModelBadge { display: none; }
+      .prompt-dock-container { padding: 0 12px; }
+      .chat-container { padding: 16px 16px 140px 16px; }
     }
   </style>
 </head>
@@ -562,7 +584,7 @@
         </div>
         <div class="sidebar-text" style="display: flex; flex-direction: column;">
           <span style="font-size: 16px; font-weight: 800; letter-spacing: -0.02em;">Pluto v2</span>
-          <span style="font-size: 11px; color: var(--text-subtle); font-weight: 600; text-transform: uppercase;">RTX 4050 • 6GB</span>
+          <span style="font-size: 11px; color: var(--text-subtle); font-weight: 600; text-transform: uppercase;">Local AI Assistant</span>
         </div>
       </div>
 
@@ -587,19 +609,10 @@
       </nav>
     </div>
 
-    <!-- Sidebar Bottom: VRAM Status Badge -->
-    <div class="sidebar-text" style="background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 12px; display: flex; flex-direction: column; gap: 8px;">
-      <div style="display: flex; align-items: center; justify-content: space-between;">
-        <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">GPU VRAM</span>
-        <span style="font-size: 11px; font-weight: 700; color: var(--primary);" id="sidebarVramPercent">20%</span>
-      </div>
-      <div style="width: 100%; height: 6px; background: var(--surface-container-high); border-radius: 3px; overflow: hidden;">
-        <div id="sidebarVramFill" style="width: 20%; height: 100%; background: var(--primary); border-radius: 3px; transition: width 0.4s ease;"></div>
-      </div>
-      <div style="display: flex; justify-content: space-between; font-size: 11px; color: var(--text-subtle);">
-        <span id="sidebarVramMb">1.2 / 6.0 GB</span>
-        <span id="sidebarOnlineTag" style="color: #22c55e; font-weight: 600;">● Online</span>
-      </div>
+    <!-- Sidebar Bottom: Connection Status -->
+    <div class="sidebar-text status-badge" style="background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 10px 12px;">
+      <span style="font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;">Status</span>
+      <span id="sidebarOnlineTag" style="font-size: 11px; color: #22c55e; font-weight: 700;">● Online</span>
     </div>
   </aside>
 
@@ -643,7 +656,7 @@
             </div>
             <div>
               <h2 style="font-size: 16px; font-weight: 700;">How can I assist your research today?</h2>
-              <p style="font-size: 12px; color: var(--text-muted);">Runs locally on your RTX 4050 with automated web search &amp; rich report synthesis.</p>
+              <p style="font-size: 12px; color: var(--text-muted);">Runs locally with automated web search &amp; rich report synthesis.</p>
             </div>
           </div>
         </div>
@@ -716,7 +729,7 @@
     <!-- ============================================================ -->
     <div id="view-settings" class="chat-container" style="display: none;">
       <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 24px; display: flex; flex-direction: column; gap: 20px; box-shadow: var(--shadow-sm);">
-        <h2 style="font-size: 18px; font-weight: 800;">Configuration &amp; VRAM Safety</h2>
+        <h2 style="font-size: 18px; font-weight: 800;">Configuration</h2>
 
         <div style="display: flex; flex-direction: column; gap: 6px;">
           <label style="font-size: 13px; font-weight: 700;">Neural Voice (Edge-TTS)</label>
@@ -742,12 +755,11 @@
         </div>
 
         <div style="display: flex; flex-direction: column; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border-light);">
-          <div style="font-size: 14px; font-weight: 700;">Hardware Envelope (RTX 4050 6GB)</div>
+          <div style="font-size: 14px; font-weight: 700;">Engines</div>
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; font-size: 12px; color: var(--text-muted);">
-            <div>VRAM Hard Budget: <strong style="color: var(--text);">6000 MB</strong></div>
-            <div>STT Engine: <strong style="color: var(--text);">FasterWhisper (Lazy VRAM)</strong></div>
             <div>LLM Engine: <strong style="color: var(--text);">Ollama (qwen2.5:7b)</strong></div>
-            <div>TTS Engine: <strong style="color: var(--text);">Edge-TTS (0MB VRAM)</strong></div>
+            <div>STT Engine: <strong style="color: var(--text);">FasterWhisper (CPU)</strong></div>
+            <div>TTS Engine: <strong style="color: var(--text);">Edge-TTS</strong></div>
           </div>
         </div>
       </div>
@@ -790,16 +802,6 @@
       <button class="btn btn-icon" onclick="toggleDrawer()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
       </button>
-    </div>
-
-    <!-- Hardware Stats -->
-    <div style="background: var(--surface-container); border: 1px solid var(--border-light); border-radius: var(--radius-md); padding: 14px; display: flex; flex-direction: column; gap: 8px;">
-      <span style="font-size: 12px; font-weight: 700; color: var(--text-muted);">GPU ALLOCATION (RTX 4050)</span>
-      <div style="font-size: 20px; font-weight: 800; color: var(--primary);" id="drawerVramText">1,239 MB</div>
-      <div style="width: 100%; height: 8px; background: var(--surface-container-high); border-radius: 4px; overflow: hidden;">
-        <div id="drawerVramFill" style="width: 20%; height: 100%; background: var(--primary); transition: width 0.4s ease;"></div>
-      </div>
-      <span style="font-size: 11px; color: var(--text-subtle);">Budget Limit: 6,000 MB</span>
     </div>
 
     <!-- Active Engines -->
@@ -1301,18 +1303,50 @@
         </div>`;
     }
 
-    // Markdown + math renderer. markdown-it-texmath (configured with
-    // delimiters:'brackets') parses the LLM's raw \(...\)/\[...\] math and
-    // KaTeX renders it synchronously here — no placeholder substitution and no
-    // post-insertion typesetting pass needed. Falls back to the custom renderer
-    // only if the markdown-it CDN failed to load.
+    // Markdown + math renderer. We normalize the model's \(…\)/\[…\] math to the
+    // $…$/$$…$$ forms (see normalizeMathDelimiters for why), then markdown-it +
+    // texmath parses it and KaTeX renders it synchronously here — no placeholder
+    // substitution and no post-insertion typesetting pass needed. Falls back to
+    // the custom renderer only if the markdown-it CDN failed to load.
     function renderMarkdownAndMath(rawText) {
       if (!rawText) return '';
-      const cleaned = stripDanglingMath(rawText);
+      const cleaned = normalizeMathDelimiters(stripDanglingMath(rawText));
       if (window._plutoMd) {
         return window._plutoMd.render(cleaned);
       }
       return renderMarkdownCustom(cleaned);
+    }
+
+    // The local model is wildly inconsistent about math delimiters, and two of
+    // its habits leak raw TeX onto the page unless we normalize first:
+    //   1. Display/inline brackets  \[ … \] / \( … \).  In markdown-it-texmath's
+    //      'brackets' mode these exist ONLY as block rules, so a \[ … \] inside a
+    //      list item or mid-paragraph never matches at block start and shows up
+    //      as a bare "[\sin^2\theta …]" (markdown-it's escape rule eats the "\").
+    //   2. Padded inline dollars    "$ \sin\theta $".  texmath's currency guard
+    //      refuses a "$" with an adjacent space (so "$5 … $10" prose stays text),
+    //      which also rejects the model's space-padded inline math.
+    // The dollar forms without padding always render (the inline $$…$$ and $…$
+    // rules fire in any position), so we rewrite toward those: \[ … \] → $$…$$,
+    // \( … \) → $…$, and trim the padding out of a "$ …\command… $" span. Fenced
+    // code and inline code spans are stashed out first so nothing inside them is
+    // rewritten, and currency ("$5") is untouched (no \command inside).
+    function normalizeMathDelimiters(text) {
+      if (text.indexOf('$') === -1 && text.indexOf('\\[') === -1 && text.indexOf('\\(') === -1) return text;
+      const guards = [];
+      const stash = (m) => { guards.push(m); return `@@PLUTOMATHGUARD_${guards.length - 1}@@`; };
+      // Protect code — never rewrite math-looking text inside ``` fences / `spans`.
+      let t = text.replace(/```[\s\S]*?```|`[^`\n]*`/g, stash);
+      // Bracket forms → dollar forms (trimmed so no space hugs an inline "$").
+      t = t.replace(/\\\[([\s\S]+?)\\\]/g, (_, x) => `$$${x.trim()}$$`);
+      t = t.replace(/\\\(([\s\S]+?)\\\)/g, (_, x) => `$${x.trim()}$`);
+      // Trim the padding out of a single-$ inline span that is real math (holds a
+      // \command). Lookarounds skip "$$…$$" display spans; the \command guard
+      // skips "$5 and $10" currency.
+      t = t.replace(/(?<!\$)\$(?!\$)([^$\n]*\\[a-zA-Z][^$\n]*)\$(?!\$)/g, (_, x) => `$${x.trim()}$`);
+      // Restore code spans.
+      t = t.replace(/@@PLUTOMATHGUARD_(\d+)@@/g, (_, i) => guards[+i]);
+      return t;
     }
 
     // A truncated generation (the token cap cutting the reply mid-formula) can
@@ -1607,25 +1641,8 @@
       });
     }
 
-    // Background Telemetry Polling (every 3s)
+    // Background status polling (every 3s): online/offline + active model.
     async function pollStats() {
-      try {
-        const vramRes = await fetch('/vram');
-        if (vramRes.ok) {
-          const v = await vramRes.json();
-          const used = v.total_mb || 1200;
-          const total = v.budget_mb || 6000;
-          const pct = Math.min(100, Math.round((used / total) * 100));
-
-          document.getElementById('sidebarVramPercent').innerText = pct + '%';
-          document.getElementById('sidebarVramFill').style.width = pct + '%';
-          document.getElementById('sidebarVramMb').innerText = `${(used/1024).toFixed(1)} / ${(total/1024).toFixed(1)} GB`;
-
-          document.getElementById('drawerVramText').innerText = `${used} MB (${pct}%)`;
-          document.getElementById('drawerVramFill').style.width = pct + '%';
-        }
-      } catch (e) {}
-
       try {
         const stRes = await fetch('/status');
         if (stRes.ok) {
@@ -1649,16 +1666,30 @@
       // Initialize markdown-it with the texmath (KaTeX) plugin.
       // The local model is inconsistent about math delimiters: real answers use
       // BOTH \(...\)/\[...\] (brackets) and $...$/$$...$$ (dollars), sometimes in
-      // the same reply. texmath applies one delimiter set per .use(), so we
-      // register it twice — brackets AND dollars — otherwise whichever form the
-      // model didn't happen to use leaks as raw "\frac"/"\theta" source text.
-      // Verified in a real browser: bracket + dollar, inline + display all
+      // the same reply. renderMarkdownAndMath() normalizes the bracket forms to
+      // dollar forms first, so the 'dollars' set below does the real work; we
+      // still register 'brackets' too as a fallback for anything the normalizer
+      // doesn't reach. texmath applies one delimiter set per .use(), hence two
+      // calls. Verified in a real browser: bracket + dollar, inline + display all
       // render, while prose like "$5 per month and $10" is left as plain text.
       if (window.markdownit && window.texmath && window.katex) {
         const tm = window.texmath.use(window.katex);
+        // The local model tends to write right-triangle side names as bare
+        // macros (\opposite, \adjacent, \hypotenuse) — none are real KaTeX
+        // commands, so without help KaTeX renders them as red error text inside
+        // an otherwise-correct fraction. Map the SOHCAHTOA triple to upright
+        // text so trig definitions like sin = opposite/hypotenuse read cleanly.
+        const katexOptions = {
+          throwOnError: false,
+          macros: {
+            '\\opposite': '\\text{opposite}',
+            '\\adjacent': '\\text{adjacent}',
+            '\\hypotenuse': '\\text{hypotenuse}',
+          },
+        };
         window._plutoMd = window.markdownit({ html: false, breaks: true, linkify: true })
-          .use(tm, { engine: window.katex, delimiters: 'brackets', katexOptions: { throwOnError: false } })
-          .use(tm, { engine: window.katex, delimiters: 'dollars',  katexOptions: { throwOnError: false } });
+          .use(tm, { engine: window.katex, delimiters: 'brackets', katexOptions })
+          .use(tm, { engine: window.katex, delimiters: 'dollars',  katexOptions });
         console.log('[PLUTO] markdown-it + texmath initialized (brackets + dollars)');
       } else if (window.markdownit) {
         // CDN for katex/texmath unavailable — fall back to plain markdown so

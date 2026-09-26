@@ -1,4 +1,4 @@
-# app.py – FastAPI wrapper around PLUTO core modules with VRAM monitoring
+# app.py – FastAPI wrapper around PLUTO core modules
 
 import asyncio
 import logging
@@ -87,71 +87,6 @@ async def synthesize_speech(req: SpeakRequest):
     except Exception as tts_err:
         logging.warning(f"TTS synthesis unavailable (likely offline): {tts_err}")
         return {"audio_uri": "", "error": "tts_unavailable"}
-
-# ------------------------------------------------------------------
-# VRAM monitoring endpoint
-# ------------------------------------------------------------------
-@app.get("/vram")
-def get_vram():
-    """Return current VRAM usage from multiple sources."""
-    result = {
-        "pytorch_mb": 0,
-        "ollama_mb": 0,
-        "total_mb": 0,
-        "budget_mb": 6000,
-        "usage_percent": 0,
-    }
-
-    # 1. Check PyTorch CUDA memory
-    try:
-        import torch
-        if torch.cuda.is_available():
-            allocated = torch.cuda.memory_allocated() / (1024 * 1024)
-            reserved = torch.cuda.memory_reserved() / (1024 * 1024)
-            result["pytorch_mb"] = round(allocated, 2)
-    except Exception:
-        pass
-
-    # 2. Check Ollama GPU memory (primary source)
-    try:
-        import requests
-        ollama_resp = requests.get("http://127.0.0.1:11434/api/tags", timeout=5)
-        if ollama_resp.status_code == 200:
-            data = ollama_resp.json()
-            total_ollama_mb = 0
-            for model in data.get("models", []):
-                # Size is in bytes, convert to MB
-                size_bytes = model.get("size", 0)
-                total_ollama_mb += size_bytes / (1024 * 1024)
-            result["ollama_mb"] = round(total_ollama_mb, 2)
-    except Exception:
-        pass
-
-    # 3. Try nvidia-smi for actual GPU usage (most accurate)
-    try:
-        import subprocess
-        output = subprocess.check_output(
-            ["nvidia-smi", "--query-gpu=memory.used,memory.total", "--format=csv,noheader,nounits"],
-            stderr=subprocess.DEVNULL
-        ).decode('utf-8').strip()
-        if output:
-            lines = output.split('\n')
-            for line in lines:
-                parts = line.split(',')
-                if len(parts) >= 2:
-                    used_mb = int(parts[0].strip())
-                    total_mb = int(parts[1].strip())
-                    result["nvidia_used_mb"] = used_mb
-                    result["nvidia_total_mb"] = total_mb
-                    result["total_mb"] = used_mb
-                    result["usage_percent"] = round(used_mb / total_mb * 100, 2) if total_mb > 0 else 0
-                    break
-    except Exception:
-        # If nvidia-smi not available, use PyTorch + Ollama sum
-        result["total_mb"] = round(result["pytorch_mb"] + result["ollama_mb"], 2)
-        result["usage_percent"] = round(result["total_mb"] / result["budget_mb"] * 100, 2)
-
-    return result
 
 # ------------------------------------------------------------------
 # Knowledge base endpoints
@@ -276,5 +211,5 @@ app.mount("/", StaticFiles(directory="ui", html=True), name="ui")
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app:app", host="127.0.0.1", port=8080, reload=True)
+    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
 
